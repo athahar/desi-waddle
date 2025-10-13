@@ -1,0 +1,905 @@
+// Auto-generated from charades data
+export interface CharadesItem {
+  id: string;
+  term: string;
+  category: string;
+  difficulty: number;
+  ageBands: string[];
+  alt?: string[];
+  hints?: string[];
+  locale?: string;
+  tags?: string[];
+}
+
+export const charactersItems: CharadesItem[] = [
+  {
+    "id": "characters_elsa",
+    "term": "Elsa",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_anna",
+    "term": "Anna",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_olaf",
+    "term": "Olaf",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_moana",
+    "term": "Moana",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_maui",
+    "term": "Maui",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_simba",
+    "term": "Simba",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_nala",
+    "term": "Nala",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_timon",
+    "term": "Timon",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_pumbaa",
+    "term": "Pumbaa",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_mufasa",
+    "term": "Mufasa",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_ariel",
+    "term": "Ariel",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_belle",
+    "term": "Belle",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_beast",
+    "term": "Beast",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_aladdin",
+    "term": "Aladdin",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_jasmine",
+    "term": "Jasmine",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_genie",
+    "term": "Genie",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_buzz_lightyear",
+    "term": "Buzz Lightyear",
+    "category": "characters",
+    "difficulty": 3,
+    "ageBands": [
+      "10-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_woody",
+    "term": "Woody",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_jessie",
+    "term": "Jessie",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_lightning_mcqueen",
+    "term": "Lightning McQueen",
+    "category": "characters",
+    "difficulty": 3,
+    "ageBands": [
+      "10-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_mater",
+    "term": "Mater",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_dory",
+    "term": "Dory",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_nemo",
+    "term": "Nemo",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_marlin",
+    "term": "Marlin",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_mike_wazowski",
+    "term": "Mike Wazowski",
+    "category": "characters",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_sulley",
+    "term": "Sulley",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_miguel",
+    "term": "Miguel",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_dante",
+    "term": "Dante",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_mirabel",
+    "term": "Mirabel",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_luisa",
+    "term": "Luisa",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_isabela",
+    "term": "Isabela",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_spongebob",
+    "term": "SpongeBob",
+    "category": "characters",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_patrick_star",
+    "term": "Patrick Star",
+    "category": "characters",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_peppa_pig",
+    "term": "Peppa Pig",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_george_pig",
+    "term": "George Pig",
+    "category": "characters",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_pikachu",
+    "term": "Pikachu",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_ash_ketchum",
+    "term": "Ash Ketchum",
+    "category": "characters",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_dora",
+    "term": "Dora",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_boots",
+    "term": "Boots",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_bluey",
+    "term": "Bluey",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "characters_woody",
+    "term": "Woody",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_buzz_lightyear",
+    "term": "Buzz Lightyear",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_nemo",
+    "term": "Nemo",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_dory",
+    "term": "Dory",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_lightning_mcqueen",
+    "term": "Lightning McQueen",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_mater",
+    "term": "Mater",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_sulley",
+    "term": "Sulley",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_mike_wazowski",
+    "term": "Mike Wazowski",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_olaf",
+    "term": "Olaf",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_kristoff",
+    "term": "Kristoff",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_anna",
+    "term": "Anna",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_rapunzel",
+    "term": "Rapunzel",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_merida",
+    "term": "Merida",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_tiana",
+    "term": "Tiana",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_mulan",
+    "term": "Mulan",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_pocahontas",
+    "term": "Pocahontas",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_aladdin",
+    "term": "Aladdin",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_jasmine",
+    "term": "Jasmine",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_beast",
+    "term": "Beast",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_belle",
+    "term": "Belle",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_ariel",
+    "term": "Ariel",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_sebastian",
+    "term": "Sebastian",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_flounder",
+    "term": "Flounder",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_stitch",
+    "term": "Stitch",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_shrek",
+    "term": "Shrek",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_donkey",
+    "term": "Donkey",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_kung_fu_panda",
+    "term": "Kung Fu Panda",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_tigger",
+    "term": "Tigger",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_eeyore",
+    "term": "Eeyore",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "characters_piglet",
+    "term": "Piglet",
+    "category": "characters",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  }
+];
+
+export default charactersItems;

@@ -1,0 +1,774 @@
+// Auto-generated from charades data
+export interface CharadesItem {
+  id: string;
+  term: string;
+  category: string;
+  difficulty: number;
+  ageBands: string[];
+  alt?: string[];
+  hints?: string[];
+  locale?: string;
+  tags?: string[];
+}
+
+export const professionsItems: CharadesItem[] = [
+  {
+    "id": "professions_doctor",
+    "term": "Doctor",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_nurse",
+    "term": "Nurse",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_teacher",
+    "term": "Teacher",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_firefighter",
+    "term": "Firefighter",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_police_officer",
+    "term": "Police Officer",
+    "category": "professions",
+    "difficulty": 3,
+    "ageBands": [
+      "10-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_chef",
+    "term": "Chef",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_baker",
+    "term": "Baker",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_farmer",
+    "term": "Farmer",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_construction_worker",
+    "term": "Construction Worker",
+    "category": "professions",
+    "difficulty": 3,
+    "ageBands": [
+      "10-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_pilot",
+    "term": "Pilot",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_astronaut",
+    "term": "Astronaut",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_dentist",
+    "term": "Dentist",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_veterinarian",
+    "term": "Veterinarian",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_librarian",
+    "term": "Librarian",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_mail_carrier",
+    "term": "Mail Carrier",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_bus_driver",
+    "term": "Bus Driver",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_taxi_driver",
+    "term": "Taxi Driver",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_train_conductor",
+    "term": "Train Conductor",
+    "category": "professions",
+    "difficulty": 3,
+    "ageBands": [
+      "10-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_scientist",
+    "term": "Scientist",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_engineer",
+    "term": "Engineer",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_artist",
+    "term": "Artist",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_musician",
+    "term": "Musician",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_singer",
+    "term": "Singer",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_dancer",
+    "term": "Dancer",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_actor",
+    "term": "Actor",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_photographer",
+    "term": "Photographer",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_lifeguard",
+    "term": "Lifeguard",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_plumber",
+    "term": "Plumber",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_electrician",
+    "term": "Electrician",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_carpenter",
+    "term": "Carpenter",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_mechanic",
+    "term": "Mechanic",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_cashier",
+    "term": "Cashier",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_barber",
+    "term": "Barber",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_hairdresser",
+    "term": "Hairdresser",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_waiter",
+    "term": "Waiter",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_tour_guide",
+    "term": "Tour Guide",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_zookeeper",
+    "term": "Zookeeper",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_park_ranger",
+    "term": "Park Ranger",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_gardener",
+    "term": "Gardener",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_coach",
+    "term": "Coach",
+    "category": "professions",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "professions_veterinarian",
+    "term": "Veterinarian",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_scientist",
+    "term": "Scientist",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_engineer",
+    "term": "Engineer",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_architect",
+    "term": "Architect",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_photographer",
+    "term": "Photographer",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_journalist",
+    "term": "Journalist",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_writer",
+    "term": "Writer",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_author",
+    "term": "Author",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_librarian",
+    "term": "Librarian",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_cashier",
+    "term": "Cashier",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_waiter",
+    "term": "Waiter",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_waitress",
+    "term": "Waitress",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_barista",
+    "term": "Barista",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_mechanic",
+    "term": "Mechanic",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_plumber",
+    "term": "Plumber",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_gardener",
+    "term": "Gardener",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_florist",
+    "term": "Florist",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_baker",
+    "term": "Baker",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_butcher",
+    "term": "Butcher",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "professions_tailor",
+    "term": "Tailor",
+    "category": "professions",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  }
+];
+
+export default professionsItems;

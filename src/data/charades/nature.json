@@ -1,0 +1,437 @@
+[
+  {
+    "id": "nature_rain",
+    "term": "Rain",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_snow",
+    "term": "Snow",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_thunder",
+    "term": "Thunder",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_lightning",
+    "term": "Lightning",
+    "category": "nature",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_rainbow",
+    "term": "Rainbow",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_clouds",
+    "term": "Clouds",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_fog",
+    "term": "Fog",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_mist",
+    "term": "Mist",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_wind",
+    "term": "Wind",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_tornado",
+    "term": "Tornado",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_hurricane",
+    "term": "Hurricane",
+    "category": "nature",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_earthquake",
+    "term": "Earthquake",
+    "category": "nature",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_volcano",
+    "term": "Volcano",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_avalanche",
+    "term": "Avalanche",
+    "category": "nature",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_flood",
+    "term": "Flood",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_drought",
+    "term": "Drought",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_sunrise",
+    "term": "Sunrise",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_sunset",
+    "term": "Sunset",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_moon",
+    "term": "Moon",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_stars",
+    "term": "Stars",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_comet",
+    "term": "Comet",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_meteor",
+    "term": "Meteor",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_eclipse",
+    "term": "Eclipse",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_northern_lights",
+    "term": "Northern Lights",
+    "category": "nature",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_tree",
+    "term": "Tree",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_flower",
+    "term": "Flower",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_grass",
+    "term": "Grass",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_leaf",
+    "term": "Leaf",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_branch",
+    "term": "Branch",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_root",
+    "term": "Root",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_mountain",
+    "term": "Mountain",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_valley",
+    "term": "Valley",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_hill",
+    "term": "Hill",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_cave",
+    "term": "Cave",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_river",
+    "term": "River",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_lake",
+    "term": "Lake",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_ocean",
+    "term": "Ocean",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_beach",
+    "term": "Beach",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_desert",
+    "term": "Desert",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "nature_forest",
+    "term": "Forest",
+    "category": "nature",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  }
+]

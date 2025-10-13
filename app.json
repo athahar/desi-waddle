@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "name": "Waddle Play",
+    "slug": "kids-learning-games-trivia-and-fun",
+    "version": "1.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-screen.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F5EFE6"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.kidslearninggames.triviaandfun",
+      "buildNumber": "13",
+      "icon": "./assets/icon.png",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIViewControllerBasedStatusBarAppearance": false,
+        "UIRequiredDeviceCapabilities": ["armv7"],
+        "UIDeviceFamily": [1]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "plugins": [
+      "expo-localization"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ad6be89c-a323-4697-a307-d712837e7285"
+      }
+    },
+    "owner": "athahar"
+  }
+}

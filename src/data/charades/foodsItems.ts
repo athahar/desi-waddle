@@ -1,0 +1,1043 @@
+// Auto-generated from charades data
+export interface CharadesItem {
+  id: string;
+  term: string;
+  category: string;
+  difficulty: number;
+  ageBands: string[];
+  alt?: string[];
+  hints?: string[];
+  locale?: string;
+  tags?: string[];
+}
+
+export const foodsItems: CharadesItem[] = [
+  {
+    "id": "foods_pizza",
+    "term": "Pizza",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_ice_cream",
+    "term": "Ice Cream",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_spaghetti",
+    "term": "Spaghetti",
+    "category": "foods",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_tacos",
+    "term": "Tacos",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_hamburger",
+    "term": "Hamburger",
+    "category": "foods",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_hot_dog",
+    "term": "Hot Dog",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_sandwich",
+    "term": "Sandwich",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_salad",
+    "term": "Salad",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_sushi",
+    "term": "Sushi",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_burrito",
+    "term": "Burrito",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_pancake",
+    "term": "Pancake",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_waffle",
+    "term": "Waffle",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_cereal",
+    "term": "Cereal",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_toast",
+    "term": "Toast",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_soup",
+    "term": "Soup",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_steak",
+    "term": "Steak",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_chicken_nuggets",
+    "term": "Chicken Nuggets",
+    "category": "foods",
+    "difficulty": 3,
+    "ageBands": [
+      "10-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_french_fries",
+    "term": "French Fries",
+    "category": "foods",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_mashed_potatoes",
+    "term": "Mashed Potatoes",
+    "category": "foods",
+    "difficulty": 3,
+    "ageBands": [
+      "10-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_rice",
+    "term": "Rice",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_noodles",
+    "term": "Noodles",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_dumplings",
+    "term": "Dumplings",
+    "category": "foods",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_fried_rice",
+    "term": "Fried Rice",
+    "category": "foods",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_chocolate",
+    "term": "Chocolate",
+    "category": "foods",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_cupcake",
+    "term": "Cupcake",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_donut",
+    "term": "Donut",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_cookie",
+    "term": "Cookie",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_brownie",
+    "term": "Brownie",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_apple",
+    "term": "Apple",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_banana",
+    "term": "Banana",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_orange",
+    "term": "Orange",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_grapes",
+    "term": "Grapes",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_watermelon",
+    "term": "Watermelon",
+    "category": "foods",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_strawberry",
+    "term": "Strawberry",
+    "category": "foods",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_pineapple",
+    "term": "Pineapple",
+    "category": "foods",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_carrot",
+    "term": "Carrot",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_broccoli",
+    "term": "Broccoli",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_corn",
+    "term": "Corn",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_peas",
+    "term": "Peas",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_cheese",
+    "term": "Cheese",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_yogurt",
+    "term": "Yogurt",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_milkshake",
+    "term": "Milkshake",
+    "category": "foods",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_smoothie",
+    "term": "Smoothie",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_popcorn",
+    "term": "Popcorn",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_pretzel",
+    "term": "Pretzel",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_nachos",
+    "term": "Nachos",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_quesadilla",
+    "term": "Quesadilla",
+    "category": "foods",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_ramen",
+    "term": "Ramen",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_omelet",
+    "term": "Omelet",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_bagel",
+    "term": "Bagel",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10"
+    ],
+    "alt": [],
+    "hints": [],
+    "locale": "en-US",
+    "tags": []
+  },
+  {
+    "id": "foods_sushi",
+    "term": "Sushi",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_ramen",
+    "term": "Ramen",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_dumpling",
+    "term": "Dumpling",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_spring_roll",
+    "term": "Spring Roll",
+    "category": "foods",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_quesadilla",
+    "term": "Quesadilla",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_burrito",
+    "term": "Burrito",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_nacho",
+    "term": "Nacho",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_pretzel",
+    "term": "Pretzel",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_bagel",
+    "term": "Bagel",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_croissant",
+    "term": "Croissant",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_muffin",
+    "term": "Muffin",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_cupcake",
+    "term": "Cupcake",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_brownie",
+    "term": "Brownie",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_pie",
+    "term": "Pie",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_pudding",
+    "term": "Pudding",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_jello",
+    "term": "Jello",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_yogurt",
+    "term": "Yogurt",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_cheese",
+    "term": "Cheese",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_butter",
+    "term": "Butter",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_honey",
+    "term": "Honey",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_jam",
+    "term": "Jam",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_peanut_butter",
+    "term": "Peanut Butter",
+    "category": "foods",
+    "difficulty": 2,
+    "ageBands": [
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_ketchup",
+    "term": "Ketchup",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_mustard",
+    "term": "Mustard",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_pickle",
+    "term": "Pickle",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_olive",
+    "term": "Olive",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_avocado",
+    "term": "Avocado",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_coconut",
+    "term": "Coconut",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_pineapple",
+    "term": "Pineapple",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  },
+  {
+    "id": "foods_mango",
+    "term": "Mango",
+    "category": "foods",
+    "difficulty": 1,
+    "ageBands": [
+      "5-7",
+      "8-10",
+      "11-12"
+    ]
+  }
+];
+
+export default foodsItems;
