@@ -19,19 +19,37 @@
 ## 📋 Project Plan
 
 **ALWAYS refer to [DESI-WADDLE-PROJECT-PLAN.md](./DESI-WADDLE-PROJECT-PLAN.md) for:**
-- Current phase and progress (Phase 2 complete, Phase 3 next)
+- Current phase and progress (Phase 2 complete, Phase 3 ready to start)
 - Detailed task breakdowns and acceptance criteria
-- Timeline estimates
+- Timeline estimates (updated: 30-40 hours total, +40% for dual-game system)
 - Success metrics
-- User action items (GitHub remote, Expo project ID, card data)
+- User action items (remaining pack data for 8 charades packs + dialogue cards)
 
-**Current Status**: Phase 2 Complete - Charades-Only App ✅
+**Current Status**: Phase 2 Complete - Ready for Dual-Game Implementation ✅
 
 ---
 
 ## 📝 Changelog
 
 > **IMPORTANT**: Update this section AFTER EVERY COMMIT with a brief summary of changes.
+
+### 2025-10-13 - Project Plan Updated for Dual-Game Architecture
+- **Commit**: `1d44f07` - "docs: update project plan for dual-game architecture"
+- **Changes**:
+  - 🎮 **Major scope change**: Added "Guess the Movie" as second game mode
+  - 📝 Rewrote Phase 3 with comprehensive dual-game implementation plan (14 steps)
+  - ⏱️ Revised timeline: 30-40 hours (was 20-30 hours, +40% scope)
+  - 🗺️ New navigation: GameModeScreen → Charades OR Guess Movie flows
+  - 📱 New screens: GameModeScreen, PackDetailScreen, GuessMovieInstructions, GuessMoviePlay, GuessMovieResults
+  - 📊 Updated: Phase 2 marked complete, Phase 3 ready to start
+  - 🎯 Scope: Two games (Charades acting + Bollywood dialogue trivia)
+- **Next**: Phase 3 - Build GameModeScreen, convert JSON data, implement both games (12-15 hours)
+- **Data Needed**:
+  - ✅ Bollywood Universe pack (500 cards) - provided
+  - ✅ Street Food pack - provided
+  - ✅ Cricket Fever pack - provided
+  - ❌ Need 8 more charades packs
+  - ❌ Need complete Guess the Movie dialogues (100-200 cards)
 
 ### 2025-10-13 - Strip Down to Charades-Only App (Phase 2 Complete)
 - **Commit**: `25e30ff` - "refactor: strip down to charades-only app (Phase 2 complete)"
