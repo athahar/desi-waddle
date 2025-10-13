@@ -59,14 +59,12 @@ export default function App() {
           screenOptions={{
             headerStyle: {
               backgroundColor: '#F8F1E9',
-              height: 70,
             },
             headerTintColor: '#000000',
             headerTitleStyle: {
               fontFamily: fonts.sansation.bold,
               fontSize: 28,
             },
-            headerBackTitleVisible: false,
             headerShadowVisible: false,
           }}
         >

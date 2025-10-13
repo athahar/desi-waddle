@@ -218,8 +218,6 @@ function GuessMoviePlayScreen({ navigation }: Props) {
             <Text style={styles.timerText}>{timeLeft}s</Text>
             <ProgressBar
               progress={(ROUND_SECONDS - timeLeft) / ROUND_SECONDS}
-              color={timeLeft <= 5 ? colors.error : colors.primary.teal}
-              height={6}
             />
           </View>
 

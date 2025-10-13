@@ -61,6 +61,10 @@ export const colors = {
   shadow: {
     default: 'rgba(0, 0, 0, 0.25)',
   },
+
+  // Status colors
+  success: '#4CAF50',  // Green for correct answers
+  error: '#FF6B6B',    // Red for errors or time running out
 };
 
 export default colors;
