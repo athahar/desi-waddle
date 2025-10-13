@@ -17,7 +17,6 @@ import * as Haptics from 'expo-haptics';
 import { NavigationProps } from '../types/game';
 import colors from '../styles/colors';
 import { fonts } from '../styles/fonts';
-import Icon from '../components/Icon';
 
 interface Route {
   params: {
@@ -63,7 +62,7 @@ export default function CharadesInstructionsScreen({ navigation, route }: Props)
           {/* Step 1: Hold at forehead */}
           <View style={styles.instructionCard}>
             <View style={[styles.iconContainer, { backgroundColor: colors.primary.blue }]}>
-              <Icon name="phone-forehead" size={80} />
+              <Text style={styles.emoji}>📱</Text>
             </View>
             <Text style={styles.instructionTitle}>Hold at forehead</Text>
             <Text style={styles.instructionText}>
@@ -74,7 +73,7 @@ export default function CharadesInstructionsScreen({ navigation, route }: Props)
           {/* Step 2: Tilt up for correct */}
           <View style={styles.instructionCard}>
             <View style={[styles.iconContainer, { backgroundColor: colors.success }]}>
-              <Icon name="tilt-up" size={80} />
+              <Text style={styles.emoji}>⬆️</Text>
             </View>
             <Text style={styles.instructionTitle}>Tilt up for correct</Text>
             <Text style={styles.instructionText}>
@@ -85,7 +84,7 @@ export default function CharadesInstructionsScreen({ navigation, route }: Props)
           {/* Step 3: Tilt down to pass */}
           <View style={styles.instructionCard}>
             <View style={[styles.iconContainer, { backgroundColor: colors.error }]}>
-              <Icon name="tilt-down" size={80} />
+              <Text style={styles.emoji}>⬇️</Text>
             </View>
             <Text style={styles.instructionTitle}>Tilt down to pass</Text>
             <Text style={styles.instructionText}>
@@ -162,6 +161,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderWidth: 4,
     borderColor: colors.border.black,
+  },
+  emoji: {
+    fontSize: 60,
   },
   instructionTitle: {
     fontSize: 20,
