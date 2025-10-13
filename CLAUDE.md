@@ -1,14 +1,52 @@
-# Claude Code Development Guidelines
+# Claude Code Development Guidelines - Desi Waddle
+
+> **IMPORTANT**: Always refer to [DESI-WADDLE-PROJECT-PLAN.md](./DESI-WADDLE-PROJECT-PLAN.md) as the single source of truth for project roadmap, phases, and implementation details. This file contains development guidelines and best practices.
 
 ## 📖 Table of Contents
-1. [Critical Safety Rules](#critical-safety-rules)
-2. [Best Practices from Top Users](#best-practices-from-top-users)
-3. [Project Status](#project-status)
-4. [Architecture Overview](#architecture-overview)
-5. [Development Workflow](#development-workflow)
-6. [Testing & Quality Assurance](#testing--quality-assurance)
-7. [Deployment Guidelines](#deployment-guidelines)
-8. [Performance Standards](#performance-standards)
+1. [Project Plan](#project-plan)
+2. [Changelog](#changelog)
+3. [Critical Safety Rules](#critical-safety-rules)
+4. [Best Practices from Top Users](#best-practices-from-top-users)
+5. [Project Status](#project-status)
+6. [Architecture Overview](#architecture-overview)
+7. [Development Workflow](#development-workflow)
+8. [Testing & Quality Assurance](#testing--quality-assurance)
+9. [Deployment Guidelines](#deployment-guidelines)
+10. [Performance Standards](#performance-standards)
+
+---
+
+## 📋 Project Plan
+
+**ALWAYS refer to [DESI-WADDLE-PROJECT-PLAN.md](./DESI-WADDLE-PROJECT-PLAN.md) for:**
+- Current phase and progress (Phase 1 complete, Phase 2 next)
+- Detailed task breakdowns and acceptance criteria
+- Timeline estimates
+- Success metrics
+- User action items (GitHub remote, Expo project ID, card data)
+
+**Current Status**: Phase 1 Complete - Repository Setup ✅
+
+---
+
+## 📝 Changelog
+
+> **IMPORTANT**: Update this section AFTER EVERY COMMIT with a brief summary of changes.
+
+### 2025-10-13 - Initial Setup (Phase 1 Complete)
+- **Commit**: `bcd94bc` - "chore: initialize Desi Waddle app"
+- **Changes**:
+  - ✅ Created `/desi-charades/` folder at project root
+  - ✅ Copied WaddlePlay structure (excluded git history, node_modules)
+  - ✅ Initialized git repo with proper .gitignore
+  - ✅ Updated app.config.js: "Desi Waddle", `com.desiwaddle.charades`, v0.1.0
+  - ✅ Updated package.json: Added required dependencies (uuid, expo-sharing, etc.)
+  - ✅ Created README.md and DESI-WADDLE-PROJECT-PLAN.md
+  - ✅ Updated CLAUDE.md with project plan reference and changelog section
+- **Next**: Phase 2 - Strip down to charades-only app
+- **Action Items**:
+  - User needs to create GitHub remote: `github.com/athahar/desi-waddle`
+  - User needs to create Expo project ID in dashboard
 
 ---
 
