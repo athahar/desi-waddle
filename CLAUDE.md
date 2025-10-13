@@ -19,19 +19,36 @@
 ## 📋 Project Plan
 
 **ALWAYS refer to [DESI-WADDLE-PROJECT-PLAN.md](./DESI-WADDLE-PROJECT-PLAN.md) for:**
-- Current phase and progress (Phase 1 complete, Phase 2 next)
+- Current phase and progress (Phase 2 complete, Phase 3 next)
 - Detailed task breakdowns and acceptance criteria
 - Timeline estimates
 - Success metrics
 - User action items (GitHub remote, Expo project ID, card data)
 
-**Current Status**: Phase 1 Complete - Repository Setup ✅
+**Current Status**: Phase 2 Complete - Charades-Only App ✅
 
 ---
 
 ## 📝 Changelog
 
 > **IMPORTANT**: Update this section AFTER EVERY COMMIT with a brief summary of changes.
+
+### 2025-10-13 - Strip Down to Charades-Only App (Phase 2 Complete)
+- **Commit**: `25e30ff` - "refactor: strip down to charades-only app (Phase 2 complete)"
+- **Changes**:
+  - ✅ Removed 8 unused game screens (GuessAnimal, GuessCountry, WouldYouRather, StoryStarter, ScavengerHunt, SimonSays)
+  - ✅ Removed unused game data files (7 files + folders): animals, countries, scavengerHunt, simonSays, storyStarter, wouldYouRather, seasonalSystem
+  - ✅ Removed unused utilities: dealSimonRound.ts
+  - ✅ Renamed HomeScreen.tsx → PackListScreen.tsx
+  - ✅ Updated App.tsx: cleaned up imports and navigation routes (charades-only)
+  - ✅ Updated PackListScreen to only show Charades game
+  - ✅ Fixed TypeScript types: CharadesCategory.icon now uses IconName type
+  - ✅ Installed dependencies (npm install)
+  - ✅ Deleted 17,179 lines of unused code
+- **Next**: Phase 3 - Implement pack-based content system
+- **Action Items**:
+  - User needs to create GitHub remote: `github.com/athahar/desi-waddle`
+  - User needs to create Expo project ID in dashboard
 
 ### 2025-10-13 - Initial Setup (Phase 1 Complete)
 - **Commit**: `bcd94bc` - "chore: initialize Desi Waddle app"
@@ -44,9 +61,6 @@
   - ✅ Created README.md and DESI-WADDLE-PROJECT-PLAN.md
   - ✅ Updated CLAUDE.md with project plan reference and changelog section
 - **Next**: Phase 2 - Strip down to charades-only app
-- **Action Items**:
-  - User needs to create GitHub remote: `github.com/athahar/desi-waddle`
-  - User needs to create Expo project ID in dashboard
 
 ---
 
