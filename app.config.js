@@ -42,8 +42,7 @@ module.exports = {
     plugins: ['expo-localization', 'expo-font', 'expo-secure-store'],
     extra: {
       eas: {
-        // TODO: User needs to create new Expo project ID
-        // projectId will be added after creating project in Expo dashboard
+        projectId: '850609f7-3aa4-443c-99f0-0561fd1858cc',
       },
     },
     owner: 'athahar',
