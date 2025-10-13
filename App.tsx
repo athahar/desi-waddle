@@ -22,6 +22,9 @@ import InfoScreen from './src/screens/InfoScreen';
 import CharadesCategoryScreen from './src/screens/CharadesCategoryScreen';
 import CharadesScreen from './src/screens/CharadesScreen';
 import CharadesResultsScreen from './src/screens/CharadesResultsScreen';
+import GuessMovieInstructionsScreen from './src/screens/GuessMovieInstructionsScreen';
+import GuessMoviePlayScreen from './src/screens/GuessMoviePlayScreen';
+import GuessMovieResultsScreen from './src/screens/GuessMovieResultsScreen';
 import Icon from './src/components/Icon';
 
 const Stack = createNativeStackNavigator();
@@ -129,6 +132,27 @@ export default function App() {
           <Stack.Screen
             name="CharadesResults"
             component={CharadesResultsScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="GuessMovieInstructions"
+            component={GuessMovieInstructionsScreen}
+            options={{
+              title: 'Guess the Movie',
+              headerTitleStyle: {
+                fontFamily: fonts.sansation.bold,
+                fontSize: 20,
+              },
+            }}
+          />
+          <Stack.Screen
+            name="GuessMoviePlay"
+            component={GuessMoviePlayScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="GuessMovieResults"
+            component={GuessMovieResultsScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen

@@ -49,15 +49,11 @@ function PackListScreen({ navigation, route }: Props) {
     }
 
     // For charades packs, navigate to PackDetail
-    // For guess-movie packs, navigate directly to instructions (future)
+    // For guess-movie packs, navigate directly to instructions
     if (pack.gameType === 'charades') {
       navigation.navigate('PackDetail', { packId: pack.id });
     } else {
-      // TODO: Navigate to Guess Movie Instructions
-      if (__DEV__) {
-        console.log('Guess Movie mode not yet implemented');
-      }
-      Alert.alert('Coming Soon', 'Guess the Movie mode will be available soon!');
+      navigation.navigate('GuessMovieInstructions');
     }
   }, [navigation]);
 
