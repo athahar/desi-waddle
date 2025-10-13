@@ -11,50 +11,31 @@ import {
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { NavigationProps } from '../types/game';
+import { Pack, GameType } from '../types/content';
+import { getPacksByGameType } from '../data';
 import colors from '../styles/colors';
 import { fonts } from '../styles/fonts';
 import Icon, { IconName } from '../components/Icon';
 
 interface Props extends NavigationProps {}
 
-interface GameInfo {
-  id: string;
-  title: string;
-  icon: IconName;
-  description: string;
-  gameType: 'animalGame' | 'countryGame' | 'wouldYouRather' | 'storyStarter' | 'simonSays' | 'scavengerHunt' | 'charades';
-  route: string;
-  backgroundColor: string; // Pastel color for card
-  enabled: boolean; // Feature flag to enable/disable game
-}
+function PackListScreen({ navigation, route }: Props) {
+  // Get game type from route params (default to 'charades')
+  const gameType = route?.params?.gameType || 'charades';
 
-// Feature flags for games
-const FEATURE_FLAGS = {
-  SIMON_SAYS_ENABLED: false, // Set to true to enable Simon Says in this release
-};
+  // Get packs for this game type
+  const packs = useMemo(() => {
+    return getPacksByGameType(gameType as GameType);
+  }, [gameType]);
 
-const games: GameInfo[] = [
-  {
-    id: 'charades',
-    title: 'Charades',
-    icon: 'theater',
-    description: 'Act fast, guess right',
-    gameType: 'charades',
-    route: 'CharadesCategory',
-    backgroundColor: colors.pastel.lightPurple,
-    enabled: true,
-  },
-];
-
-function PackListScreen({ navigation }: Props) {
   useEffect(() => {
     if (__DEV__) {
-      console.log('PackListScreen rendered');
+      console.log('PackListScreen rendered for gameType:', gameType);
+      console.log('Loaded packs:', packs.length);
     }
-  }, []);
+  }, [gameType, packs]);
 
-
-  const handleGamePress = async (game: GameInfo) => {
+  const handlePackPress = useCallback(async (pack: Pack) => {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     } catch (error) {
@@ -64,45 +45,55 @@ function PackListScreen({ navigation }: Props) {
     }
 
     if (__DEV__) {
-      console.log(`Navigating to ${game.title}`);
+      console.log(`Pack selected: ${pack.name}`);
     }
 
-    // Navigate to the game
-    navigation.navigate(game.route as any);
-  };
+    // For charades packs, navigate to PackDetail
+    // For guess-movie packs, navigate directly to instructions (future)
+    if (pack.gameType === 'charades') {
+      navigation.navigate('PackDetail', { packId: pack.id });
+    } else {
+      // TODO: Navigate to Guess Movie Instructions
+      if (__DEV__) {
+        console.log('Guess Movie mode not yet implemented');
+      }
+      Alert.alert('Coming Soon', 'Guess the Movie mode will be available soon!');
+    }
+  }, [navigation]);
 
-
-  const renderGameCard = useCallback((game: GameInfo) => {
+  const renderPackCard = useCallback((pack: Pack) => {
     return (
       <TouchableOpacity
-        key={game.id}
-        style={styles.gameCard}
-        onPress={() => handleGamePress(game)}
+        key={pack.id}
+        style={styles.packCard}
+        onPress={() => handlePackPress(pack)}
         activeOpacity={0.7}
       >
-        <Icon name={game.icon} size={56} style={styles.gameIcon} />
-        <View style={styles.gameInfo}>
-          <View style={styles.gameTitleContainer}>
-            <Text style={styles.gameTitle}>
-              {game.title}
-            </Text>
+        <Icon name={pack.icon || 'theater'} size={56} style={styles.packIcon} />
+        <View style={styles.packInfo}>
+          <View style={styles.packTitleContainer}>
+            <Text style={styles.packTitle}>{pack.name}</Text>
+            {pack.is_paid && (
+              <Text style={styles.lockIcon}>🔒</Text>
+            )}
           </View>
-          <Text style={styles.gameDescription}>
-            {game.description}
-          </Text>
+          <Text style={styles.packDescription}>{pack.description}</Text>
         </View>
       </TouchableOpacity>
     );
-  }, []);
+  }, [handlePackPress]);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
+          <Text style={styles.headerTitle}>
+            {gameType === 'charades' ? 'Choose a Pack' : 'Bollywood Dialogues'}
+          </Text>
         </View>
 
-        <View style={styles.gamesContainer}>
-          {games.filter(game => game.enabled ?? true).map(renderGameCard)}
+        <View style={styles.packsContainer}>
+          {packs.map(renderPackCard)}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -122,41 +113,18 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 24,
+    marginTop: 8,
   },
-  resetTouchable: {
-    alignItems: 'center',
-    padding: 10,
+  headerTitle: {
+    fontSize: 26,
+    fontFamily: fonts.sansation.bold,
+    color: colors.text.primary,
   },
-  subtitle: {
-    fontSize: 22,
-    color: colors.primary.teal,
-    fontWeight: '600',
-    textAlign: 'center',
-    marginBottom: 16,
-  },
-  devHint: {
-    fontSize: 12,
-    color: colors.text.light,
-    textAlign: 'center',
-    marginTop: 4,
-    fontStyle: 'italic',
-  },
-  seasonalBanner: {
-    backgroundColor: colors.primary.teal,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 20,
-  },
-  seasonalText: {
-    fontSize: 16,
-    color: colors.primary.white,
-    fontWeight: '600',
-  },
-  gamesContainer: {
+  packsContainer: {
     flex: 1,
   },
-  gameCard: {
+  packCard: {
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 10,
@@ -165,82 +133,36 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: colors.border.card,
-    borderLeftWidth: 6, // Accent bar like timesheets app
+    borderLeftWidth: 6, // Accent bar
     borderLeftColor: colors.border.black,
     borderBottomWidth: 6, // Bottom accent bar
     borderBottomColor: colors.border.black,
   },
-  gameIcon: {
+  packIcon: {
     marginRight: 16,
   },
-  gameInfo: {
+  packInfo: {
     flex: 1,
   },
-  gameTitleContainer: {
+  packTitleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 4,
   },
-  gameTitle: {
+  packTitle: {
     fontSize: 20,
     fontFamily: fonts.sansation.bold,
     color: colors.text.primary,
     flex: 1,
   },
-  gameDescription: {
+  lockIcon: {
+    fontSize: 16,
+    marginLeft: 8,
+  },
+  packDescription: {
     fontSize: 16,
     fontFamily: fonts.inter.regular,
     color: colors.text.secondary,
     lineHeight: 22,
-  },
-  infoSection: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  infoTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333333',
-    marginBottom: 12,
-  },
-  infoDescription: {
-    fontSize: 16,
-    color: '#666666',
-    lineHeight: 24,
-    marginBottom: 16,
-  },
-  featureList: {
-    gap: 8,
-  },
-  featureItem: {
-    fontSize: 14,
-    color: '#666666',
-    lineHeight: 20,
-  },
-  devResetSection: {
-    marginTop: 32,
-    marginBottom: 16,
-  },
-  devResetButton: {
-    backgroundColor: '#FF6B6B',
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    alignItems: 'center',
-    marginHorizontal: 32,
-  },
-  devResetButtonText: {
-    fontSize: 14,
-    color: 'white',
-    fontWeight: '600',
   },
 });
