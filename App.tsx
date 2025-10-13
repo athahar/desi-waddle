@@ -15,7 +15,9 @@ import {
 } from '@expo-google-fonts/inter';
 import { ErrorBoundary } from './src/components/ErrorBoundary';
 import { fonts } from './src/styles/fonts';
+import GameModeScreen from './src/screens/GameModeScreen';
 import PackListScreen from './src/screens/PackListScreen';
+import PackDetailScreen from './src/screens/PackDetailScreen';
 import InfoScreen from './src/screens/InfoScreen';
 import CharadesCategoryScreen from './src/screens/CharadesCategoryScreen';
 import CharadesScreen from './src/screens/CharadesScreen';
@@ -50,7 +52,7 @@ export default function App() {
     <ErrorBoundary>
         <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Home"
+          initialRouteName="GameMode"
           screenOptions={{
             headerStyle: {
               backgroundColor: '#F8F1E9',
@@ -66,14 +68,14 @@ export default function App() {
           }}
         >
           <Stack.Screen
-            name="Home"
-            component={PackListScreen}
+            name="GameMode"
+            component={GameModeScreen}
             options={({ navigation }) => ({
-              title: 'Waddle Play',
+              title: 'Desi Waddle',
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: fonts.sansation.bold,
-                fontSize: 20,
+                fontSize: 24,
                 marginTop: 5,
               },
               headerRight: () => (
@@ -91,6 +93,28 @@ export default function App() {
                 </TouchableOpacity>
               ),
             })}
+          />
+          <Stack.Screen
+            name="PackList"
+            component={PackListScreen}
+            options={{
+              title: 'Choose a Pack',
+              headerTitleStyle: {
+                fontFamily: fonts.sansation.bold,
+                fontSize: 20,
+              },
+            }}
+          />
+          <Stack.Screen
+            name="PackDetail"
+            component={PackDetailScreen}
+            options={{
+              title: 'Categories',
+              headerTitleStyle: {
+                fontFamily: fonts.sansation.bold,
+                fontSize: 20,
+              },
+            }}
           />
           <Stack.Screen
             name="CharadesCategory"

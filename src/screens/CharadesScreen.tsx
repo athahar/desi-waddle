@@ -8,18 +8,16 @@ import { useKeepAwake } from 'expo-keep-awake';
 import colors from '../styles/colors';
 import { fonts } from '../styles/fonts';
 import { NavigationProps } from '../types/game';
-import {
-  CharadesCategoryId,
-  getAllCharadesItems,
-  getCharadesItemsByCategory,
-} from '../data/charadesData';
+import { getPackById } from '../data';
+import { isCharadesPack, CharadeCard } from '../types/content';
 import { useAccelerometer } from '../hooks/useAccelerometer';
 import { getNextItems } from '../services/gameSessionService';
 
-type CategoryParam = 'All' | CharadesCategoryId;
-
 interface Route {
-  params: { category: CategoryParam };
+  params: {
+    packId?: string;
+    categoryId?: string;
+  };
 }
 
 interface Props extends NavigationProps {
@@ -34,7 +32,8 @@ interface Attempt {
 const ROUND_SECONDS = 60;
 
 export default function CharadesScreen({ route, navigation }: Props) {
-  const category = route.params?.category ?? 'All';
+  const packId = route.params?.packId;
+  const categoryId = route.params?.categoryId;
   useKeepAwake(); // Keep screen awake during gameplay
 
   // Lock orientation to landscape
@@ -77,19 +76,54 @@ export default function CharadesScreen({ route, navigation }: Props) {
 
   useEffect(() => {
     const loadWords = async () => {
-      const gameId = `charades_${category}`;
-
-      // Get items based on category
-      const baseItems =
-        category === 'All'
-          ? getAllCharadesItems()
-          : getCharadesItemsByCategory(category as CharadesCategoryId);
-
-      if (baseItems.length === 0) {
+      // Get pack data
+      if (!packId) {
+        if (__DEV__) {
+          console.error('CharadesScreen: packId is required');
+        }
         setWords([]);
         setIsLoading(false);
         return;
       }
+
+      const pack = getPackById(packId);
+      if (!pack || !isCharadesPack(pack)) {
+        if (__DEV__) {
+          console.error(`CharadesScreen: Pack not found or not a charades pack: ${packId}`);
+        }
+        setWords([]);
+        setIsLoading(false);
+        return;
+      }
+
+      // Get cards from category or all categories
+      let cards: CharadeCard[] = [];
+      if (categoryId) {
+        const category = pack.categories.find(cat => cat.id === categoryId);
+        if (category) {
+          cards = category.cards;
+        }
+      } else {
+        // Get all cards from all categories
+        cards = pack.categories.flatMap(cat => cat.cards);
+      }
+
+      if (cards.length === 0) {
+        setWords([]);
+        setIsLoading(false);
+        return;
+      }
+
+      const gameId = `charades_${packId}_${categoryId || 'all'}`;
+
+      // Convert CharadeCard[] to items with 'term' property for compatibility
+      const baseItems = cards.map(card => ({
+        id: card.id,
+        term: card.text,
+        category: categoryId || 'all',
+        difficulty: 1,
+        ageBands: ['all'],
+      }));
 
       // Get unused items from session
       const unusedItems = await getNextItems(
@@ -111,12 +145,12 @@ export default function CharadesScreen({ route, navigation }: Props) {
       setIsLoading(false);
 
       if (__DEV__) {
-        console.log(`Loaded ${unusedItems.length} charades words for ${category}`);
+        console.log(`Loaded ${unusedItems.length} charades words for ${packId}/${categoryId || 'all'}`);
       }
     };
 
     loadWords();
-  }, [category]);
+  }, [packId, categoryId]);
 
   const [idx, setIdx] = useState(0);
   const [attempts, setAttempts] = useState<Attempt[]>([]);
