@@ -33,7 +33,10 @@ export type IconName =
   | 'sports'
   | 'vehicles'
   | 'bulb'
-  | 'star';
+  | 'star'
+  | 'charades-hold'
+  | 'charades-tilt-up'
+  | 'charades-tilt-down';
 
 interface IconProps {
   name: IconName;
@@ -75,6 +78,9 @@ const iconSources: Record<IconName, any> = {
   vehicles: require('../../assets/icons/vehicles.png'),
   bulb: require('../../assets/icons/bulb.png'),
   star: require('../../assets/icons/star.png'),
+  'charades-hold': require('../../assets/icons/charades-hold.png'),
+  'charades-tilt-up': require('../../assets/icons/charades-tilt-up.png'),
+  'charades-tilt-down': require('../../assets/icons/charades-tilt-down.png'),
 };
 
 // Emoji icons for new games (fallback when PNG not available)
@@ -111,6 +117,9 @@ const emojiIcons: Record<IconName, string | null> = {
   vehicles: null,
   bulb: null,
   star: null,
+  'charades-hold': null,
+  'charades-tilt-up': null,
+  'charades-tilt-down': null,
 };
 
 export const Icon: React.FC<IconProps> = ({ name, size = 48, style, tintColor }) => {

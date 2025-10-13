@@ -12,6 +12,7 @@ import { getPackById } from '../data';
 import { isCharadesPack, CharadeCard } from '../types/content';
 import { useAccelerometer } from '../hooks/useAccelerometer';
 import { getNextCards, getSessionId, DeckItem } from '../core/deckManager';
+import Icon from '../components/Icon';
 
 interface Route {
   params: {
@@ -141,6 +142,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
 
       setWords(nextCards.map((item) => item.term));
       setIsLoading(false);
+      setShowInstructions(true); // Show instructions after loading
 
       if (__DEV__) {
         console.log(`Session ${currentSessionId}: Loaded ${nextCards.length} charades words for ${packId}/${categoryId || 'all'}`);
@@ -155,15 +157,67 @@ export default function CharadesScreen({ route, navigation }: Props) {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(ROUND_SECONDS);
   const [bg, setBg] = useState('#2DA4EA'); // blue
-  const [sensorsEnabled, setSensorsEnabled] = useState(true); // Enable sensors immediately
+  const [sensorsEnabled, setSensorsEnabled] = useState(false); // Disabled until countdown ends
   const [hapticsEnabled, setHapticsEnabled] = useState(true);
-  const [gameStarted, setGameStarted] = useState(true); // Start game immediately
+  const [countdown, setCountdown] = useState(3); // 3-second countdown
+  const [gameStarted, setGameStarted] = useState(false);
+  // Pre-game phases
+  const [showInstructions, setShowInstructions] = useState(false); // Will be set to true after loading
+  const [isCountingDown, setIsCountingDown] = useState(false);
 
   const word = words[idx] ?? '…';
 
-  // Game timer (starts immediately when words are loaded)
+  // Start button on the Instructions screen
+  const handleStart = () => {
+    setCountdown(3);
+    setIsCountingDown(true);
+    setShowInstructions(false);
+  };
+
+  // Countdown after user taps Start (3→2→1)
   useEffect(() => {
     if (isLoading || words.length === 0) return;
+    if (!isCountingDown || gameStarted) return;
+
+    const tick = setInterval(async () => {
+      setCountdown((prev) => {
+        const next = prev - 1;
+
+        // Light haptic tick for each second
+        if (next >= 1) {
+          try {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          } catch (error) {
+            if (__DEV__) {
+              console.log('Haptics error (non-critical):', error);
+            }
+          }
+        }
+
+        // Success haptic when countdown reaches 0
+        if (next === 0) {
+          try {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+          } catch (error) {
+            if (__DEV__) {
+              console.log('Haptics error (non-critical):', error);
+            }
+          }
+          setGameStarted(true);
+          setSensorsEnabled(true);
+          setIsCountingDown(false);
+        }
+
+        return next;
+      });
+    }, 1000);
+
+    return () => clearInterval(tick);
+  }, [isCountingDown, gameStarted, isLoading, words.length]);
+
+  // Game timer (runs after countdown finishes)
+  useEffect(() => {
+    if (!gameStarted) return;
 
     if (timeLeft <= 0) {
       // Navigate to results screen
@@ -172,7 +226,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
     }
     const t = setTimeout(() => setTimeLeft((tl) => tl - 1), 1000);
     return () => clearTimeout(t);
-  }, [timeLeft, isLoading, words.length, navigation, score, attempts]);
+  }, [timeLeft, gameStarted, navigation, score, attempts]);
 
   const nextWord = useCallback(() => {
     setIdx((i) => (i + 1) % words.length);
@@ -262,7 +316,62 @@ export default function CharadesScreen({ route, navigation }: Props) {
     );
   }
 
-  // Gameplay starts immediately - no countdown or neutral position required
+  // Instructions screen
+  if (showInstructions) {
+    return (
+      <SafeAreaView style={[styles.container, { backgroundColor: '#D9EFFB' }]}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}
+          activeOpacity={0.7}
+        >
+          <Icon name="back-button" size={40} />
+        </TouchableOpacity>
+
+        <View style={styles.instructionsHeader}>
+          <Text style={styles.instructionsTitle}>Charades</Text>
+          <Text style={styles.instructionsSubtitle}>How to Play</Text>
+        </View>
+
+        <View style={styles.instructionsRow}>
+          <View style={styles.instructionsItem}>
+            <Icon name="charades-hold" size={96} />
+            <Text style={styles.instructionLabel}>Hold at forehead</Text>
+          </View>
+
+          <View style={styles.instructionsItem}>
+            <Icon name="charades-tilt-up" size={96} />
+            <Text style={styles.instructionLabel}>Tilt up for correct</Text>
+          </View>
+
+          <View style={styles.instructionsItem}>
+            <Icon name="charades-tilt-down" size={96} />
+            <Text style={styles.instructionLabel}>Tilt down to pass</Text>
+          </View>
+        </View>
+
+        <TouchableOpacity onPress={handleStart} style={styles.startBtn} activeOpacity={0.9}>
+          <Text style={styles.startTxt}>Start</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    );
+  }
+
+  // Countdown screen
+  if (isCountingDown && !gameStarted) {
+    return (
+      <SafeAreaView style={[styles.container, { backgroundColor: bg }]}>
+        <View style={styles.center}>
+          <Text style={styles.readyTitle}>Get Ready</Text>
+          <Text style={styles.countdownText} accessibilityLiveRegion="polite">
+            {countdown}
+          </Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  // Normal gameplay with word and timer
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: bg }]}>
       <TouchableOpacity onPress={finish} style={styles.finishBtn} activeOpacity={0.7}>
@@ -342,5 +451,71 @@ const styles = StyleSheet.create({
     fontFamily: fonts.inter.bold,
     letterSpacing: 1,
     fontSize: 16,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 24,
+    left: 24,
+    zIndex: 10,
+    padding: 12,
+  },
+  instructionsHeader: {
+    alignItems: 'center',
+    marginTop: 8,
+    marginBottom: 12,
+  },
+  instructionsTitle: {
+    fontSize: 28,
+    fontFamily: fonts.inter.bold,
+    color: colors.text?.primary ?? '#0F172A',
+    marginBottom: 4,
+  },
+  instructionsSubtitle: {
+    fontSize: 16,
+    fontFamily: fonts.inter.semiBold,
+    color: 'rgba(0,0,0,0.6)',
+  },
+  instructionsRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    width: '88%',
+    maxWidth: 820,
+    marginTop: 12,
+    marginBottom: 24,
+    gap: 16,
+  },
+  instructionsItem: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  instructionLabel: {
+    marginTop: 8,
+    textAlign: 'center',
+    fontSize: 16,
+    fontFamily: fonts.inter.bold,
+    color: colors.text?.primary ?? '#0F172A',
+  },
+  startBtn: {
+    marginTop: 8,
+    backgroundColor: colors.border?.black ?? '#000',
+    paddingVertical: 18,
+    paddingHorizontal: 40,
+    borderRadius: 16,
+    width: '60%',
+    maxWidth: 360,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.18,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  startTxt: {
+    color: colors.primary.white,
+    fontFamily: fonts.inter.bold,
+    fontSize: 18,
+    letterSpacing: 0.5,
   },
 });

@@ -56,8 +56,8 @@ function PackDetailScreen({ navigation, route }: Props) {
       console.log(`Category selected: ${category.name}`);
     }
 
-    // Navigate to instructions screen first
-    navigation.navigate('CharadesInstructions', {
+    // Navigate directly to Charades (instructions shown inside CharadesScreen)
+    navigation.navigate('Charades', {
       packId: pack?.id,
       categoryId: category.id,
     });
