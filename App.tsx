@@ -21,6 +21,7 @@ import PackListScreen from './src/screens/PackListScreen';
 import PackDetailScreen from './src/screens/PackDetailScreen';
 import InfoScreen from './src/screens/InfoScreen';
 import CharadesCategoryScreen from './src/screens/CharadesCategoryScreen';
+import CharadesInstructionsScreen from './src/screens/CharadesInstructionsScreen';
 import CharadesScreen from './src/screens/CharadesScreen';
 import CharadesResultsScreen from './src/screens/CharadesResultsScreen';
 import GuessMovieInstructionsScreen from './src/screens/GuessMovieInstructionsScreen';
@@ -172,6 +173,11 @@ export default function App() {
           <Stack.Screen
             name="CharadesCategory"
             component={CharadesCategoryScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="CharadesInstructions"
+            component={CharadesInstructionsScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen

@@ -155,58 +155,15 @@ export default function CharadesScreen({ route, navigation }: Props) {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(ROUND_SECONDS);
   const [bg, setBg] = useState('#2DA4EA'); // blue
-  const [sensorsEnabled, setSensorsEnabled] = useState(false); // Disabled during countdown
+  const [sensorsEnabled, setSensorsEnabled] = useState(true); // Enable sensors immediately
   const [hapticsEnabled, setHapticsEnabled] = useState(true);
-  const [countdown, setCountdown] = useState(4); // 4-second countdown before game starts
-  const [gameStarted, setGameStarted] = useState(false);
-  const [neutralReady, setNeutralReady] = useState(false); // Tracks if forehead position detected
+  const [gameStarted, setGameStarted] = useState(true); // Start game immediately
 
   const word = words[idx] ?? '…';
 
-  // Initial countdown before game starts (4 seconds)
+  // Game timer (starts immediately when words are loaded)
   useEffect(() => {
     if (isLoading || words.length === 0) return;
-    if (gameStarted) return;
-
-    const tick = setInterval(async () => {
-      setCountdown((prev) => {
-        const next = prev - 1;
-
-        // Light haptic tick for each second
-        if (next >= 1) {
-          try {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          } catch (error) {
-            if (__DEV__) {
-              console.log('Haptics error (non-critical):', error);
-            }
-          }
-        }
-
-        // Success haptic when game starts
-        if (next === 0) {
-          try {
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-          } catch (error) {
-            if (__DEV__) {
-              console.log('Haptics error (non-critical):', error);
-            }
-          }
-          // Start the game
-          setGameStarted(true);
-          setSensorsEnabled(true);
-        }
-
-        return next;
-      });
-    }, 1000);
-
-    return () => clearInterval(tick);
-  }, [gameStarted, isLoading, words.length]);
-
-  // Game timer (only runs after countdown finishes AND forehead position detected)
-  useEffect(() => {
-    if (!gameStarted || !neutralReady) return;
 
     if (timeLeft <= 0) {
       // Navigate to results screen
@@ -215,7 +172,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
     }
     const t = setTimeout(() => setTimeLeft((tl) => tl - 1), 1000);
     return () => clearTimeout(t);
-  }, [timeLeft, gameStarted, neutralReady, navigation, score, attempts]);
+  }, [timeLeft, isLoading, words.length, navigation, score, attempts]);
 
   const nextWord = useCallback(() => {
     setIdx((i) => (i + 1) % words.length);
@@ -263,18 +220,14 @@ export default function CharadesScreen({ route, navigation }: Props) {
   }, [word, nextWord, hapticsEnabled]);
 
   // Accelerometer: down = correct, up = pass
-  // Requires neutral (forehead) position before accepting tilts
+  // No neutral position required - start immediately
   useAccelerometer(markCorrect, markPass, {
     enable: sensorsEnabled,
-    requireNeutralFirst: true,
-    neutralThresh: 0.25,
-    neutralDwellMs: 600,
+    requireNeutralFirst: false, // Start immediately without waiting for forehead
     armThresh: 0.55,
     dwellMs: 250,
     cooldownMs: 800,
     interval: 100,
-    onNeutralReadyChange: setNeutralReady,
-    playHapticOnReady: true,
   });
 
   const finish = useCallback(() => {
@@ -309,37 +262,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
     );
   }
 
-  // Show countdown before game starts
-  if (!gameStarted) {
-    return (
-      <SafeAreaView style={[styles.container, { backgroundColor: bg }]}>
-        <View style={styles.center}>
-          <Text style={styles.readyTitle}>Get Ready</Text>
-          <Text style={styles.countdownText} accessibilityLiveRegion="polite">
-            {countdown === 0 ? word : `0${countdown}`}
-          </Text>
-          <Text style={styles.readyHint}>Hold phone to your forehead</Text>
-        </View>
-      </SafeAreaView>
-    );
-  }
-
-  // Show "waiting for forehead position" overlay
-  if (gameStarted && !neutralReady) {
-    return (
-      <SafeAreaView style={[styles.container, { backgroundColor: bg }]}>
-        <TouchableOpacity onPress={finish} style={styles.finishBtn} activeOpacity={0.7}>
-          <Text style={styles.finishTxt}>FINISH</Text>
-        </TouchableOpacity>
-        <View style={styles.center}>
-          <Text style={styles.readyTitle}>Hold to your forehead</Text>
-          <Text style={styles.readyHint}>Keep it steady for a moment…</Text>
-        </View>
-      </SafeAreaView>
-    );
-  }
-
-  // Normal gameplay with word and timer
+  // Gameplay starts immediately - no countdown or neutral position required
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: bg }]}>
       <TouchableOpacity onPress={finish} style={styles.finishBtn} activeOpacity={0.7}>
