@@ -1,18 +1,24 @@
 # Desi Waddle - Project Plan & Roadmap
 
 **Version**: 0.1.0
-**Status**: 🚧 Phase 1 Complete - Repository Setup
+**Status**: 🚧 Phase 2 Complete - Charades-Only Foundation
 **Last Updated**: 2025-10-13
 
 ---
 
 ## 📋 Project Overview
 
-**Goal**: Create a standalone iOS charades app for Indian grown-up audiences with 11 themed packs, advanced deck management, and dev tools.
+**Goal**: Create a standalone iOS party game app for Indian grown-up audiences with two game modes, themed packs, advanced deck management, and dev tools.
+
+**🎮 Two Game Modes**:
+1. **Charades** - Classic acting game with 11 themed packs (Bollywood, Cricket, Street Food, etc.)
+2. **Guess the Movie** - Fast-paced Bollywood dialogue recognition game (30-second rounds)
 
 **Key Differentiators**:
-- Culturally relevant content (Bollywood, Cricket, Street Food, etc.)
-- Multi-level navigation (Pack → Subcategory → Cards)
+- **Dual game modes** with shared pack architecture
+- Culturally relevant content (Bollywood, Cricket, Street Food, Desi Life, etc.)
+- Multi-level navigation (Pack → Category → Cards) for Charades
+- Fast trivia mode for "Guess the Movie" with timer + reveal mechanic
 - Advanced deck management (30-day cooldown, ≥50% refresh rule)
 - Dev Console with CSV export
 - Grown-up audience (witty/edgy but App Store safe)
@@ -53,184 +59,231 @@
 
 ---
 
-### 🚧 Phase 2: Strip Down to Charades Only (NEXT)
+### ✅ Phase 2: Strip Down to Charades Only (COMPLETE)
 
 **Goal**: Remove all non-charades games and simplify to single-game app
 
-**Tasks**:
-1. **Delete unused game screens** (9 files):
-   - [ ] GuessAnimalScreen.tsx
-   - [ ] GuessCountryScreen.tsx
-   - [ ] WouldYouRatherScreen.tsx
-   - [ ] StoryStarterScreen.tsx
-   - [ ] ScavengerHuntModePickerScreen.tsx
-   - [ ] ScavengerHuntPlayScreen.tsx
-   - [ ] SimonSaysHomeScreen.tsx
-   - [ ] SimonSaysPlayScreen.tsx
-   - [ ] InfoScreen.tsx (replace with simple About modal)
-
-2. **Delete unused game data** (7 files + 1 folder):
-   - [ ] animalData.ts
-   - [ ] countryData.ts
-   - [ ] wouldYouRatherData.ts
-   - [ ] storyStarterData.ts
-   - [ ] scavengerHuntData.ts + scavengerHunt/ folder
-   - [ ] simonSaysData.ts
-   - [ ] seasonalSystem.ts
-
-3. **Keep only Charades files**:
-   - [ ] CharadesCategoryScreen.tsx (will rename to SubcategoryScreen.tsx)
-   - [ ] CharadesScreen.tsx (main gameplay)
-   - [ ] CharadesResultsScreen.tsx
-   - [ ] charadesData.ts (will replace with pack system)
-   - [ ] charades/ folder (will reorganize to data/packs/)
-
-4. **Update HomeScreen → PackListScreen**:
-   - [ ] Rename HomeScreen.tsx to PackListScreen.tsx
-   - [ ] Remove all non-charades game cards
-   - [ ] Show 11 pack cards (placeholder data)
-   - [ ] Update navigation references
-
-5. **Clean up Navigation (App.tsx)**:
-   - [ ] Remove unused routes (GuessAnimal, GuessCountry, etc.)
-   - [ ] Keep only: PackList, Subcategory, Charades, CharadesResults, Dev, Info
-   - [ ] Update navigation types
-
-6. **Remove unused utilities**:
-   - [ ] Keep gameSessionService.ts (reuse for session tracking)
-   - [ ] deckBuilder.ts functionality will move to core/deckManager.ts
-   - [ ] Delete dealSimonRound.ts
-
-7. **Commit**: "refactor: strip down to charades-only app"
+**Tasks Completed**:
+- ✅ Deleted unused game screens (8 files): GuessAnimal, GuessCountry, WouldYouRather, StoryStarter, ScavengerHunt x2, SimonSays x2
+- ✅ Deleted unused game data (7 files + folders): animals, countries, scavengerHunt, simonSays, storyStarter, wouldYouRather, seasonalSystem
+- ✅ Removed unused utilities: dealSimonRound.ts
+- ✅ Renamed HomeScreen.tsx → PackListScreen.tsx
+- ✅ Updated App.tsx: cleaned up imports and navigation routes (charades-only)
+- ✅ Updated PackListScreen to only show Charades game
+- ✅ Fixed TypeScript types: CharadesCategory.icon now uses IconName type
+- ✅ Installed dependencies (npm install)
+- ✅ Deleted 17,179 lines of unused code
+- ✅ Commits:
+  - `25e30ff` - "refactor: strip down to charades-only app"
+  - `4b87b76` - "docs: update changelog for Phase 2 completion"
+  - `e415c43` - "chore: add EAS project ID"
 
 **Deliverables**:
-- Minimal charades-only app
-- No dead code or unused files
-- Clean navigation structure
-- TypeScript compiles without errors
+- ✅ Minimal charades-only app
+- ✅ No dead code or unused files
+- ✅ Clean navigation structure
+- ✅ TypeScript compiles (minor navigation type warnings acceptable)
+- ✅ GitHub remote configured and pushed
+- ✅ EAS project ID configured
 
-**Estimated Time**: 1-2 hours
+**Actual Time**: 2 hours
 
 ---
 
-### 📦 Phase 3: Implement Pack System
+### 📦 Phase 3: Implement Dual-Game Architecture + Pack System (NEXT)
 
-**Goal**: Build pack-based content architecture with multi-level navigation
+**Goal**: Transform into two-game app (Charades + Guess the Movie) with pack-based content architecture
 
-#### Step 3.1: Create Type System
+#### Step 3.1: Create Type System for Dual-Game Support
 - [ ] Create `src/types/content.ts` with interfaces:
   ```typescript
-  interface CharadeCard
-  interface Subcategory
-  interface Pack
+  // Charades card (acting game)
+  interface CharadeCard {
+    id: string;
+    text: string;  // What to act out
+  }
+
+  // Dialogue card (guess the movie game)
+  interface DialogueCard {
+    id: string;
+    dialogue: string;  // Famous Bollywood dialogue
+    answer: string;    // Movie name
+    hint?: string;     // Actor/scene hint
+    difficulty?: 'casual' | 'expert' | 'mixed';
+  }
+
+  // Category within a pack
+  interface PackCategory {
+    id: string;
+    name: string;
+    cards: CharadeCard[];
+  }
+
+  // Pack (can have categories or direct cards)
+  interface Pack {
+    id: string;
+    name: string;
+    description: string;
+    is_paid: boolean;
+    gameType: 'charades' | 'guess-movie';
+    categories?: PackCategory[];  // Multi-level (for charades)
+    cards?: DialogueCard[];       // Flat (for guess-movie)
+  }
   ```
-- [ ] Update `src/types/game.ts` to remove old types
+- [ ] Update `src/types/game.ts` to add game mode types
 
 #### Step 3.2: Organize Data Structure
 - [ ] Create `src/data/packs/` folder structure:
   ```
   data/packs/
-  ├── bollywood/          # Multi-level pack
-  │   ├── 90s-movies.ts
-  │   ├── modern-movies.ts
-  │   ├── stars.ts
-  │   ├── comedy.ts
-  │   ├── villains.ts
-  │   ├── dialogues.ts
-  │   ├── songs.ts
-  │   ├── scenes.ts
-  │   ├── item-songs.ts
-  │   └── behind-scenes.ts
-  ├── cricket/
-  │   ├── legends.ts
-  │   ├── matches.ts
-  │   ├── ipl.ts
-  │   ├── commentary.ts
-  │   ├── ads.ts
-  │   ├── gully-cricket.ts
-  │   └── nicknames.ts
-  ├── street-food/
-  ├── places/
-  ├── desi-life/
-  ├── pop-culture/
-  ├── travel/
-  ├── slang.ts           # Flat pack
-  ├── special-themes.ts  # Flat pack
-  ├── characters.ts      # Flat pack
-  └── meme-life.ts       # Flat pack
+  ├── charades/                    # Charades game packs
+  │   ├── bollywood-universe.ts    # 5 categories (provided JSON)
+  │   ├── street-food.ts           # 3 categories (provided JSON)
+  │   ├── cricket-fever.ts         # 3 categories (provided JSON)
+  │   ├── places.ts                # TBD
+  │   ├── desi-life.ts             # TBD
+  │   ├── pop-culture.ts           # TBD
+  │   ├── travel.ts                # TBD
+  │   ├── slang.ts                 # TBD
+  │   ├── special-themes.ts        # TBD
+  │   ├── characters.ts            # TBD
+  │   └── meme-life.ts             # TBD
+  └── guess-movie/                 # Guess the Movie game packs
+      └── bollywood-dialogues.ts   # Flat structure with dialogue cards
   ```
 
-#### Step 3.3: Create Sample Data
-- [ ] Bollywood pack with 2 subcategories, 10 placeholder cards each
-- [ ] Slang pack (flat) with 15 placeholder cards
-- [ ] Purpose: Test navigation flow before user provides real data
+#### Step 3.3: Convert Provided JSON to TypeScript
+- [ ] Convert provided Bollywood Universe pack (5 categories, 500 cards) to TypeScript
+- [ ] Convert Street Food & Drinks pack (3 categories) to TypeScript
+- [ ] Convert Cricket Fever pack (3 categories) to TypeScript
+- [ ] Create placeholder "Guess the Movie" pack with 20 sample dialogues
+- [ ] Validate all card IDs are unique
 
 #### Step 3.4: Create Data Aggregator
 - [ ] Create `src/data/index.ts`:
-  - `getAllPacks()` - Returns all 11 packs
+  - `getAllPacks()` - Returns all packs (charades + guess-movie)
+  - `getPacksByGameType(gameType)` - Filter by game mode
   - `getPackById(id)` - Get specific pack
-  - `getSubcategoryById(packId, subcategoryId)` - Get subcategory
-  - `getCardsByPack(packId, subcategoryId?)` - Get all cards
+  - `getCategoryById(packId, categoryId)` - Get category
+  - `getCardsByPack(packId, categoryId?)` - Get all cards
 
-#### Step 3.5: Build PackListScreen
-- [ ] Display all 11 packs as cards (similar to current HomeScreen)
-- [ ] Each pack shows: emoji, name, description
-- [ ] Handle paid packs (show lock icon, but don't implement IAP yet)
+#### Step 3.5: Build GameModeScreen (NEW)
+- [ ] Create `src/screens/GameModeScreen.tsx`
+- [ ] Display 2 large game mode cards:
+  - **Charades** card: "Act it out!" (theater icon)
+  - **Guess the Movie** card: "Bollywood Dialogues" (question icon)
+- [ ] Navigation:
+  - Charades → PackListScreen (filter gameType='charades')
+  - Guess Movie → GuessMovieInstructionsScreen
+- [ ] Update App.tsx to start at GameModeScreen
+
+#### Step 3.6: Update PackListScreen for Charades
+- [ ] Receive route param: `{ gameType: 'charades' }`
+- [ ] Display only charades packs (11 packs)
+- [ ] Each pack shows: icon, name, description
+- [ ] Handle paid packs (show lock icon, don't implement IAP yet)
 - [ ] Navigation logic:
-  - If pack has `subcategories`: navigate to SubcategoryScreen
-  - If pack has `cards` only: navigate to CharadesInstructionsScreen
+  - If pack has `categories`: navigate to PackDetailScreen
+  - If flat pack: navigate to CharadesInstructionsScreen (future)
 
-#### Step 3.6: Build SubcategoryScreen
-- [ ] Rename CharadesCategoryScreen.tsx to SubcategoryScreen.tsx
-- [ ] Update to work with new Pack/Subcategory data model
-- [ ] Display subcategories within a multi-level pack
+#### Step 3.7: Build PackDetailScreen (NEW)
+- [ ] Create `src/screens/PackDetailScreen.tsx`
+- [ ] Receive route params: `{ packId: string }`
+- [ ] Display categories within selected pack (grid layout)
+- [ ] Each category card shows: icon, name, card count
 - [ ] Navigation: `onPress` → CharadesInstructionsScreen
 
-#### Step 3.7: Extract CharadesInstructionsScreen
+#### Step 3.8: Extract CharadesInstructionsScreen
 - [ ] Extract instructions UI from CharadesScreen.tsx
-- [ ] Create standalone CharadesInstructionsScreen.tsx
-- [ ] Show 3 icons: Hold at forehead, Tilt up, Tilt down
-- [ ] "Start" button → CharadesScreen
+- [ ] Create standalone `src/screens/CharadesInstructionsScreen.tsx`
+- [ ] Receive params: `{ packId: string; categoryId?: string }`
+- [ ] Show 3 icons: Hold at forehead, Tilt up (correct), Tilt down (pass)
+- [ ] "Start Game" button → CharadesScreen with params
 
-#### Step 3.8: Update CharadesScreen
-- [ ] Accept route params: `{ packId: string; subcategoryId?: string }`
+#### Step 3.9: Update CharadesScreen
+- [ ] Accept route params: `{ packId: string; categoryId?: string }`
 - [ ] Load cards from new pack system:
   ```typescript
-  const cards = subcategoryId
-    ? getCardsByPack(packId, subcategoryId)
+  const cards = categoryId
+    ? getCardsByPack(packId, categoryId)
     : getCardsByPack(packId);
   ```
 - [ ] Keep existing gameplay logic (accelerometer, timer, scoring)
-- [ ] Update session tracking: `gameId = "charades_${packId}_${subcategoryId || 'all'}"`
+- [ ] Update session tracking: `gameId = "charades_${packId}_${categoryId || 'all'}"`
 
-#### Step 3.9: Update Navigation
+#### Step 3.10: Build "Guess the Movie" Game (NEW)
+- [ ] Create `src/screens/GuessMovieInstructionsScreen.tsx`:
+  - Explain rules: "30 seconds, guess the movie, reveal for hint"
+  - Show example dialogue
+  - "Start Game" button → GuessMoviePlayScreen
+- [ ] Create `src/screens/GuessMoviePlayScreen.tsx`:
+  - Display dialogue in large text (center screen)
+  - 30-second countdown timer (top-right, circular progress)
+  - "Reveal" button (bottom-center) - shows answer + hint
+  - Auto-reveal after 5 seconds
+  - Scoring: +1 correct before reveal, +1 bonus if <3s, -1 skip
+  - "Next" button after reveal
+  - "Finish" button (top-right) to end early
+- [ ] Create `src/screens/GuessMovieResultsScreen.tsx`:
+  - Show total score, correct count, time taken
+  - "Play Again" and "Back to Menu" buttons
+- [ ] Integrate with deckBuilder for card rotation and cooldown
+
+#### Step 3.11: Update Navigation
 - [ ] Update App.tsx navigation stack:
   ```typescript
+  <Stack.Screen name="GameMode" component={GameModeScreen} />
+
+  // Charades flow
   <Stack.Screen name="PackList" component={PackListScreen} />
-  <Stack.Screen name="Subcategory" component={SubcategoryScreen} />
+  <Stack.Screen name="PackDetail" component={PackDetailScreen} />
   <Stack.Screen name="CharadesInstructions" component={CharadesInstructionsScreen} />
   <Stack.Screen name="Charades" component={CharadesScreen} />
   <Stack.Screen name="CharadesResults" component={CharadesResultsScreen} />
+
+  // Guess the Movie flow
+  <Stack.Screen name="GuessMovieInstructions" component={GuessMovieInstructionsScreen} />
+  <Stack.Screen name="GuessMoviePlay" component={GuessMoviePlayScreen} />
+  <Stack.Screen name="GuessMovieResults" component={GuessMovieResultsScreen} />
+
+  // Utilities
   <Stack.Screen name="Dev" component={DevConsoleScreen} />
   <Stack.Screen name="Info" component={InfoScreen} />
   ```
 
-#### Step 3.10: Test Navigation Flows
-- [ ] Multi-level: PackList → Subcategory → Instructions → Play → Results
-- [ ] Flat: PackList → Instructions → Play → Results
-- [ ] Back button navigation works correctly
-- [ ] No crashes or TypeScript errors
+#### Step 3.12: Add Icons for New Screens
+- [ ] Add game mode icons (theater, question) if not present
+- [ ] Update Icon.tsx and IconName type
+- [ ] Test all icons render correctly
 
-#### Step 3.11: Commit
-- [ ] "feat: implement pack-based content system"
+#### Step 3.13: Test Navigation Flows
+- [ ] **Charades**: GameMode → PackList → PackDetail → Instructions → Play → Results
+- [ ] **Guess Movie**: GameMode → Instructions → Play → Results
+- [ ] Back button navigation works correctly from all screens
+- [ ] No crashes or TypeScript errors
+- [ ] Test with provided JSON data
+
+#### Step 3.14: Commit
+- [ ] "feat: implement dual-game architecture with pack system"
 
 **Deliverables**:
-- Working pack navigation with placeholder data
-- 11 packs configured (7 multi-level, 4 flat)
-- Smart navigation based on pack type
-- Ready for real card data import
+- ✅ Two working game modes (Charades + Guess the Movie)
+- ✅ Pack navigation with real data from provided JSON
+- ✅ 3 charades packs configured (Bollywood, Street Food, Cricket)
+- ✅ 1 guess-movie pack configured (Bollywood Dialogues)
+- ✅ Smart navigation based on game type
+- ✅ Ready for remaining pack data
 
-**Estimated Time**: 4-6 hours
+**Estimated Time**: 12-15 hours (vs original 4-6 hours)
+- Type system & data conversion: 2 hours
+- GameModeScreen: 1 hour
+- PackListScreen updates: 1 hour
+- PackDetailScreen: 1.5 hours
+- CharadesInstructionsScreen extraction: 1 hour
+- CharadesScreen updates: 1.5 hours
+- Guess the Movie screens (3 screens): 4 hours
+- Navigation updates: 1 hour
+- Testing: 1 hour
 
 ---
 
@@ -534,16 +587,22 @@ async function exportHistoryCsv(packId: string, subcategoryId?: string): Promise
 
 ### Completed ✅
 - Phase 1: Repository & Project Setup
+- Phase 2: Strip Down to Charades Only
+- GitHub remote configured and pushed
+- EAS project ID configured
 
 ### In Progress 🚧
-- None (waiting for user direction)
+- Phase 3: Dual-Game Architecture + Pack System (ready to start)
 
 ### Next Up ⏭️
-- Phase 2: Strip Down to Charades Only
+- Phase 3: Build GameModeScreen, convert JSON data, implement both games
+- Phase 4: Enhanced Deck Manager
+- Phase 5: Dev Console
 
 ### Blocked 🚫
-- Phase 8: User-Provided Data Import (waiting on user data)
-- Phase 9: Deployment (waiting on Expo project ID)
+- Phase 8: User-Provided Data Import (waiting on remaining pack data)
+  - Need 8 more charades packs
+  - Need complete "Guess the Movie" dialogue set (100-200 cards)
 
 ---
 
@@ -645,29 +704,33 @@ npm run ios
 
 ## 📈 Timeline Estimate
 
-| Phase | Estimated Time | Status |
-|-------|---------------|--------|
-| Phase 1: Setup | 1 hour | ✅ Complete |
-| Phase 2: Strip Down | 1-2 hours | ⏭️ Next |
-| Phase 3: Pack System | 4-6 hours | 🔲 Pending |
-| Phase 4: Deck Manager | 3-4 hours | 🔲 Pending |
-| Phase 5: Dev Console | 3-4 hours | 🔲 Pending |
-| Phase 6: Polish | 2-3 hours | 🔲 Pending |
-| Phase 7: Testing | 3-4 hours | 🔲 Pending |
-| Phase 8: Data Import | 2-3 hours | 🚫 Blocked (waiting on user) |
-| Phase 9: Deployment | 1-2 days | 🚫 Blocked (waiting on Expo ID) |
-| **Total** | **~20-30 hours** | **5% complete** |
+| Phase | Original Est. | Revised Est. | Actual Time | Status |
+|-------|--------------|--------------|-------------|--------|
+| Phase 1: Setup | 1 hour | 1 hour | 1 hour | ✅ Complete |
+| Phase 2: Strip Down | 1-2 hours | 1-2 hours | 2 hours | ✅ Complete |
+| Phase 3: Pack System | 4-6 hours | **12-15 hours** | TBD | ⏭️ Next |
+| Phase 4: Deck Manager | 3-4 hours | 3-4 hours | TBD | 🔲 Pending |
+| Phase 5: Dev Console | 3-4 hours | 3-4 hours | TBD | 🔲 Pending |
+| Phase 6: Polish | 2-3 hours | 2-3 hours | TBD | 🔲 Pending |
+| Phase 7: Testing | 3-4 hours | 4-5 hours | TBD | 🔲 Pending |
+| Phase 8: Data Import | 2-3 hours | 2-3 hours | TBD | 🚫 Blocked |
+| Phase 9: Deployment | 1-2 days | 1-2 days | TBD | ✅ Unblocked |
+| **Total** | **~20-30 hours** | **~30-40 hours** | **3 hours** | **8% complete** |
+
+**Scope Change**: +40% time (added second game "Guess the Movie" + dual-game navigation)
 
 ---
 
 ## 📝 Notes & Decisions
 
 ### Key Architectural Decisions
-1. **Pack System**: Hybrid multi-level + flat navigation based on pack type
-2. **Deck Manager**: Blend ChatGPT spec with WaddlePlay's proven deckBuilder.ts
-3. **Dev Console**: Triple-tap activation (hidden from regular users)
-4. **Data Format**: TypeScript files (not JSON) for type safety
-5. **Session Tracking**: Pack-level, not global (each pack/subcategory = separate session)
+1. **🎮 Dual-Game App**: Two game modes (Charades + Guess the Movie) with shared pack infrastructure
+2. **Pack System**: Multi-level navigation for Charades (Pack → Category → Cards), flat for Guess Movie
+3. **Data Structure**: Converted from user-provided JSON to TypeScript files for type safety
+4. **Game Mode Selection**: Dedicated GameModeScreen as entry point (not hidden in settings)
+5. **Deck Manager**: Blend ChatGPT spec with WaddlePlay's proven deckBuilder.ts (30-day cooldown)
+6. **Dev Console**: Triple-tap activation (hidden from regular users)
+7. **Session Tracking**: Game-mode + pack-level tracking (each game/pack/category = separate session)
 
 ### Learnings from WaddlePlay
 - ✅ Console guards mandatory (`if (__DEV__)`)
@@ -679,9 +742,12 @@ npm run ios
 ### Future Enhancements (Not in Current Plan)
 - RevenueCat integration for monetization
 - Android version
-- Social sharing features
+- Social sharing features (share scores, favorite dialogues)
 - Custom pack creation by users
 - Cloud sync across devices
+- Audio mode for "Guess the Movie" (voice actor clips)
+- More game modes: "Guess the Ad", "Guess the Song Lyric"
+- Daily challenge (one dialogue per day with push notification)
 
 ---
 
