@@ -1,4 +1,5 @@
 // Charades game data and utilities
+import { IconName } from '../components/Icon';
 import animalsItems from './charades/animalsItems';
 import foodsItems from './charades/foodsItems';
 import placesItems from './charades/placesItems';
@@ -41,7 +42,7 @@ export type CharadesCategoryId =
 export interface CharadesCategory {
   id: CharadesCategoryId;
   name: string;
-  icon: string;
+  icon: IconName;
   description: string;
   color: string;
   items: CharadesItem[];

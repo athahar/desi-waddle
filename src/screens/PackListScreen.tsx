@@ -35,56 +35,6 @@ const FEATURE_FLAGS = {
 
 const games: GameInfo[] = [
   {
-    id: 'animal',
-    title: 'Guess the Animal',
-    icon: 'animal',
-    description: 'Clues from zoos to moos',
-    gameType: 'animalGame',
-    route: 'GuessAnimal',
-    backgroundColor: colors.pastel.cream,
-    enabled: true,
-  },
-  {
-    id: 'country',
-    title: 'Guess the Country',
-    icon: 'flag',
-    description: 'Travel the world, guess!',
-    gameType: 'countryGame',
-    route: 'GuessCountry',
-    backgroundColor: colors.pastel.lightBlue,
-    enabled: true,
-  },
-  {
-    id: 'wouldyourather',
-    title: 'Would You Rather',
-    icon: 'question',
-    description: 'Tough choices, big laughs',
-    gameType: 'wouldYouRather',
-    route: 'WouldYouRather',
-    backgroundColor: colors.pastel.lavender,
-    enabled: true,
-  },
-  {
-    id: 'storystarter',
-    title: 'Story Starter',
-    icon: 'storybook',
-    description: 'Tell tales, twist endings',
-    gameType: 'storyStarter',
-    route: 'StoryStarter',
-    backgroundColor: colors.pastel.lightPink,
-    enabled: true,
-  },
-  {
-    id: 'scavengerhunt',
-    title: 'Scavenger Hunt',
-    icon: 'search',
-    description: 'Explore, collect, conquer!',
-    gameType: 'scavengerHunt',
-    route: 'ScavengerHuntModePicker',
-    backgroundColor: colors.pastel.lightOrange,
-    enabled: true,
-  },
-  {
     id: 'charades',
     title: 'Charades',
     icon: 'theater',
@@ -94,22 +44,12 @@ const games: GameInfo[] = [
     backgroundColor: colors.pastel.lightPurple,
     enabled: true,
   },
-  {
-    id: 'simonsays',
-    title: 'Simon Says',
-    icon: 'hand',
-    description: 'Follow commands, spot tricks',
-    gameType: 'simonSays',
-    route: 'SimonSaysHome',
-    backgroundColor: colors.pastel.lightGreen,
-    enabled: FEATURE_FLAGS.SIMON_SAYS_ENABLED,
-  },
 ];
 
-function HomeScreen({ navigation }: Props) {
+function PackListScreen({ navigation }: Props) {
   useEffect(() => {
     if (__DEV__) {
-      console.log('HomeScreen rendered');
+      console.log('PackListScreen rendered');
     }
   }, []);
 
@@ -170,7 +110,7 @@ function HomeScreen({ navigation }: Props) {
 }
 
 // Memoize the component to prevent unnecessary re-renders
-export default React.memo(HomeScreen);
+export default React.memo(PackListScreen);
 
 const styles = StyleSheet.create({
   container: {

@@ -15,16 +15,8 @@ import {
 } from '@expo-google-fonts/inter';
 import { ErrorBoundary } from './src/components/ErrorBoundary';
 import { fonts } from './src/styles/fonts';
-import HomeScreen from './src/screens/HomeScreen';
-import GuessAnimalScreen from './src/screens/GuessAnimalScreen';
-import GuessCountryScreen from './src/screens/GuessCountryScreen';
-import WouldYouRatherScreen from './src/screens/WouldYouRatherScreen';
-import StoryStarterScreen from './src/screens/StoryStarterScreen';
+import PackListScreen from './src/screens/PackListScreen';
 import InfoScreen from './src/screens/InfoScreen';
-import SimonSaysHomeScreen from './src/screens/SimonSaysHomeScreen';
-import SimonSaysPlayScreen from './src/screens/SimonSaysPlayScreen';
-import ScavengerHuntModePickerScreen from './src/screens/ScavengerHuntModePickerScreen';
-import ScavengerHuntPlayScreen from './src/screens/ScavengerHuntPlayScreen';
 import CharadesCategoryScreen from './src/screens/CharadesCategoryScreen';
 import CharadesScreen from './src/screens/CharadesScreen';
 import CharadesResultsScreen from './src/screens/CharadesResultsScreen';
@@ -75,7 +67,7 @@ export default function App() {
         >
           <Stack.Screen
             name="Home"
-            component={HomeScreen}
+            component={PackListScreen}
             options={({ navigation }) => ({
               title: 'Waddle Play',
               headerTitleAlign: 'center',
@@ -99,46 +91,6 @@ export default function App() {
                 </TouchableOpacity>
               ),
             })}
-          />
-          <Stack.Screen
-            name="GuessAnimal"
-            component={GuessAnimalScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="GuessCountry"
-            component={GuessCountryScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="WouldYouRather"
-            component={WouldYouRatherScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="StoryStarter"
-            component={StoryStarterScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="SimonSaysHome"
-            component={SimonSaysHomeScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="SimonSaysPlay"
-            component={SimonSaysPlayScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="ScavengerHuntModePicker"
-            component={ScavengerHuntModePickerScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="ScavengerHuntPlay"
-            component={ScavengerHuntPlayScreen}
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="CharadesCategory"
