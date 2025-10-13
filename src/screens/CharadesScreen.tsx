@@ -209,17 +209,8 @@ export default function CharadesScreen({ route, navigation }: Props) {
     if (!gameStarted || !neutralReady) return;
 
     if (timeLeft <= 0) {
-      // Reset stack to: Home → CharadesCategory → CharadesResults (removes Play screen)
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 2,
-          routes: [
-            { name: 'Home' },
-            { name: 'CharadesCategory' },
-            { name: 'CharadesResults', params: { score, attempts } },
-          ],
-        })
-      );
+      // Navigate to results screen
+      navigation.navigate('CharadesResults', { score, attempts });
       return;
     }
     const t = setTimeout(() => setTimeLeft((tl) => tl - 1), 1000);
@@ -291,17 +282,8 @@ export default function CharadesScreen({ route, navigation }: Props) {
     setSensorsEnabled(false);
     setHapticsEnabled(false);
 
-    // Reset stack to: Home → CharadesCategory → CharadesResults (removes Play screen)
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 2,
-        routes: [
-          { name: 'Home' },
-          { name: 'CharadesCategory' },
-          { name: 'CharadesResults', params: { score, attempts } },
-        ],
-      })
-    );
+    // Navigate to results screen
+    navigation.navigate('CharadesResults', { score, attempts });
   }, [navigation, score, attempts]);
 
   if (isLoading) {
