@@ -11,7 +11,7 @@ import { NavigationProps } from '../types/game';
 import { getPackById } from '../data';
 import { isCharadesPack, CharadeCard } from '../types/content';
 import { useAccelerometer } from '../hooks/useAccelerometer';
-import { getNextItems } from '../services/gameSessionService';
+import { getNextCards, getSessionId, DeckItem } from '../core/deckManager';
 
 interface Route {
   params: {
@@ -70,9 +70,10 @@ export default function CharadesScreen({ route, navigation }: Props) {
     };
   }, [navigation]);
 
-  // Load word pool with session tracking
+  // Load word pool with enhanced deck manager (Phase 4)
   const [words, setWords] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [sessionId, setSessionId] = useState<string>('');
 
   useEffect(() => {
     const loadWords = async () => {
@@ -116,8 +117,8 @@ export default function CharadesScreen({ route, navigation }: Props) {
 
       const gameId = `charades_${packId}_${categoryId || 'all'}`;
 
-      // Convert CharadeCard[] to items with 'term' property for compatibility
-      const baseItems = cards.map(card => ({
+      // Convert CharadeCard[] to DeckItem format for enhanced deck manager
+      const deckItems: DeckItem[] = cards.map(card => ({
         id: card.id,
         term: card.text,
         category: categoryId || 'all',
@@ -125,27 +126,24 @@ export default function CharadesScreen({ route, navigation }: Props) {
         ageBands: ['all'],
       }));
 
-      // Get unused items from session
-      const unusedItems = await getNextItems(
+      // Get or create session ID
+      const currentSessionId = await getSessionId(gameId, packId, categoryId, deckItems.length);
+      setSessionId(currentSessionId);
+
+      // Get next cards using enhanced deck manager (50% refresh rule, seeded shuffle)
+      const nextCards = await getNextCards(
         gameId,
-        baseItems,
-        baseItems.length, // Get all unused items
-        (items) => {
-          // Fisher-Yates shuffle
-          const shuffled = [...items];
-          for (let i = shuffled.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-          }
-          return shuffled;
-        }
+        packId,
+        categoryId,
+        deckItems,
+        deckItems.length // Get all available cards for this session
       );
 
-      setWords(unusedItems.map((item) => item.term));
+      setWords(nextCards.map((item) => item.term));
       setIsLoading(false);
 
       if (__DEV__) {
-        console.log(`Loaded ${unusedItems.length} charades words for ${packId}/${categoryId || 'all'}`);
+        console.log(`Session ${currentSessionId}: Loaded ${nextCards.length} charades words for ${packId}/${categoryId || 'all'}`);
       }
     };
 

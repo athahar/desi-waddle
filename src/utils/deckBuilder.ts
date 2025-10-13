@@ -321,6 +321,53 @@ export async function maybeMigrateSeen(
 }
 
 /**
+ * Ensures enough unseen items remain before rebuilding a deck.
+ * - Keeps items unseen for at least 30 days.
+ * - Clears the oldest 50% if fewer than half remain unseen.
+ *
+ * This implements progressive deck refresh to prevent early repetition
+ * while maintaining session continuity across app restarts.
+ */
+export async function refreshDeckIfNeeded<T extends { id: string | number }>(
+  gameKey: string,
+  allItems: T[]
+): Promise<T[]> {
+  const seen = await loadSeenMap(gameKey);
+  const now = Date.now();
+
+  // Step 1. Determine unseen items (never seen or expired)
+  const unseen = allItems.filter(item => {
+    const seenAt = seen[String(item.id)];
+    return !seenAt || now - new Date(seenAt).getTime() > DAYS_30;
+  });
+
+  // Step 2. If less than half deck unseen → clear oldest 50%
+  const halfCount = Math.floor(allItems.length / 2);
+  if (unseen.length < halfCount) {
+    const entries = Object.entries(seen)
+      .sort(([, a], [, b]) => new Date(a).getTime() - new Date(b).getTime()); // oldest first
+    const oldestToClear = entries.slice(0, Math.floor(entries.length / 2));
+    for (const [id] of oldestToClear) {
+      delete seen[id];
+    }
+    await saveSeenMap(gameKey, seen);
+
+    if (__DEV__) {
+      console.log(
+        `[Deck Refresh] ${gameKey}: cleared ${oldestToClear.length} oldest items to restore freshness`
+      );
+    }
+  }
+
+  // Step 3. Return filtered unseen items (freshest pool)
+  const updatedSeen = await loadSeenMap(gameKey);
+  return allItems.filter(item => {
+    const seenAt = updatedSeen[String(item.id)];
+    return !seenAt || now - new Date(seenAt).getTime() > DAYS_30;
+  });
+}
+
+/**
  * Get set of unseen item IDs (respecting 30-day cooldown)
  */
 export async function getUnseenIds(
