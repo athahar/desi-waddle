@@ -37,7 +37,6 @@ function GuessMovieResultsScreen({ navigation, route }: Props) {
   const { results = [], score = 0, totalCards = 0 } = route.params || {};
 
   const correctCount = results.filter(r => r.correct).length;
-  const percentage = totalCards > 0 ? Math.round((correctCount / totalCards) * 100) : 0;
 
   const handlePlayAgain = useCallback(async () => {
     try {
@@ -52,7 +51,7 @@ function GuessMovieResultsScreen({ navigation, route }: Props) {
     navigation.navigate('GuessMovieInstructions');
   }, [navigation]);
 
-  const handleBackToMenu = useCallback(async () => {
+  const handleBackPress = useCallback(async () => {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     } catch (error) {
@@ -70,23 +69,20 @@ function GuessMovieResultsScreen({ navigation, route }: Props) {
     );
   }, [navigation]);
 
-  // Get performance message
-  const getPerformanceMessage = () => {
-    if (percentage >= 90) return 'Outstanding! 🌟';
-    if (percentage >= 75) return 'Excellent! 🎉';
-    if (percentage >= 60) return 'Great job! 👏';
-    if (percentage >= 40) return 'Good effort! 👍';
-    return 'Keep trying! 💪';
-  };
-
   return (
     <SafeAreaView style={styles.container}>
+      {/* Header with back button */}
+      <View style={styles.headerBar}>
+        <TouchableOpacity
+          onPress={handleBackPress}
+          style={styles.backButton}
+          activeOpacity={0.7}
+        >
+          <Icon name="back" size={40} />
+        </TouchableOpacity>
+      </View>
+
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={styles.header}>
-          <Icon name="star" size={80} style={styles.icon} />
-          <Text style={styles.title}>Game Over!</Text>
-          <Text style={styles.performanceText}>{getPerformanceMessage()}</Text>
-        </View>
 
         <View style={styles.scoreContainer}>
           <View style={styles.scoreBox}>
@@ -103,11 +99,6 @@ function GuessMovieResultsScreen({ navigation, route }: Props) {
             <View style={styles.statItem}>
               <Text style={styles.statValue}>{totalCards - correctCount}</Text>
               <Text style={styles.statLabel}>Skipped</Text>
-            </View>
-            <View style={styles.statDivider} />
-            <View style={styles.statItem}>
-              <Text style={styles.statValue}>{percentage}%</Text>
-              <Text style={styles.statLabel}>Accuracy</Text>
             </View>
           </View>
         </View>
@@ -147,14 +138,6 @@ function GuessMovieResultsScreen({ navigation, route }: Props) {
           >
             <Text style={styles.playAgainButtonText}>Play Again</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.button, styles.menuButton]}
-            onPress={handleBackToMenu}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.menuButtonText}>Back to Menu</Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -168,26 +151,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F8F1E9',
   },
+  headerBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  backButton: {
+    padding: 4,
+  },
   content: {
     padding: 24,
-  },
-  header: {
-    alignItems: 'center',
-    marginBottom: 32,
-  },
-  icon: {
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 36,
-    fontFamily: fonts.sansation.bold,
-    color: colors.text.primary,
-    marginBottom: 8,
-  },
-  performanceText: {
-    fontSize: 22,
-    fontFamily: fonts.inter.regular,
-    color: colors.primary.teal,
+    paddingTop: 8,
   },
   scoreContainer: {
     marginBottom: 32,
@@ -296,7 +271,7 @@ const styles = StyleSheet.create({
     color: colors.text.primary,
   },
   buttonContainer: {
-    gap: 12,
+    marginTop: 8,
   },
   button: {
     borderRadius: 10,
@@ -311,15 +286,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: fonts.sansation.bold,
     color: colors.primary.white,
-  },
-  menuButton: {
-    backgroundColor: 'transparent',
-    borderWidth: 2,
-    borderColor: colors.border.card,
-  },
-  menuButtonText: {
-    fontSize: 18,
-    fontFamily: fonts.sansation.bold,
-    color: colors.text.primary,
   },
 });
