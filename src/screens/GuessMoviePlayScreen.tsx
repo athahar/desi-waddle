@@ -109,14 +109,16 @@ function GuessMoviePlayScreen({ navigation }: Props) {
 
   // Countdown timer
   useEffect(() => {
-    if (revealed || !currentCard || isLoading) return;
+    if (!currentCard || isLoading) return;
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           // Auto-reveal when time runs out
-          setRevealed(true);
-          setRevealTime(ROUND_SECONDS);
+          if (!revealed) {
+            setRevealed(true);
+            setRevealTime(ROUND_SECONDS);
+          }
           return 0;
         }
         return prev - 1;
@@ -124,7 +126,7 @@ function GuessMoviePlayScreen({ navigation }: Props) {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [revealed, currentCard, isLoading]); // Removed currentIndex to prevent reset
+  }, [currentCard, isLoading, revealed]); // Timer continues even when revealed
 
   const handleReveal = useCallback(async () => {
     if (revealed) return;
