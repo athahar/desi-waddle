@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -15,6 +15,7 @@ import { getGuessMoviePacks } from '../data';
 import colors from '../styles/colors';
 import { fonts } from '../styles/fonts';
 import ProgressBar from '../components/ProgressBar';
+import { getNextCards, getSessionId, DeckItem } from '../core/deckManager';
 
 interface Props extends NavigationProps {}
 
@@ -31,22 +32,61 @@ const QUICK_BONUS_THRESHOLD = 3; // Bonus if revealed in <3 seconds
 function GuessMoviePlayScreen({ navigation }: Props) {
   useKeepAwake(); // Keep screen awake during gameplay
 
-  // Load dialogue cards
-  const cards = useMemo(() => {
-    const packs = getGuessMoviePacks();
-    if (packs.length === 0) return [];
+  // Load dialogue cards using deck manager
+  const [cards, setCards] = useState<DialogueCard[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [sessionId, setSessionId] = useState<string>('');
 
-    // For now, use the first pack (Bollywood Dialogues)
-    const pack = packs[0];
+  useEffect(() => {
+    const loadCards = async () => {
+      const packs = getGuessMoviePacks();
+      if (packs.length === 0) {
+        setCards([]);
+        setIsLoading(false);
+        return;
+      }
 
-    // Shuffle cards
-    const shuffled = [...pack.cards];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
+      // For now, use the first pack (Bollywood Dialogues)
+      const pack = packs[0];
+      const gameId = `guess-movie_${pack.id}`;
 
-    return shuffled;
+      // Convert DialogueCard[] to DeckItem format
+      const deckItems: DeckItem[] = pack.cards.map(card => ({
+        id: card.id,
+        term: card.dialogue,
+        category: 'dialogue',
+        difficulty: 1,
+        ageBands: ['all'],
+      }));
+
+      // Get or create session ID
+      const currentSessionId = await getSessionId(gameId, pack.id, undefined, deckItems.length);
+      setSessionId(currentSessionId);
+
+      // Get next cards using enhanced deck manager (50% refresh rule, seeded shuffle)
+      const nextCards = await getNextCards(
+        gameId,
+        pack.id,
+        undefined,
+        deckItems,
+        deckItems.length // Get all available cards for this session
+      );
+
+      // Map back to DialogueCard format
+      const loadedCards = nextCards.map(item => {
+        const originalCard = pack.cards.find(c => c.id === item.id);
+        return originalCard!;
+      }).filter(Boolean);
+
+      setCards(loadedCards);
+      setIsLoading(false);
+
+      if (__DEV__) {
+        console.log(`Session ${currentSessionId}: Loaded ${loadedCards.length} dialogue cards for ${pack.id}`);
+      }
+    };
+
+    loadCards();
   }, []);
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -60,7 +100,7 @@ function GuessMoviePlayScreen({ navigation }: Props) {
 
   // Countdown timer
   useEffect(() => {
-    if (revealed || !currentCard) return;
+    if (revealed || !currentCard || isLoading) return;
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
@@ -75,7 +115,7 @@ function GuessMoviePlayScreen({ navigation }: Props) {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [currentIndex, revealed, currentCard]);
+  }, [revealed, currentCard, isLoading]); // Removed currentIndex to prevent reset
 
   const handleReveal = useCallback(async () => {
     if (revealed) return;
@@ -185,6 +225,16 @@ function GuessMoviePlayScreen({ navigation }: Props) {
       ]
     );
   }, [results, navigateToResults]);
+
+  if (isLoading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyText}>Loading...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   if (!currentCard) {
     return (
