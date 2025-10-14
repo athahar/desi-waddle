@@ -78,10 +78,9 @@ function GuessMovieResultsScreen({ navigation, route }: Props) {
           style={styles.backButton}
           activeOpacity={0.7}
         >
-          <Icon name="back-button" size={40} />
+          <Icon name="back-button" size={48} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Results</Text>
-        <View style={styles.headerSpacer} />
       </View>
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
@@ -156,22 +155,23 @@ const styles = StyleSheet.create({
   headerBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     paddingHorizontal: 16,
     paddingVertical: 12,
+    position: 'relative',
   },
   backButton: {
-    padding: 4,
+    position: 'absolute',
+    left: 16,
+    width: 48,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerTitle: {
     fontSize: 24,
     fontFamily: fonts.sansation.bold,
     color: colors.text.primary,
-    flex: 1,
-    textAlign: 'center',
-  },
-  headerSpacer: {
-    width: 48, // Same width as back button to center title
   },
   content: {
     padding: 24,
