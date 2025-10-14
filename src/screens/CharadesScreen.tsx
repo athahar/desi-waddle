@@ -435,17 +435,21 @@ export default function CharadesScreen({ route, navigation }: Props) {
   }
 
   // Normal gameplay with word and timer
+  // Determine text color based on background
+  const textColor = bg === '#FFF9E6' ? colors.text.primary : colors.primary.white;
+  const timerColor = bg === '#FFF9E6' ? colors.text.secondary : 'rgba(255,255,255,0.9)';
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: bg }]}>
       <TouchableOpacity onPress={finish} style={styles.finishBtn} activeOpacity={0.7}>
-        <Text style={styles.finishTxt}>FINISH</Text>
+        <Text style={[styles.finishTxt, { color: textColor }]}>FINISH</Text>
       </TouchableOpacity>
 
       <View style={styles.center}>
-        <Text style={styles.word} numberOfLines={1} adjustsFontSizeToFit>
+        <Text style={[styles.word, { color: textColor }]} numberOfLines={1} adjustsFontSizeToFit>
           {word}
         </Text>
-        <Text style={styles.timer}>{formatTime(timeLeft)}</Text>
+        <Text style={[styles.timer, { color: timerColor }]}>{formatTime(timeLeft)}</Text>
       </View>
     </SafeAreaView>
   );
@@ -472,7 +476,6 @@ const styles = StyleSheet.create({
   word: {
     fontSize: 72,
     fontFamily: fonts.inter.bold,
-    color: colors.text.primary,
     textAlign: 'center',
     letterSpacing: 0.5,
   },
@@ -500,7 +503,6 @@ const styles = StyleSheet.create({
   timer: {
     fontSize: 32,
     fontFamily: fonts.inter.bold,
-    color: colors.text.secondary,
     marginTop: 24,
   },
   finishBtn: {
@@ -510,7 +512,6 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   finishTxt: {
-    color: colors.text.primary,
     fontFamily: fonts.inter.bold,
     letterSpacing: 1,
     fontSize: 16,
