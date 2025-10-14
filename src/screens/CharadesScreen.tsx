@@ -13,6 +13,7 @@ import { isCharadesPack, CharadeCard } from '../types/content';
 import { useAccelerometer } from '../hooks/useAccelerometer';
 import { getNextCards, getSessionId, DeckItem } from '../core/deckManager';
 import Icon from '../components/Icon';
+import { logEvent } from '../devlog/logger';
 
 interface Route {
   params: {
@@ -147,6 +148,15 @@ export default function CharadesScreen({ route, navigation }: Props) {
       if (__DEV__) {
         console.log(`Session ${currentSessionId}: Loaded ${nextCards.length} charades words for ${packId}/${categoryId || 'all'}`);
       }
+
+      // Log session start
+      await logEvent({
+        type: 'SESSION_START',
+        game: 'charades',
+        pack: packId,
+        category: categoryId,
+        sessionId: currentSessionId,
+      });
     };
 
     loadWords();
@@ -239,8 +249,21 @@ export default function CharadesScreen({ route, navigation }: Props) {
   }, [timeLeft, gameStarted, navigation, score, attempts, route.params]);
 
   const nextWord = useCallback(() => {
-    setIdx((i) => (i + 1) % words.length);
-  }, [words.length]);
+    const nextIndex = (idx + 1) % words.length;
+    setIdx(nextIndex);
+
+    // Log card shown
+    if (words[nextIndex]) {
+      logEvent({
+        type: 'CARD_SHOWN',
+        game: 'charades',
+        pack: packId,
+        category: categoryId,
+        sessionId,
+        cardTerm: words[nextIndex],
+      });
+    }
+  }, [idx, words, packId, categoryId, sessionId]);
 
   const markCorrect = useCallback(async () => {
     if (!hapticsEnabled) return;
@@ -253,6 +276,16 @@ export default function CharadesScreen({ route, navigation }: Props) {
       }
     }
 
+    // Log correct answer
+    await logEvent({
+      type: 'CARD_CORRECT',
+      game: 'charades',
+      pack: packId,
+      category: categoryId,
+      sessionId,
+      cardTerm: word,
+    });
+
     setBg('#2ECC40'); // green
     setScore((s) => s + 1);
     setAttempts((a) => [...a, { word, correct: true }]);
@@ -261,7 +294,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
       setBg('#2DA4EA');
       nextWord();
     }, 260);
-  }, [word, nextWord, hapticsEnabled]);
+  }, [word, nextWord, hapticsEnabled, packId, categoryId, sessionId]);
 
   const markPass = useCallback(async () => {
     if (!hapticsEnabled) return;
@@ -274,6 +307,16 @@ export default function CharadesScreen({ route, navigation }: Props) {
       }
     }
 
+    // Log passed card
+    await logEvent({
+      type: 'CARD_PASSED',
+      game: 'charades',
+      pack: packId,
+      category: categoryId,
+      sessionId,
+      cardTerm: word,
+    });
+
     setBg('#E6656A'); // red
     setAttempts((a) => [...a, { word, correct: false }]);
 
@@ -281,7 +324,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
       setBg('#2DA4EA');
       nextWord();
     }, 260);
-  }, [word, nextWord, hapticsEnabled]);
+  }, [word, nextWord, hapticsEnabled, packId, categoryId, sessionId]);
 
   // Accelerometer: down = correct, up = pass
   // No neutral position required - start immediately

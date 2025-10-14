@@ -16,6 +16,7 @@ import colors from '../styles/colors';
 import { fonts } from '../styles/fonts';
 import ProgressBar from '../components/ProgressBar';
 import { getNextCards, getSessionId, DeckItem } from '../core/deckManager';
+import { logEvent } from '../devlog/logger';
 
 interface Props extends NavigationProps {}
 
@@ -84,6 +85,14 @@ function GuessMoviePlayScreen({ navigation }: Props) {
       if (__DEV__) {
         console.log(`Session ${currentSessionId}: Loaded ${loadedCards.length} dialogue cards for ${pack.id}`);
       }
+
+      // Log session start
+      await logEvent({
+        type: 'SESSION_START',
+        game: 'guess-movie',
+        pack: pack.id,
+        sessionId: currentSessionId,
+      });
     };
 
     loadCards();
@@ -131,7 +140,16 @@ function GuessMoviePlayScreen({ navigation }: Props) {
     const elapsed = ROUND_SECONDS - timeLeft;
     setRevealTime(elapsed);
     setRevealed(true);
-  }, [revealed, timeLeft]);
+
+    // Log card shown (when revealed)
+    await logEvent({
+      type: 'CARD_SHOWN',
+      game: 'guess-movie',
+      pack: cards[currentIndex]?.id || 'unknown',
+      sessionId,
+      cardTerm: currentCard.dialogue,
+    });
+  }, [revealed, timeLeft, currentCard, currentIndex, cards, sessionId]);
 
   const handleCorrect = useCallback(async () => {
     try {
@@ -141,6 +159,15 @@ function GuessMoviePlayScreen({ navigation }: Props) {
         console.log('Haptics error (non-critical):', error);
       }
     }
+
+    // Log correct answer
+    await logEvent({
+      type: 'CARD_CORRECT',
+      game: 'guess-movie',
+      pack: cards[currentIndex]?.id || 'unknown',
+      sessionId,
+      cardTerm: currentCard.dialogue,
+    });
 
     const result: CardResult = {
       dialogue: currentCard.dialogue,
@@ -157,7 +184,7 @@ function GuessMoviePlayScreen({ navigation }: Props) {
     } else {
       nextCard();
     }
-  }, [currentCard, revealTime, results, isLastCard]);
+  }, [currentCard, revealTime, results, isLastCard, currentIndex, cards, sessionId]);
 
   const handleSkip = useCallback(async () => {
     try {
@@ -167,6 +194,15 @@ function GuessMoviePlayScreen({ navigation }: Props) {
         console.log('Haptics error (non-critical):', error);
       }
     }
+
+    // Log skipped card
+    await logEvent({
+      type: 'CARD_PASSED',
+      game: 'guess-movie',
+      pack: cards[currentIndex]?.id || 'unknown',
+      sessionId,
+      cardTerm: currentCard.dialogue,
+    });
 
     const result: CardResult = {
       dialogue: currentCard.dialogue,
@@ -183,7 +219,7 @@ function GuessMoviePlayScreen({ navigation }: Props) {
     } else {
       nextCard();
     }
-  }, [currentCard, revealTime, results, isLastCard]);
+  }, [currentCard, revealTime, results, isLastCard, currentIndex, cards, sessionId]);
 
   const nextCard = useCallback(() => {
     setCurrentIndex(currentIndex + 1);
