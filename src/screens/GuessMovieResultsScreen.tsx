@@ -78,7 +78,7 @@ function GuessMovieResultsScreen({ navigation, route }: Props) {
           style={styles.backButton}
           activeOpacity={0.7}
         >
-          <Icon name="back" size={40} />
+          <Icon name="back-button" size={40} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Results</Text>
         <View style={styles.headerSpacer} />
