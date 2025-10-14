@@ -220,13 +220,23 @@ export default function CharadesScreen({ route, navigation }: Props) {
     if (!gameStarted) return;
 
     if (timeLeft <= 0) {
-      // Navigate to results screen
-      navigation.navigate('CharadesResults', { score, attempts });
+      // Reset stack to: GameMode → PackList → PackDetail → CharadesResults (removes Charades screen)
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 3,
+          routes: [
+            { name: 'GameMode' },
+            { name: 'PackList', params: { gameMode: 'charades' } },
+            { name: 'PackDetail', params: route.params },
+            { name: 'CharadesResults', params: { score, attempts } },
+          ],
+        })
+      );
       return;
     }
     const t = setTimeout(() => setTimeLeft((tl) => tl - 1), 1000);
     return () => clearTimeout(t);
-  }, [timeLeft, gameStarted, navigation, score, attempts]);
+  }, [timeLeft, gameStarted, navigation, score, attempts, route.params]);
 
   const nextWord = useCallback(() => {
     setIdx((i) => (i + 1) % words.length);
@@ -289,9 +299,19 @@ export default function CharadesScreen({ route, navigation }: Props) {
     setSensorsEnabled(false);
     setHapticsEnabled(false);
 
-    // Navigate to results screen
-    navigation.navigate('CharadesResults', { score, attempts });
-  }, [navigation, score, attempts]);
+    // Reset stack to: GameMode → PackList → PackDetail → CharadesResults (removes Charades screen)
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 3,
+        routes: [
+          { name: 'GameMode' },
+          { name: 'PackList', params: { gameMode: 'charades' } },
+          { name: 'PackDetail', params: route.params },
+          { name: 'CharadesResults', params: { score, attempts } },
+        ],
+      })
+    );
+  }, [navigation, score, attempts, route.params]);
 
   if (isLoading) {
     return (
