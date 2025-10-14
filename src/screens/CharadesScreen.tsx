@@ -472,7 +472,7 @@ const styles = StyleSheet.create({
   word: {
     fontSize: 72,
     fontFamily: fonts.inter.bold,
-    color: colors.primary.white,
+    color: colors.text.primary,
     textAlign: 'center',
     letterSpacing: 0.5,
   },
@@ -500,7 +500,7 @@ const styles = StyleSheet.create({
   timer: {
     fontSize: 32,
     fontFamily: fonts.inter.bold,
-    color: 'rgba(255,255,255,0.9)',
+    color: colors.text.secondary,
     marginTop: 24,
   },
   finishBtn: {
@@ -510,7 +510,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   finishTxt: {
-    color: colors.primary.white,
+    color: colors.text.primary,
     fontFamily: fonts.inter.bold,
     letterSpacing: 1,
     fontSize: 16,
