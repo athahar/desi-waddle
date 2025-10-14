@@ -171,6 +171,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
   const [hapticsEnabled, setHapticsEnabled] = useState(true);
   const [countdown, setCountdown] = useState(3); // 3-second countdown
   const [gameStarted, setGameStarted] = useState(false);
+  const [gameEnded, setGameEnded] = useState(false); // Prevent re-renders after game ends
   // Pre-game phases
   const [showInstructions, setShowInstructions] = useState(false); // Will be set to true after loading
   const [isCountingDown, setIsCountingDown] = useState(false);
@@ -227,9 +228,12 @@ export default function CharadesScreen({ route, navigation }: Props) {
 
   // Game timer (runs after countdown finishes)
   useEffect(() => {
-    if (!gameStarted) return;
+    if (!gameStarted || gameEnded) return;
 
     if (timeLeft <= 0) {
+      // Mark game as ended to prevent re-renders
+      setGameEnded(true);
+
       // Reset stack to: GameMode → PackList → PackDetail → CharadesResults (removes Charades screen)
       navigation.dispatch(
         CommonActions.reset({
@@ -246,7 +250,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
     }
     const t = setTimeout(() => setTimeLeft((tl) => tl - 1), 1000);
     return () => clearTimeout(t);
-  }, [timeLeft, gameStarted, navigation, score, attempts, route.params]);
+  }, [timeLeft, gameStarted, gameEnded, navigation, score, attempts, route.params]);
 
   const nextWord = useCallback(() => {
     const nextIndex = (idx + 1) % words.length;
@@ -341,6 +345,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
     // Stop sensors and haptics immediately
     setSensorsEnabled(false);
     setHapticsEnabled(false);
+    setGameEnded(true);
 
     // Reset stack to: GameMode → PackList → PackDetail → CharadesResults (removes Charades screen)
     navigation.dispatch(
@@ -422,11 +427,13 @@ export default function CharadesScreen({ route, navigation }: Props) {
 
   // Countdown screen
   if (isCountingDown && !gameStarted) {
+    const countdownTextColor = bg === '#FFF9E6' ? colors.text.primary : colors.primary.white;
+
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: bg }]}>
         <View style={styles.center}>
-          <Text style={styles.readyTitle}>Get Ready</Text>
-          <Text style={styles.countdownText} accessibilityLiveRegion="polite">
+          <Text style={[styles.readyTitle, { color: countdownTextColor }]}>Get Ready</Text>
+          <Text style={[styles.countdownText, { color: countdownTextColor }]} accessibilityLiveRegion="polite">
             {countdown}
           </Text>
         </View>
@@ -482,14 +489,12 @@ const styles = StyleSheet.create({
   readyTitle: {
     fontSize: 24,
     fontFamily: fonts.inter.bold,
-    color: 'rgba(255,255,255,0.9)',
     marginBottom: 12,
     textAlign: 'center',
   },
   countdownText: {
     fontSize: 120,
     fontFamily: fonts.inter.bold,
-    color: colors.primary.white,
     textAlign: 'center',
     letterSpacing: 2,
   },
