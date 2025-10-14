@@ -223,7 +223,7 @@ function GuessMoviePlayScreen({ navigation }: Props) {
 
   const nextCard = useCallback(() => {
     setCurrentIndex(currentIndex + 1);
-    setTimeLeft(ROUND_SECONDS);
+    // Don't reset timer - let it continue from current time
     setRevealed(false);
     setRevealTime(null);
   }, [currentIndex]);
@@ -387,12 +387,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
-    backgroundColor: colors.border.card,
+    backgroundColor: colors.border.black,
   },
   finishButtonText: {
     fontSize: 16,
-    fontFamily: fonts.inter.regular,
-    color: colors.text.primary,
+    fontFamily: fonts.sansation.bold,
+    color: colors.primary.white,
   },
   timerContainer: {
     flex: 1,
