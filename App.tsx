@@ -1,10 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { TouchableOpacity, Text, View, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import { useFonts } from 'expo-font';
-import * as Haptics from 'expo-haptics';
 import {
   Sansation_400Regular,
   Sansation_700Bold,
@@ -54,40 +53,6 @@ export default function App() {
   }
 
   const AppContent = () => {
-    // Triple-tap activation for Dev Console
-    const [tapCount, setTapCount] = useState(0);
-    const tapTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-    const handleHeaderPress = (navigation: any) => {
-      // Only enable in development mode
-      if (!__DEV__) return;
-
-      const newTapCount = tapCount + 1;
-      setTapCount(newTapCount);
-
-      // Clear existing timeout
-      if (tapTimeoutRef.current) {
-        clearTimeout(tapTimeoutRef.current);
-      }
-
-      if (newTapCount === 3) {
-        // Triple tap detected! Navigate to Dev Console
-        try {
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        } catch (error) {
-          if (__DEV__) {
-            console.log('Haptics error (non-critical):', error);
-          }
-        }
-        navigation.navigate('DevConsole');
-        setTapCount(0);
-      } else {
-        // Reset tap count after 500ms
-        tapTimeoutRef.current = setTimeout(() => {
-          setTapCount(0);
-        }, 500);
-      }
-    };
 
     return (
     <ErrorBoundary>
@@ -133,20 +98,6 @@ export default function App() {
                 fontSize: 24,
                 marginTop: 5,
               },
-              headerTitle: () => (
-                <TouchableOpacity onPress={() => handleHeaderPress(navigation)} activeOpacity={0.8}>
-                  <Text
-                    style={{
-                      fontFamily: fonts.sansation.bold,
-                      fontSize: 24,
-                      marginTop: 5,
-                      color: '#000000',
-                    }}
-                  >
-                    Desi Waddle
-                  </Text>
-                </TouchableOpacity>
-              ),
               headerRight: () => (
                 <TouchableOpacity
                   onPress={() => navigation.navigate('Info')}

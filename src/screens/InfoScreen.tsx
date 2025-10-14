@@ -140,6 +140,24 @@ export default function InfoScreen({ navigation }: Props) {
           </TouchableOpacity>
           <Text style={styles.emailText}>kidsgameslearnandplay@gmail.com</Text>
         </View>
+
+        {/* Developer Section (only visible in __DEV__) */}
+        {__DEV__ && (
+          <View style={styles.card}>
+            <Text style={styles.devTitle}>Developer</Text>
+            <Text style={styles.devDescription}>
+              Access developer console to view deck manager sessions, event logs, and export history.
+            </Text>
+
+            <TouchableOpacity
+              style={styles.devPanelButton}
+              onPress={() => navigation.navigate('DevConsole')}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.devPanelButtonText}>Open Dev Console</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -224,5 +242,33 @@ const styles = StyleSheet.create({
     fontFamily: fonts.inter.regular,
     color: colors.text.primary,
     textAlign: 'center',
+  },
+  devTitle: {
+    fontSize: 20,
+    fontFamily: fonts.inter.bold,
+    color: colors.text.primary,
+    textAlign: 'center',
+    marginBottom: 12,
+  },
+  devDescription: {
+    fontSize: 14,
+    fontFamily: fonts.inter.regular,
+    color: colors.text.primary,
+    textAlign: 'center',
+    lineHeight: 20,
+    marginBottom: 20,
+  },
+  devPanelButton: {
+    backgroundColor: colors.border.black,
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    alignItems: 'center',
+    width: '100%',
+  },
+  devPanelButtonText: {
+    fontSize: 16,
+    fontFamily: fonts.inter.bold,
+    color: colors.primary.white,
   },
 });
