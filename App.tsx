@@ -94,7 +94,7 @@ export default function App() {
         <NavigationContainer>
         <Stack.Navigator
           initialRouteName="GameMode"
-          screenOptions={{
+          screenOptions={({ navigation }) => ({
             headerStyle: {
               backgroundColor: '#F8F1E9',
             },
@@ -104,7 +104,23 @@ export default function App() {
               fontSize: 28,
             },
             headerShadowVisible: false,
-          }}
+            headerLeft: () => (
+              navigation.canGoBack() ? (
+                <TouchableOpacity
+                  onPress={() => navigation.goBack()}
+                  style={{
+                    width: 44,
+                    height: 44,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginLeft: 8,
+                  }}
+                >
+                  <Icon name="back-button" size={40} />
+                </TouchableOpacity>
+              ) : null
+            ),
+          })}
         >
           <Stack.Screen
             name="GameMode"
