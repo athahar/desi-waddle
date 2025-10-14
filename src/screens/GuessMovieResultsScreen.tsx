@@ -7,7 +7,6 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
-import { CommonActions } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import { NavigationProps } from '../types/game';
 import colors from '../styles/colors';
@@ -60,13 +59,8 @@ function GuessMovieResultsScreen({ navigation, route }: Props) {
       }
     }
 
-    // Reset navigation to GameMode screen
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: 'GameMode' }],
-      })
-    );
+    // Navigate back to GameMode with proper back animation
+    navigation.navigate('GameMode');
   }, [navigation]);
 
   return (
