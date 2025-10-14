@@ -15,10 +15,13 @@ import { NavigationProps } from '../types/game';
 import { fonts } from '../styles/fonts';
 import colors from '../styles/colors';
 import Icon from '../components/Icon';
+import { useDevModeStore } from '../devlog/devMode';
 
 interface Props extends NavigationProps {}
 
 export default function InfoScreen({ navigation }: Props) {
+  const { togglePanel } = useDevModeStore();
+
   const handleRateApp = async () => {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -151,10 +154,10 @@ export default function InfoScreen({ navigation }: Props) {
 
             <TouchableOpacity
               style={styles.devPanelButton}
-              onPress={() => navigation.navigate('DevConsole')}
+              onPress={togglePanel}
               activeOpacity={0.8}
             >
-              <Text style={styles.devPanelButtonText}>Open Dev Console</Text>
+              <Text style={styles.devPanelButtonText}>Open Dev Panel</Text>
             </TouchableOpacity>
           </View>
         )}

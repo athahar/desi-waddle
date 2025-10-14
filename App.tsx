@@ -15,6 +15,8 @@ import {
 } from '@expo-google-fonts/inter';
 import { ErrorBoundary } from './src/components/ErrorBoundary';
 import { fonts } from './src/styles/fonts';
+import { DevPanel } from './src/devlog/DevPanel';
+import { useDevModeStore } from './src/devlog/devMode';
 import GameModeScreen from './src/screens/GameModeScreen';
 import PackListScreen from './src/screens/PackListScreen';
 import PackDetailScreen from './src/screens/PackDetailScreen';
@@ -25,7 +27,6 @@ import CharadesResultsScreen from './src/screens/CharadesResultsScreen';
 import GuessMovieInstructionsScreen from './src/screens/GuessMovieInstructionsScreen';
 import GuessMoviePlayScreen from './src/screens/GuessMoviePlayScreen';
 import GuessMovieResultsScreen from './src/screens/GuessMovieResultsScreen';
-import DevConsoleScreen from './src/screens/DevConsoleScreen';
 import Icon from './src/components/Icon';
 
 const Stack = createNativeStackNavigator();
@@ -53,6 +54,12 @@ export default function App() {
   }
 
   const AppContent = () => {
+    const { initialize } = useDevModeStore();
+
+    React.useEffect(() => {
+      // Initialize dev mode on app start
+      initialize();
+    }, [initialize]);
 
     return (
     <ErrorBoundary>
@@ -180,18 +187,11 @@ export default function App() {
               presentation: 'modal',
             }}
           />
-          <Stack.Screen
-            name="DevConsole"
-            component={DevConsoleScreen}
-            options={{
-              title: 'Developer Console',
-              headerShown: false,
-              presentation: 'modal',
-            }}
-          />
         </Stack.Navigator>
         <StatusBar style="dark" />
       </NavigationContainer>
+      {/* DevPanel overlay - renders above navigation when visible */}
+      <DevPanel />
     </ErrorBoundary>
     );
   };
