@@ -382,7 +382,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
   // Instructions screen
   if (showInstructions) {
     return (
-      <SafeAreaView style={[styles.container, { backgroundColor: '#D9EFFB' }]}>
+      <SafeAreaView style={[styles.container, { backgroundColor: '#FFF9E6' }]}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.backButton}
