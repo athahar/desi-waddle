@@ -128,6 +128,28 @@ function GuessMoviePlayScreen({ navigation }: Props) {
     return () => clearInterval(timer);
   }, [currentCard, isLoading, revealed]); // Timer continues even when revealed
 
+  // Auto-navigate to results when timer hits 0
+  useEffect(() => {
+    if (timeLeft === 0 && revealed && !isLoading) {
+      // Create a result for the current card (treated as skipped)
+      const result: CardResult = {
+        dialogue: currentCard.dialogue,
+        answer: currentCard.answer,
+        correct: false, // Treat timeout as skip
+        timeToReveal: ROUND_SECONDS,
+      };
+
+      const updatedResults = [...results, result];
+
+      // Wait 2 seconds before navigating (give user time to see the answer)
+      const timeout = setTimeout(() => {
+        navigateToResults(updatedResults);
+      }, 2000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [timeLeft, revealed, isLoading, currentCard, results, navigateToResults]);
+
   const handleReveal = useCallback(async () => {
     if (revealed) return;
 
