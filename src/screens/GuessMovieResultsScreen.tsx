@@ -194,12 +194,16 @@ const styles = StyleSheet.create({
   },
   scoreBox: {
     backgroundColor: colors.primary.teal,
-    borderRadius: 16,
+    borderRadius: 10,
     padding: 32,
     alignItems: 'center',
     marginBottom: 16,
-    borderWidth: 3,
-    borderColor: colors.border.black,
+    borderWidth: 2,
+    borderColor: colors.border.card,
+    borderLeftWidth: 6,
+    borderLeftColor: colors.border.black,
+    borderBottomWidth: 6,
+    borderBottomColor: colors.border.black,
   },
   scoreLabel: {
     fontSize: 18,
@@ -215,9 +219,11 @@ const styles = StyleSheet.create({
   statsContainer: {
     flexDirection: 'row',
     backgroundColor: colors.pastel.lightBlue,
-    borderRadius: 12,
+    borderRadius: 10,
     padding: 20,
     justifyContent: 'space-around',
+    borderWidth: 2,
+    borderColor: colors.border.card,
   },
   statItem: {
     alignItems: 'center',
@@ -254,13 +260,13 @@ const styles = StyleSheet.create({
     borderColor: colors.border.card,
   },
   resultCorrect: {
-    backgroundColor: colors.success + '20', // 20% opacity
-    borderLeftWidth: 4,
-    borderLeftColor: colors.success,
+    backgroundColor: colors.pastel.lightGreen,
+    borderLeftWidth: 6,
+    borderLeftColor: colors.border.black,
   },
   resultSkipped: {
-    backgroundColor: colors.border.card,
-    borderLeftWidth: 4,
+    backgroundColor: '#f5f5f5',
+    borderLeftWidth: 6,
     borderLeftColor: colors.text.secondary,
   },
   resultHeader: {
@@ -293,14 +299,13 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   button: {
-    borderRadius: 12,
-    paddingVertical: 18,
+    borderRadius: 10,
+    paddingVertical: 14,
     alignItems: 'center',
-    borderWidth: 3,
-    borderColor: colors.border.black,
+    width: '100%',
   },
   playAgainButton: {
-    backgroundColor: colors.primary.teal,
+    backgroundColor: colors.border.black,
   },
   playAgainButtonText: {
     fontSize: 20,
@@ -309,11 +314,12 @@ const styles = StyleSheet.create({
   },
   menuButton: {
     backgroundColor: 'transparent',
+    borderWidth: 2,
     borderColor: colors.border.card,
   },
   menuButtonText: {
     fontSize: 18,
-    fontFamily: fonts.inter.regular,
+    fontFamily: fonts.sansation.bold,
     color: colors.text.primary,
   },
 });
