@@ -166,7 +166,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
   const [attempts, setAttempts] = useState<Attempt[]>([]);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(ROUND_SECONDS);
-  const [bg, setBg] = useState('#2DA4EA'); // blue
+  const [bg, setBg] = useState('#FFF9E6'); // cream
   const [sensorsEnabled, setSensorsEnabled] = useState(false); // Disabled until countdown ends
   const [hapticsEnabled, setHapticsEnabled] = useState(true);
   const [countdown, setCountdown] = useState(3); // 3-second countdown
@@ -291,7 +291,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
     setAttempts((a) => [...a, { word, correct: true }]);
 
     setTimeout(() => {
-      setBg('#2DA4EA');
+      setBg('#FFF9E6'); // cream
       nextWord();
     }, 260);
   }, [word, nextWord, hapticsEnabled, packId, categoryId, sessionId]);
@@ -321,7 +321,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
     setAttempts((a) => [...a, { word, correct: false }]);
 
     setTimeout(() => {
-      setBg('#2DA4EA');
+      setBg('#FFF9E6'); // cream
       nextWord();
     }, 260);
   }, [word, nextWord, hapticsEnabled, packId, categoryId, sessionId]);
