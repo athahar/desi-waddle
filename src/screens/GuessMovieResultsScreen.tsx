@@ -71,7 +71,7 @@ function GuessMovieResultsScreen({ navigation, route }: Props) {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header with back button */}
+      {/* Header with back button and title */}
       <View style={styles.headerBar}>
         <TouchableOpacity
           onPress={handleBackPress}
@@ -80,6 +80,8 @@ function GuessMovieResultsScreen({ navigation, route }: Props) {
         >
           <Icon name="back" size={40} />
         </TouchableOpacity>
+        <Text style={styles.headerTitle}>Results</Text>
+        <View style={styles.headerSpacer} />
       </View>
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
@@ -154,11 +156,22 @@ const styles = StyleSheet.create({
   headerBar: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 12,
   },
   backButton: {
     padding: 4,
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontFamily: fonts.sansation.bold,
+    color: colors.text.primary,
+    flex: 1,
+    textAlign: 'center',
+  },
+  headerSpacer: {
+    width: 48, // Same width as back button to center title
   },
   content: {
     padding: 24,
