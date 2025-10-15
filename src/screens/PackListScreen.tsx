@@ -314,8 +314,8 @@ const styles = StyleSheet.create({
   cardGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    gap: 8,
+    columnGap: 8,
+    rowGap: 0,
   },
   cardCategory: {
     width: 167,
