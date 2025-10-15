@@ -216,16 +216,16 @@ function PackListScreen({ navigation }: Props) {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Circle categories row - sticky at top */}
+      <View style={styles.circleRow}>
+        {circleCategories.map(renderCircleCategory)}
+      </View>
+
       <ScrollView
         ref={scrollViewRef}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        {/* Circle categories row */}
-        <View style={styles.circleRow}>
-          {circleCategories.map(renderCircleCategory)}
-        </View>
-
         {/* Bollywood section */}
         {renderSection('bollywood', bollywoodCategories)}
 
@@ -248,13 +248,17 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 16,
+    paddingTop: 8,
     paddingBottom: 24,
   },
   circleRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 20,
+    paddingVertical: 16,
     paddingHorizontal: 8,
+    backgroundColor: '#F8F1E9',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E8DCC9',
   },
   circleCategory: {
     alignItems: 'center',
