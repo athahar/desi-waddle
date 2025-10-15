@@ -317,13 +317,13 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   cardCategory: {
-    width: 198,
+    width: 163,
     marginBottom: 16,
     alignItems: 'center',
   },
   cardImage: {
-    width: 198,
-    height: 210,
+    width: 163,
+    height: 173,
     borderRadius: 12,
   },
   cardCategoryName: {
