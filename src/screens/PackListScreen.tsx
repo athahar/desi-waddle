@@ -249,7 +249,7 @@ export default React.memo(PackListScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F1E9',
+    backgroundColor: '#F2EDD3',
   },
   content: {
     padding: 16,
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingVertical: 4,
     paddingHorizontal: 8,
-    backgroundColor: '#F8F1E9',
+    backgroundColor: '#F2EDD3',
     borderBottomWidth: 1,
     borderBottomColor: '#E8DCC9',
   },
