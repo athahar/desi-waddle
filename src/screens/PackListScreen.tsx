@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2EDD3',
   },
   content: {
-    paddingHorizontal: 4,
+    paddingHorizontal: 0,
     paddingTop: 28,
     paddingBottom: 400,
   },
@@ -316,6 +316,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     columnGap: 8,
     rowGap: 0,
+    justifyContent: 'center',
   },
   cardCategory: {
     width: 179,
