@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -121,6 +121,7 @@ const categories: CharadesCategory[] = [
 function PackListScreen({ navigation }: Props) {
   const scrollViewRef = useRef<ScrollView>(null);
   const sectionRefs = useRef<{ [key: string]: number }>({});
+  const [selectedCategory, setSelectedCategory] = useState<string>('bollywood');
 
   const handleCategoryPress = useCallback(async (category: CharadesCategory) => {
     try {
@@ -137,6 +138,7 @@ function PackListScreen({ navigation }: Props) {
 
     // If it's a circle category, scroll to that section
     if (category.type === 'circle') {
+      setSelectedCategory(category.id);
       const sectionY = sectionRefs.current[category.id];
       if (sectionY !== undefined && scrollViewRef.current) {
         scrollViewRef.current.scrollTo({ y: sectionY, animated: true });
@@ -161,6 +163,7 @@ function PackListScreen({ navigation }: Props) {
   const desiLifeCategories = categories.filter(cat => cat.parentCategory === 'desi-life');
 
   const renderCircleCategory = useCallback((category: CharadesCategory) => {
+    const isSelected = selectedCategory === category.id;
     return (
       <TouchableOpacity
         key={category.id}
@@ -174,9 +177,10 @@ function PackListScreen({ navigation }: Props) {
           resizeMode="contain"
         />
         <Text style={styles.circleCategoryName}>{category.name}</Text>
+        {isSelected && <View style={styles.selectedUnderline} />}
       </TouchableOpacity>
     );
-  }, [handleCategoryPress]);
+  }, [handleCategoryPress, selectedCategory]);
 
   const renderCardCategory = useCallback((category: CharadesCategory) => {
     return (
@@ -274,6 +278,13 @@ const styles = StyleSheet.create({
     fontFamily: fonts.inter.semiBold,
     color: colors.text.primary,
     textAlign: 'center',
+  },
+  selectedUnderline: {
+    width: 60,
+    height: 3,
+    backgroundColor: '#000000',
+    marginTop: 4,
+    borderRadius: 1.5,
   },
   cardGrid: {
     flexDirection: 'row',
