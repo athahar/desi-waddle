@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2EDD3',
   },
   content: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 4,
     paddingTop: 28,
     paddingBottom: 400,
   },
@@ -318,14 +318,14 @@ const styles = StyleSheet.create({
     rowGap: 0,
   },
   cardCategory: {
-    width: 167,
+    width: 179,
     marginBottom: 16,
     alignItems: 'center',
     overflow: 'hidden',
   },
   cardImage: {
-    width: 167,
-    height: 178,
+    width: 179,
+    height: 190,
     borderRadius: 12,
   },
   cardCategoryName: {
