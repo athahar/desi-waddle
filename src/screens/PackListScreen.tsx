@@ -315,15 +315,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    gap: 16,
   },
   cardCategory: {
-    width: '48%',
+    width: 163,
     marginBottom: 16,
     alignItems: 'center',
+    overflow: 'hidden',
   },
   cardImage: {
-    width: '100%',
-    aspectRatio: 163 / 173,
+    width: 163,
+    height: 173,
     borderRadius: 12,
   },
   cardCategoryName: {
