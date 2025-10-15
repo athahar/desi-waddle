@@ -98,7 +98,7 @@ export default function App() {
             name="GameMode"
             component={GameModeScreen}
             options={({ navigation }) => ({
-              title: 'Desi Waddle',
+              title: 'Desi Games',
               headerTitleAlign: 'center',
               headerTitleStyle: {
                 fontFamily: fonts.sansation.bold,
