@@ -293,13 +293,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   cardCategory: {
-    width: 186,
+    width: 165,
     marginBottom: 16,
     alignItems: 'center',
   },
   cardImage: {
-    width: 186,
-    height: 198,
+    width: 165,
+    height: 175,
     borderRadius: 12,
   },
   cardCategoryName: {
