@@ -69,7 +69,7 @@ function GameModeScreen({ navigation }: Props) {
         <Image
           source={mode.image}
           style={styles.modeImage}
-          resizeMode="cover"
+          resizeMode="contain"
         />
       </TouchableOpacity>
     );
@@ -104,9 +104,7 @@ const styles = StyleSheet.create({
   },
   modeCard: {
     width: '100%',
-    aspectRatio: 2.2,
-    borderRadius: 20,
-    overflow: 'hidden',
+    height: 200,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
