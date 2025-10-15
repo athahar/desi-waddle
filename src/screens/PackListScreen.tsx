@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import {
   View,
   Text,
@@ -20,6 +20,7 @@ interface CharadesCategory {
   name: string;
   image: any;
   type: 'circle' | 'card';
+  parentCategory?: 'bollywood' | 'cricket' | 'desi-life';
 }
 
 const categories: CharadesCategory[] = [
@@ -42,70 +43,85 @@ const categories: CharadesCategory[] = [
     image: require('../../assets/DesiGames/category-circle-DesiLife.png'),
     type: 'circle',
   },
-  // Card categories
+  // Bollywood card categories
   {
     id: 'bollywood-stars',
     name: 'Bollywood\nStars',
     image: require('../../assets/DesiGames/category-Bollywood-Star.png'),
     type: 'card',
+    parentCategory: 'bollywood',
   },
   {
     id: 'iconic-characters',
     name: 'Iconic\nCharacters',
     image: require('../../assets/DesiGames/category-Iconic-Characters.png'),
     type: 'card',
+    parentCategory: 'bollywood',
   },
   {
     id: 'song-dance',
     name: 'Song &\nDance',
     image: require('../../assets/DesiGames/category-Song-Dance.png'),
     type: 'card',
+    parentCategory: 'bollywood',
   },
   {
     id: 'comedians-villains',
     name: 'Comedians &\nVillains',
     image: require('../../assets/DesiGames/category-Comedians-Villains.png'),
     type: 'card',
+    parentCategory: 'bollywood',
   },
+  // Cricket card categories
   {
     id: 'cricket-players',
     name: 'Cricket\nPlayers',
     image: require('../../assets/DesiGames/category-Cricket-Players.png'),
     type: 'card',
+    parentCategory: 'cricket',
   },
   {
     id: 'famous-matches',
     name: 'Famous\nMatches',
     image: require('../../assets/DesiGames/category-Cricket-Matches.png'),
     type: 'card',
+    parentCategory: 'cricket',
   },
+  // Desi Life card categories
   {
     id: 'ads-moments',
     name: 'Ads &\nMoments',
     image: require('../../assets/DesiGames/category-Ads-Moments.png'),
     type: 'card',
+    parentCategory: 'desi-life',
   },
   {
     id: 'desi-street-food',
     name: 'Desi Street\nFood',
     image: require('../../assets/DesiGames/category-Desi-Street-Food.png'),
     type: 'card',
+    parentCategory: 'desi-life',
   },
   {
     id: 'indian-landmarks',
     name: 'Indian\nLandmarks',
     image: require('../../assets/DesiGames/category-Landmarks.png'),
     type: 'card',
+    parentCategory: 'desi-life',
   },
   {
     id: 'indian-brands',
     name: 'Indian\nBrands',
     image: require('../../assets/DesiGames/category-Brands.png'),
     type: 'card',
+    parentCategory: 'desi-life',
   },
 ];
 
 function PackListScreen({ navigation }: Props) {
+  const scrollViewRef = useRef<ScrollView>(null);
+  const sectionRefs = useRef<{ [key: string]: number }>({});
+
   const handleCategoryPress = useCallback(async (category: CharadesCategory) => {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -119,15 +135,30 @@ function PackListScreen({ navigation }: Props) {
       console.log(`Category selected: ${category.name}`);
     }
 
-    // Navigate directly to Charades game with the selected category
-    navigation.navigate('CharadesCategory', {
-      categoryId: category.id,
-      categoryName: category.name.replace('\n', ' '),
-    });
+    // If it's a circle category, scroll to that section
+    if (category.type === 'circle') {
+      const sectionY = sectionRefs.current[category.id];
+      if (sectionY !== undefined && scrollViewRef.current) {
+        scrollViewRef.current.scrollTo({ y: sectionY, animated: true });
+      }
+    } else {
+      // If it's a card category, navigate to Charades game
+      navigation.navigate('CharadesCategory', {
+        categoryId: category.id,
+        categoryName: category.name.replace('\n', ' '),
+      });
+    }
   }, [navigation]);
 
+  const handleSectionLayout = useCallback((sectionId: string, event: any) => {
+    const { y } = event.nativeEvent.layout;
+    sectionRefs.current[sectionId] = y - 100; // Offset for header and spacing
+  }, []);
+
   const circleCategories = categories.filter(cat => cat.type === 'circle');
-  const cardCategories = categories.filter(cat => cat.type === 'card');
+  const bollywoodCategories = categories.filter(cat => cat.parentCategory === 'bollywood');
+  const cricketCategories = categories.filter(cat => cat.parentCategory === 'cricket');
+  const desiLifeCategories = categories.filter(cat => cat.parentCategory === 'desi-life');
 
   const renderCircleCategory = useCallback((category: CharadesCategory) => {
     return (
@@ -165,9 +196,28 @@ function PackListScreen({ navigation }: Props) {
     );
   }, [handleCategoryPress]);
 
+  const renderSection = useCallback((
+    sectionId: string,
+    sectionCategories: CharadesCategory[]
+  ) => {
+    if (sectionCategories.length === 0) return null;
+
+    return (
+      <View
+        key={sectionId}
+        onLayout={(event) => handleSectionLayout(sectionId, event)}
+      >
+        <View style={styles.cardGrid}>
+          {sectionCategories.map(renderCardCategory)}
+        </View>
+      </View>
+    );
+  }, [handleSectionLayout, renderCardCategory]);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
+        ref={scrollViewRef}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
@@ -176,10 +226,14 @@ function PackListScreen({ navigation }: Props) {
           {circleCategories.map(renderCircleCategory)}
         </View>
 
-        {/* Card categories grid */}
-        <View style={styles.cardGrid}>
-          {cardCategories.map(renderCardCategory)}
-        </View>
+        {/* Bollywood section */}
+        {renderSection('bollywood', bollywoodCategories)}
+
+        {/* Cricket section */}
+        {renderSection('cricket', cricketCategories)}
+
+        {/* Desi Life section */}
+        {renderSection('desi-life', desiLifeCategories)}
       </ScrollView>
     </SafeAreaView>
   );
