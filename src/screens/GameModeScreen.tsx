@@ -69,7 +69,7 @@ function GameModeScreen({ navigation }: Props) {
         <Image
           source={mode.image}
           style={styles.modeImage}
-          resizeMode="contain"
+          resizeMode="cover"
         />
       </TouchableOpacity>
     );
