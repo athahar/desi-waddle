@@ -122,6 +122,7 @@ function PackListScreen({ navigation }: Props) {
   const scrollViewRef = useRef<ScrollView>(null);
   const sectionRefs = useRef<{ [key: string]: number }>({});
   const [selectedCategory, setSelectedCategory] = useState<string>('bollywood');
+  const isUserScrolling = useRef<boolean>(true);
 
   const handleCategoryPress = useCallback(async (category: CharadesCategory) => {
     try {
@@ -138,11 +139,16 @@ function PackListScreen({ navigation }: Props) {
 
     // If it's a circle category, scroll to that section
     if (category.type === 'circle') {
+      isUserScrolling.current = false;
       setSelectedCategory(category.id);
       const sectionY = sectionRefs.current[category.id];
       if (sectionY !== undefined && scrollViewRef.current) {
         scrollViewRef.current.scrollTo({ y: sectionY, animated: true });
       }
+      // Re-enable user scroll tracking after animation completes
+      setTimeout(() => {
+        isUserScrolling.current = true;
+      }, 500);
     } else {
       // If it's a card category, navigate to Charades game
       navigation.navigate('CharadesCategory', {
@@ -156,6 +162,22 @@ function PackListScreen({ navigation }: Props) {
     const { y } = event.nativeEvent.layout;
     // Subtract a small offset to hide previous section margins
     sectionRefs.current[sectionId] = Math.max(0, y - 20);
+  }, []);
+
+  const handleScroll = useCallback((event: any) => {
+    if (!isUserScrolling.current) return;
+
+    const scrollY = event.nativeEvent.contentOffset.y;
+    const sections = sectionRefs.current;
+
+    // Determine which section is currently visible based on scroll position
+    if (scrollY < sections['cricket'] - 50) {
+      setSelectedCategory('bollywood');
+    } else if (scrollY >= sections['cricket'] - 50 && scrollY < sections['desi-life'] - 50) {
+      setSelectedCategory('cricket');
+    } else if (scrollY >= sections['desi-life'] - 50) {
+      setSelectedCategory('desi-life');
+    }
   }, []);
 
   const circleCategories = categories.filter(cat => cat.type === 'circle');
@@ -230,6 +252,8 @@ function PackListScreen({ navigation }: Props) {
         ref={scrollViewRef}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
       >
         {/* Bollywood section */}
         {renderSection('bollywood', bollywoodCategories)}
