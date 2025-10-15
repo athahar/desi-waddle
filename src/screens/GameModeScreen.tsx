@@ -116,7 +116,6 @@ const styles = StyleSheet.create({
   },
   modeImage: {
     width: '100%',
-    height: undefined,
-    aspectRatio: undefined,
+    height: 200,
   },
 });
