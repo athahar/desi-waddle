@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, View, ActivityIndicator, Image } from 'react-native';
 import { useFonts } from 'expo-font';
 import {
   Sansation_400Regular,
@@ -88,7 +88,11 @@ export default function App() {
                     marginLeft: 8,
                   }}
                 >
-                  <Icon name="back-button" size={40} />
+                  <Image
+                    source={require('./assets/DesiGames/icon-Back.png')}
+                    style={{ width: 40, height: 40 }}
+                    resizeMode="contain"
+                  />
                 </TouchableOpacity>
               ) : null
             ),
