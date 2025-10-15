@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
   circleImage: {
     width: 70,
     height: 70,
-    marginBottom: 8,
+    marginBottom: 3,
   },
   circleCategoryName: {
     fontSize: 14,
