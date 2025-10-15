@@ -163,6 +163,8 @@
   - `guess-the-movie.md` - Guess the Movie game specification
 - `/docs/design/` - Design docs, architecture, future features
   - `future-games.md` - Ideas for future game modes
+- `/docs/architecture/` - System architecture and technical design docs
+  - `deck-shuffling-system.md` - Comprehensive deck management architecture (seeded PRNG, 30-day cooldown, 50% refresh rule)
 - `/docs/deploy/` - Deployment guides, build processes
 - `/docs/analytics/` - Analytics requirements, tracking plans
 - `/docs/marketing/` - Marketing materials, app store content
