@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
   content: {
     padding: 16,
     paddingTop: 28,
-    paddingBottom: 24,
+    paddingBottom: 400,
   },
   circleRow: {
     flexDirection: 'row',
