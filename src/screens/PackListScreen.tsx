@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback } from 'react';
 import {
   View,
   Text,
@@ -7,35 +6,107 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
-  Alert,
+  Image,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { NavigationProps } from '../types/game';
-import { Pack, GameType } from '../types/content';
-import { getPacksByGameType } from '../data';
 import colors from '../styles/colors';
 import { fonts } from '../styles/fonts';
-import Icon, { IconName } from '../components/Icon';
 
 interface Props extends NavigationProps {}
 
-function PackListScreen({ navigation, route }: Props) {
-  // Get game type from route params (default to 'charades')
-  const gameType = route?.params?.gameType || 'charades';
+interface CharadesCategory {
+  id: string;
+  name: string;
+  image: any;
+  type: 'circle' | 'card';
+}
 
-  // Get packs for this game type
-  const packs = useMemo(() => {
-    return getPacksByGameType(gameType as GameType);
-  }, [gameType]);
+const categories: CharadesCategory[] = [
+  // Top row - circular icons
+  {
+    id: 'bollywood',
+    name: 'Bollywood',
+    image: require('../../assets/DesiGames/category-circle-Bollywood.png'),
+    type: 'circle',
+  },
+  {
+    id: 'cricket',
+    name: 'Cricket',
+    image: require('../../assets/DesiGames/category-circle-Cricket.png'),
+    type: 'circle',
+  },
+  {
+    id: 'desi-life',
+    name: 'Desi Life',
+    image: require('../../assets/DesiGames/category-circle-DesiLife.png'),
+    type: 'circle',
+  },
+  // Card categories
+  {
+    id: 'bollywood-stars',
+    name: 'Bollywood\nStars',
+    image: require('../../assets/DesiGames/category-Bollywood-Star.png'),
+    type: 'card',
+  },
+  {
+    id: 'iconic-characters',
+    name: 'Iconic\nCharacters',
+    image: require('../../assets/DesiGames/category-Iconic-Characters.png'),
+    type: 'card',
+  },
+  {
+    id: 'song-dance',
+    name: 'Song &\nDance',
+    image: require('../../assets/DesiGames/category-Song-Dance.png'),
+    type: 'card',
+  },
+  {
+    id: 'comedians-villains',
+    name: 'Comedians &\nVillains',
+    image: require('../../assets/DesiGames/category-Comedians-Villains.png'),
+    type: 'card',
+  },
+  {
+    id: 'cricket-players',
+    name: 'Cricket\nPlayers',
+    image: require('../../assets/DesiGames/category-Cricket-Players.png'),
+    type: 'card',
+  },
+  {
+    id: 'famous-matches',
+    name: 'Famous\nMatches',
+    image: require('../../assets/DesiGames/category-Cricket-Matches.png'),
+    type: 'card',
+  },
+  {
+    id: 'ads-moments',
+    name: 'Ads &\nMoments',
+    image: require('../../assets/DesiGames/category-Ads-Moments.png'),
+    type: 'card',
+  },
+  {
+    id: 'desi-street-food',
+    name: 'Desi Street\nFood',
+    image: require('../../assets/DesiGames/category-Desi-Street-Food.png'),
+    type: 'card',
+  },
+  {
+    id: 'indian-landmarks',
+    name: 'Indian\nLandmarks',
+    image: require('../../assets/DesiGames/category-Landmarks.png'),
+    type: 'card',
+  },
+  {
+    id: 'indian-brands',
+    name: 'Indian\nBrands',
+    image: require('../../assets/DesiGames/category-Brands.png'),
+    type: 'card',
+  },
+];
 
-  useEffect(() => {
-    if (__DEV__) {
-      console.log('PackListScreen rendered for gameType:', gameType);
-      console.log('Loaded packs:', packs.length);
-    }
-  }, [gameType, packs]);
-
-  const handlePackPress = useCallback(async (pack: Pack) => {
+function PackListScreen({ navigation }: Props) {
+  const handleCategoryPress = useCallback(async (category: CharadesCategory) => {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     } catch (error) {
@@ -45,58 +116,75 @@ function PackListScreen({ navigation, route }: Props) {
     }
 
     if (__DEV__) {
-      console.log(`Pack selected: ${pack.name}`);
+      console.log(`Category selected: ${category.name}`);
     }
 
-    // For charades packs, navigate to PackDetail
-    // For guess-movie packs, navigate directly to instructions
-    if (pack.gameType === 'charades') {
-      navigation.navigate('PackDetail', { packId: pack.id });
-    } else {
-      navigation.navigate('GuessMovieInstructions');
-    }
+    // Navigate directly to Charades game with the selected category
+    navigation.navigate('CharadesCategory', {
+      categoryId: category.id,
+      categoryName: category.name.replace('\n', ' '),
+    });
   }, [navigation]);
 
-  const renderPackCard = useCallback((pack: Pack) => {
+  const circleCategories = categories.filter(cat => cat.type === 'circle');
+  const cardCategories = categories.filter(cat => cat.type === 'card');
+
+  const renderCircleCategory = useCallback((category: CharadesCategory) => {
     return (
       <TouchableOpacity
-        key={pack.id}
-        style={styles.packCard}
-        onPress={() => handlePackPress(pack)}
+        key={category.id}
+        style={styles.circleCategory}
+        onPress={() => handleCategoryPress(category)}
         activeOpacity={0.7}
       >
-        <Icon name={pack.icon || 'theater'} size={56} style={styles.packIcon} />
-        <View style={styles.packInfo}>
-          <View style={styles.packTitleContainer}>
-            <Text style={styles.packTitle}>{pack.name}</Text>
-            {pack.is_paid && (
-              <Text style={styles.lockIcon}>🔒</Text>
-            )}
-          </View>
-          <Text style={styles.packDescription}>{pack.description}</Text>
-        </View>
+        <Image
+          source={category.image}
+          style={styles.circleImage}
+          resizeMode="contain"
+        />
+        <Text style={styles.circleCategoryName}>{category.name}</Text>
       </TouchableOpacity>
     );
-  }, [handlePackPress]);
+  }, [handleCategoryPress]);
+
+  const renderCardCategory = useCallback((category: CharadesCategory) => {
+    return (
+      <TouchableOpacity
+        key={category.id}
+        style={styles.cardCategory}
+        onPress={() => handleCategoryPress(category)}
+        activeOpacity={0.7}
+      >
+        <Image
+          source={category.image}
+          style={styles.cardImage}
+          resizeMode="cover"
+        />
+        <Text style={styles.cardCategoryName}>{category.name}</Text>
+      </TouchableOpacity>
+    );
+  }, [handleCategoryPress]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>
-            {gameType === 'charades' ? 'Choose a Pack' : 'Bollywood Dialogues'}
-          </Text>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Circle categories row */}
+        <View style={styles.circleRow}>
+          {circleCategories.map(renderCircleCategory)}
         </View>
 
-        <View style={styles.packsContainer}>
-          {packs.map(renderPackCard)}
+        {/* Card categories grid */}
+        <View style={styles.cardGrid}>
+          {cardCategories.map(renderCardCategory)}
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
-// Memoize the component to prevent unnecessary re-renders
 export default React.memo(PackListScreen);
 
 const styles = StyleSheet.create({
@@ -106,59 +194,60 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 16,
+    paddingBottom: 24,
   },
-  header: {
+  circleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 20,
+    paddingHorizontal: 8,
+  },
+  circleCategory: {
     alignItems: 'center',
-    marginBottom: 24,
-    marginTop: 8,
+    width: 90,
   },
-  headerTitle: {
-    fontSize: 26,
+  circleImage: {
+    width: 70,
+    height: 70,
+    marginBottom: 8,
+  },
+  circleCategoryName: {
+    fontSize: 14,
+    fontFamily: fonts.inter.semiBold,
+    color: colors.text.primary,
+    textAlign: 'center',
+  },
+  cardGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  cardCategory: {
+    width: '48%',
+    marginBottom: 16,
+    borderRadius: 12,
+    overflow: 'hidden',
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  cardImage: {
+    width: '100%',
+    height: 140,
+  },
+  cardCategoryName: {
+    fontSize: 15,
     fontFamily: fonts.sansation.bold,
     color: colors.text.primary,
-  },
-  packsContainer: {
-    flex: 1,
-  },
-  packCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 10,
-    padding: 16,
-    marginBottom: 17,
-    backgroundColor: 'transparent',
-    borderWidth: 2,
-    borderColor: colors.border.card,
-    borderLeftWidth: 6, // Accent bar
-    borderLeftColor: colors.border.black,
-    borderBottomWidth: 6, // Bottom accent bar
-    borderBottomColor: colors.border.black,
-  },
-  packIcon: {
-    marginRight: 16,
-  },
-  packInfo: {
-    flex: 1,
-  },
-  packTitleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 4,
-  },
-  packTitle: {
-    fontSize: 20,
-    fontFamily: fonts.sansation.bold,
-    color: colors.text.primary,
-    flex: 1,
-  },
-  lockIcon: {
-    fontSize: 16,
-    marginLeft: 8,
-  },
-  packDescription: {
-    fontSize: 16,
-    fontFamily: fonts.inter.regular,
-    color: colors.text.secondary,
-    lineHeight: 22,
+    textAlign: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    lineHeight: 20,
   },
 });
