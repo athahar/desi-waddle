@@ -158,7 +158,7 @@ function PackListScreen({ navigation }: Props) {
         <Image
           source={category.image}
           style={styles.cardImage}
-          resizeMode="cover"
+          resizeMode="contain"
         />
         <Text style={styles.cardCategoryName}>{category.name}</Text>
       </TouchableOpacity>
@@ -225,21 +225,12 @@ const styles = StyleSheet.create({
   cardCategory: {
     width: '48%',
     marginBottom: 16,
-    borderRadius: 12,
-    overflow: 'hidden',
-    backgroundColor: '#fff',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    alignItems: 'center',
   },
   cardImage: {
     width: '100%',
     height: 140,
+    borderRadius: 12,
   },
   cardCategoryName: {
     fontSize: 15,
