@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   modeCard: {
     width: '100%',
-    height: 200,
+    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
   },
   modeImage: {
     width: '100%',
-    height: '100%',
+    height: undefined,
+    aspectRatio: undefined,
   },
 });
