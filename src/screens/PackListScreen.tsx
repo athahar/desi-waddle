@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.sansation.bold,
     color: colors.text.primary,
     textAlign: 'center',
-    paddingVertical: 12,
+    paddingVertical: 6,
     paddingHorizontal: 8,
     lineHeight: 20,
   },
