@@ -31,7 +31,7 @@ const gameModes: GameMode[] = [
   {
     id: 'guess-movie',
     title: 'Guess the Movie',
-    image: require('../../assets/DesiGames/main-Guess the Movie.png'),
+    image: require('../../assets/DesiGames/main-Guess-the-Movie.png'),
     route: 'GuessMovieInstructions',
   },
 ];
