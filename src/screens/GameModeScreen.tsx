@@ -78,10 +78,6 @@ function GameModeScreen({ navigation }: Props) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Desi Party Games</Text>
-        </View>
-
         <View style={styles.modesContainer}>
           {gameModes.map(renderGameModeCard)}
         </View>
@@ -99,21 +95,12 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 40,
+    paddingHorizontal: 16,
+    paddingTop: 20,
     justifyContent: 'flex-start',
   },
-  header: {
-    alignItems: 'center',
-    marginBottom: 40,
-  },
-  title: {
-    fontSize: 24,
-    fontFamily: fonts.sansation.bold,
-    color: colors.text.primary,
-  },
   modesContainer: {
-    gap: 32,
+    gap: 28,
   },
   modeCard: {
     width: '100%',
