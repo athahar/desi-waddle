@@ -25,13 +25,13 @@ const gameModes: GameMode[] = [
   {
     id: 'charades',
     title: 'Desi Charades',
-    image: require('../../assets/DesiGames/main-charades.png'),
+    image: require('../../assets/main-desi-charades.png'),
     route: 'PackList',
   },
   {
     id: 'guess-movie',
     title: 'Guess the Movie',
-    image: require('../../assets/DesiGames/main-guess-movie.png'),
+    image: require('../../assets/main-guess-the-movie.png'),
     route: 'GuessMovieInstructions',
   },
 ];
