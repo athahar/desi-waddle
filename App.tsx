@@ -68,7 +68,7 @@ export default function App() {
           initialRouteName="GameMode"
           screenOptions={({ navigation }) => ({
             headerStyle: {
-              backgroundColor: '#F8F1E9',
+              backgroundColor: '#F2EDD3',
             },
             headerTintColor: '#000000',
             headerTitleStyle: {
