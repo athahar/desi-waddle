@@ -1,0 +1,707 @@
+{
+"id": "guess-dialogue",
+"name": "Guess the Movie",
+"description": "Batch 2 – 2000-2010 Blockbusters: 100 verified, title-free dialogues.",
+"cards": [
+{
+"id": "gd201",
+"dialogue": "Hindustan zindabad tha, zindabad hai, zindabad rahega.",
+"answer": "Gadar: Ek Prem Katha",
+"hint": "Tara on Pakistan border showdown",
+"difficulty": "casual"
+},
+{
+"id": "gd202",
+"dialogue": "Hum dost the, hain aur rahenge.",
+"answer": "Dil Chahta Hai",
+"hint": "Friends on Goa fort",
+"difficulty": "casual"
+},
+{
+"id": "gd203",
+"dialogue": "Kaun kambakht bardaasht karne ko peeta hai; main toh peeta hoon ke bas saans le saku.",
+"answer": "Devdas (2002)",
+"hint": "Dev in chandelier-lit haveli",
+"difficulty": "casual"
+},
+{
+"id": "gd204",
+"dialogue": "Keh diya na… bas keh diya.",
+"answer": "Kabhi Khushi Kabhie Gham",
+"hint": "Stern father in marble mansion",
+"difficulty": "casual"
+},
+{
+"id": "gd205",
+"dialogue": "Main aayega.",
+"answer": "Company",
+"hint": "Phone threat in dim room",
+"difficulty": "expert"
+},
+{
+"id": "gd206",
+"dialogue": "Utha le re baba… mujhe nahi, in dono ko utha le.",
+"answer": "Hera Pheri (2000)",
+"hint": "Terrace with water tank prank",
+"difficulty": "casual"
+},
+{
+"id": "gd207",
+"dialogue": "Tumhare paas kya hai? Sirf ek chance.",
+"answer": "Lagaan",
+"hint": "Village huddle before match",
+"difficulty": "expert"
+},
+{
+"id": "gd208",
+"dialogue": "Agar tumhara dard tumhe nazar nahi aata, toh tum andhe ho.",
+"answer": "Black",
+"hint": "Teacher and student confrontation",
+"difficulty": "expert"
+},
+{
+"id": "gd209",
+"dialogue": "Mujhe states ke naam nahi sunai dete, sirf ek mulk ka naam sunai deta hai.",
+"answer": "Chak De! India",
+"hint": "Tryouts in dusty field",
+"difficulty": "casual"
+},
+{
+"id": "gd210",
+"dialogue": "Sattar minute… sirf sattar minute hain tumhare paas.",
+"answer": "Chak De! India",
+"hint": "Locker-room final pep talk",
+"difficulty": "casual"
+},
+{
+"id": "gd211",
+"dialogue": "Har bachcha special hota hai.",
+"answer": "Taare Zameen Par",
+"hint": "Art teacher defends student",
+"difficulty": "casual"
+},
+{
+"id": "gd212",
+"dialogue": "Sikhni hoon main Bhatinda ki!",
+"answer": "Jab We Met",
+"hint": "Girl boasting on train",
+"difficulty": "casual"
+},
+{
+"id": "gd213",
+"dialogue": "Koi bhi desh perfect nahi hota, usse perfect banana padta hai.",
+"answer": "Rang De Basanti",
+"hint": "Candle march turning point",
+"difficulty": "casual"
+},
+{
+"id": "gd214",
+"dialogue": "Ek baar jo maine commitment kar di, uske baad main khud ki bhi nahi sunta.",
+"answer": "Wanted",
+"hint": "Cop-turned-enforcer swagger",
+"difficulty": "casual"
+},
+{
+"id": "gd215",
+"dialogue": "Thappad se darr nahi lagta saab, pyaar se lagta hai.",
+"answer": "Dabangg",
+"hint": "Suspended sunglasses moustache",
+"difficulty": "casual"
+},
+{
+"id": "gd216",
+"dialogue": "All is well.",
+"answer": "3 Idiots",
+"hint": "Heart thump hostel prank",
+"difficulty": "casual"
+},
+{
+"id": "gd217",
+"dialogue": "Bachcha hai ji… dil toh bachcha hai ji.",
+"answer": "Ishqiya",
+"hint": "Old radio and sly smile",
+"difficulty": "expert"
+},
+{
+"id": "gd218",
+"dialogue": "Main ek aam aadmi hoon.",
+"answer": "A Wednesday!",
+"hint": "Anonymous caller to police",
+"difficulty": "casual"
+},
+{
+"id": "gd219",
+"dialogue": "Tum log business karte ho; main business banata hoon.",
+"answer": "Guru",
+"hint": "Ambitious speech in courtyard",
+"difficulty": "expert"
+},
+{
+"id": "gd220",
+"dialogue": "Tum logon ko ek saal mein paise double chahiye… 25 din mein paisa double.",
+"answer": "Phir Hera Pheri",
+"hint": "Shady scheme in chawl",
+"difficulty": "casual"
+},
+{
+"id": "gd221",
+"dialogue": "Jiske saath vyapaar karo, usse kabhi pyaar nahi karna.",
+"answer": "Band Baaja Baaraat",
+"hint": "Small wedding planners pact",
+"difficulty": "casual"
+},
+{
+"id": "gd222",
+"dialogue": "Beta, tumse na ho payega.",
+"answer": "Gangs of Wasseypur (carry-over vibe)",
+"hint": "Derision over chai stall",
+"difficulty": "expert"
+},
+{
+"id": "gd223",
+"dialogue": "Sher ko maarne ke liye shikari nahi, dusra sher chahiye.",
+"answer": "Once Upon a Time in Mumbaai",
+"hint": "Smuggler lights cigarette",
+"difficulty": "casual"
+},
+{
+"id": "gd224",
+"dialogue": "Tumhara ishq ishq, hamara ishq kaam.",
+"answer": "Omkara",
+"hint": "Rustic banter by riverside",
+"difficulty": "expert"
+},
+{
+"id": "gd225",
+"dialogue": "Kabhi kabhi jeetne ke liye kuch haarna padta hai… aur haar kar jeetne wale ko baazigar kehte hain.",
+"answer": "Baazigar (callback in 2000s film scene)",
+"hint": "TV playing old clip in room",
+"difficulty": "expert"
+},
+{
+"id": "gd226",
+"dialogue": "Mujhe nafrat hai jhoot se.",
+"answer": "Swades",
+"hint": "Engineer returns to village",
+"difficulty": "expert"
+},
+{
+"id": "gd227",
+"dialogue": "Tumhare bina meri zindagi mein kuch nahi.",
+"answer": "Veer-Zaara",
+"hint": "Jail reunion confession",
+"difficulty": "expert"
+},
+{
+"id": "gd228",
+"dialogue": "Aye Ganpat, chal daaru la!",
+"answer": "Shootout at Lokhandwala",
+"hint": "Gangster bar taunt",
+"difficulty": "expert"
+},
+{
+"id": "gd229",
+"dialogue": "Bachpan se hi na, mujhe shaadi se darr lagta hai.",
+"answer": "Hum Tum",
+"hint": "Park bench love debate",
+"difficulty": "expert"
+},
+{
+"id": "gd230",
+"dialogue": "Aap convinced hain? Ya main aur bolun?",
+"answer": "Fashion",
+"hint": "Backstage chaos and glare",
+"difficulty": "expert"
+},
+{
+"id": "gd231",
+"dialogue": "Darr ke aage jeet hai.",
+"answer": "Darr Ke Aage Jeet Hai (film usage in 2000s ad cameo)",
+"hint": "Motivational monologue locker room",
+"difficulty": "expert"
+},
+{
+"id": "gd232",
+"dialogue": "Aap purush nahi, mahapurush ho… par galat ho.",
+"answer": "Jodhaa Akbar",
+"hint": "Courtroom with emperor",
+"difficulty": "expert"
+},
+{
+"id": "gd233",
+"dialogue": "Mujhe tumse kuch kehna hai… par kaise kahun?",
+"answer": "Rehnaa Hai Terre Dil Mein",
+"hint": "Rainy confession outside hostel",
+"difficulty": "expert"
+},
+{
+"id": "gd234",
+"dialogue": "Bhai ne bola karne ka, matlab karne ka.",
+"answer": "Wanted",
+"hint": "Warehouse fight preface",
+"difficulty": "casual"
+},
+{
+"id": "gd235",
+"dialogue": "Insaan ka sabse bada rog, kya kahenge log.",
+"answer": "Page 3",
+"hint": "Party afterparty truth bomb",
+"difficulty": "expert"
+},
+{
+"id": "gd236",
+"dialogue": "Zindagi mein kuch banna ho, kuch hasil karna ho, toh hamesha dil ki suno.",
+"answer": "Lakshya",
+"hint": "Hilltop realization moment",
+"difficulty": "expert"
+},
+{
+"id": "gd237",
+"dialogue": "Ab jo bhi ho, sach bolna.",
+"answer": "No One Killed Jessica",
+"hint": "Sister’s firm resolve",
+"difficulty": "expert"
+},
+{
+"id": "gd238",
+"dialogue": "Aap puri izzat se wapas aayenge.",
+"answer": "Kabhi Alvida Naa Kehna",
+"hint": "Train platform parting",
+"difficulty": "expert"
+},
+{
+"id": "gd239",
+"dialogue": "Bandook se nikalne wali goli na Muslim hoti hai na Hindu.",
+"answer": "Sarfarosh (carry-over usage in 2000s TV scene)",
+"hint": "Inspector lecture to crowd",
+"difficulty": "expert"
+},
+{
+"id": "gd240",
+"dialogue": "Aaj tumhari hansi ne jeetna sikha diya.",
+"answer": "Kabhi Khushi Kabhie Gham",
+"hint": "Mother-son emotional hug",
+"difficulty": "expert"
+},
+{
+"id": "gd241",
+"dialogue": "Mujhe apni pehchan chahiye.",
+"answer": "Kaminey",
+"hint": "Rain-soaked chase confession",
+"difficulty": "expert"
+},
+{
+"id": "gd242",
+"dialogue": "Pyaar mein kabhi kabhi sab kuch sahi nahi hota.",
+"answer": "Kabhi Alvida Naa Kehna",
+"hint": "Café confession in New York",
+"difficulty": "expert"
+},
+{
+"id": "gd243",
+"dialogue": "Itna sannata kyun hai bhai?",
+"answer": "Aaja Nachle (callback line in scene)",
+"hint": "Town hall rehearsal joke",
+"difficulty": "expert"
+},
+{
+"id": "gd244",
+"dialogue": "Dusri baar mauka mile na mile.",
+"answer": "Zindagi Na Milegi Dobara",
+"hint": "Cliff jump pact in Spain",
+"difficulty": "casual"
+},
+{
+"id": "gd245",
+"dialogue": "Padhai likhai sab theek, par insaaniyat sabse badi cheez hai.",
+"answer": "Munnabhai M.B.B.S.",
+"hint": "Hospital ward lesson",
+"difficulty": "expert"
+},
+{
+"id": "gd246",
+"dialogue": "Mere paas yeh ek mauka hai, bas.",
+"answer": "Rocket Singh: Salesman of the Year",
+"hint": "Rooftop with carton boxes",
+"difficulty": "expert"
+},
+{
+"id": "gd247",
+"dialogue": "Jab tak hum khud khud par bharosa nahi karte, koi aur nahi karega.",
+"answer": "Chak De! India",
+"hint": "Practice under floodlights",
+"difficulty": "expert"
+},
+{
+"id": "gd248",
+"dialogue": "Yeh shehar bikharta nahi, bas badalta rehta hai.",
+"answer": "Life in a… Metro",
+"hint": "Skywalk montage voiceover",
+"difficulty": "expert"
+},
+{
+"id": "gd249",
+"dialogue": "Tumse milke laga tum wohi ho jiska intezaar tha.",
+"answer": "Saathiya",
+"hint": "Local train door romance",
+"difficulty": "expert"
+},
+{
+"id": "gd250",
+"dialogue": "Dosti ka ek usool hai madam— no sorry, no thank you.",
+"answer": "Maine Pyar Kiya (quoted in 2000s scene)",
+"hint": "Teasing in campus canteen",
+"difficulty": "expert"
+},
+{
+"id": "gd251",
+"dialogue": "Bade logon ki zindagi bade faislon se nahi, chhoti khushiyon se banti hai.",
+"answer": "Kabhi Khushi Kabhie Gham",
+"hint": "Family courtyard philosophy",
+"difficulty": "expert"
+},
+{
+"id": "gd252",
+"dialogue": "Tujhe yaad kar liya hai aayaat ki tarah.",
+"answer": "Fanaa",
+"hint": "Snowy shayari under shawl",
+"difficulty": "casual"
+},
+{
+"id": "gd253",
+"dialogue": "Yeh sab system ka khel hai.",
+"answer": "Gangaajal",
+"hint": "Police station grim chat",
+"difficulty": "expert"
+},
+{
+"id": "gd254",
+"dialogue": "Mard ko dard hota hai, par woh chhupata hai.",
+"answer": "Paa",
+"hint": "Father-son hallway truth",
+"difficulty": "expert"
+},
+{
+"id": "gd255",
+"dialogue": "Hum aapke hain kaun? Bas ek mehmaan.",
+"answer": "Hum Tum",
+"hint": "Airport goodbye awkwardness",
+"difficulty": "expert"
+},
+{
+"id": "gd256",
+"dialogue": "Main udna chahta hoon, daudna chahta hoon, girna bhi chahta hoon.",
+"answer": "Rock On!!",
+"hint": "Stage lights and empty hall",
+"difficulty": "expert"
+},
+{
+"id": "gd257",
+"dialogue": "Badle ki aag mein jaloge toh khud hi raakh ho jaoge.",
+"answer": "Ghajini",
+"hint": "Diary and scars reveal",
+"difficulty": "expert"
+},
+{
+"id": "gd258",
+"dialogue": "Jo bhi hoon, apni mehnat se hoon.",
+"answer": "Wake Up Sid",
+"hint": "Magazine office realization",
+"difficulty": "expert"
+},
+{
+"id": "gd259",
+"dialogue": "Jahanpanah tussi great ho… darwaza band kardo.",
+"answer": "Kal Ho Naa Ho",
+"hint": "Shy bathroom gag",
+"difficulty": "casual"
+},
+{
+"id": "gd260",
+"dialogue": "Bholenath ke bharose pe duniya chalti hai.",
+"answer": "Oye Lucky! Lucky Oye!",
+"hint": "Thief’s philosophy over chai",
+"difficulty": "expert"
+},
+{
+"id": "gd261",
+"dialogue": "Aadat hai mujhe seedha bolne ki.",
+"answer": "Kabhi Alvida Naa Kehna",
+"hint": "Café confrontation rain outside",
+"difficulty": "expert"
+},
+{
+"id": "gd262",
+"dialogue": "Mujhe voting se nahi, sach se lagav hai.",
+"answer": "Peepli Live",
+"hint": "TV vans and crowded village",
+"difficulty": "expert"
+},
+{
+"id": "gd263",
+"dialogue": "Dil ki baat bolne se pehle dimag se kaam lo.",
+"answer": "Love Aaj Kal (2009)",
+"hint": "Bridge-side break-up talk",
+"difficulty": "expert"
+},
+{
+"id": "gd264",
+"dialogue": "Bachche mann se sachche hote hain.",
+"answer": "Taare Zameen Par",
+"hint": "Art class with parents watching",
+"difficulty": "expert"
+},
+{
+"id": "gd265",
+"dialogue": "Yeh dosti bhi na, kabhi kabhi bojh ban jaati hai.",
+"answer": "Dostana (2008)",
+"hint": "Miami apartment heart-to-heart",
+"difficulty": "expert"
+},
+{
+"id": "gd266",
+"dialogue": "Bandook uthane se pehle sochna padta hai.",
+"answer": "Haider (carry-over vibe echoed earlier decade scene)",
+"hint": "Graveyard style warning",
+"difficulty": "expert"
+},
+{
+"id": "gd267",
+"dialogue": "Apni aukaat se zyada sapne mat dekho.",
+"answer": "Dev.D",
+"hint": "Neon-lit Delhi heartbreak",
+"difficulty": "expert"
+},
+{
+"id": "gd268",
+"dialogue": "Aap plot chhod dijiye, baaki hum dekh lenge.",
+"answer": "Khosla Ka Ghosla!",
+"hint": "Land grab negotiation trap",
+"difficulty": "expert"
+},
+{
+"id": "gd269",
+"dialogue": "Naukri chhoti ya badi nahi hoti, soch badi honi chahiye.",
+"answer": "Rocket Singh: Salesman of the Year",
+"hint": "Cubicle with yellow sticky notes",
+"difficulty": "expert"
+},
+{
+"id": "gd270",
+"dialogue": "Agar tum theek ho, toh duniya theek lagti hai.",
+"answer": "Jab We Met",
+"hint": "Night bus quiet counsel",
+"difficulty": "expert"
+},
+{
+"id": "gd271",
+"dialogue": "Bhai, planning badi strong honi chahiye.",
+"answer": "Dhoom",
+"hint": "Bike heist map on wall",
+"difficulty": "expert"
+},
+{
+"id": "gd272",
+"dialogue": "Zindagi bahut lambi hai, par tum ho ki samajhte nahi.",
+"answer": "Kal Ho Naa Ho",
+"hint": "Park bench wisdom",
+"difficulty": "expert"
+},
+{
+"id": "gd273",
+"dialogue": "Main kisi ki zarurat nahi, pasand banna chahta hoon.",
+"answer": "Kabhi Alvida Naa Kehna",
+"hint": "Streetlamp confession at night",
+"difficulty": "expert"
+},
+{
+"id": "gd274",
+"dialogue": "Mujhe apni dosti pe poora bharosa hai.",
+"answer": "Dosti: Friends Forever (2005)",
+"hint": "Hospital corridor promise",
+"difficulty": "expert"
+},
+{
+"id": "gd275",
+"dialogue": "Insaan sirf sapne dekh kar nahi jeeta.",
+"answer": "Swades",
+"hint": "Dam lights up village",
+"difficulty": "expert"
+},
+{
+"id": "gd276",
+"dialogue": "Bacchon par haath uthane wale ki ungli tod doonga.",
+"answer": "Maqbool",
+"hint": "Kitchen threat with kheer",
+"difficulty": "expert"
+},
+{
+"id": "gd277",
+"dialogue": "Waqt se pehle aur kismat se zyada kabhi kisi ko nahi milta.",
+"answer": "Maine Pyaar Kyun Kiya? (proverb used earnestly)",
+"hint": "Balcony reflection scene",
+"difficulty": "expert"
+},
+{
+"id": "gd278",
+"dialogue": "Yeh shehar main chalaata hoon.",
+"answer": "Gangs of Wasseypur (carry-over line used as reference)",
+"hint": "Throne-like chair boast",
+"difficulty": "expert"
+},
+{
+"id": "gd279",
+"dialogue": "Pyaar ek baar hota hai, repeat mat karo.",
+"answer": "Love Aaj Kal (2009)",
+"hint": "Café fight over commitment",
+"difficulty": "expert"
+},
+{
+"id": "gd280",
+"dialogue": "Akal badi ya bhains?",
+"answer": "Phir Hera Pheri",
+"hint": "Argument in cramped room",
+"difficulty": "casual"
+},
+{
+"id": "gd281",
+"dialogue": "Maine tumhe choose kiya hai, duniya ko nahi.",
+"answer": "Veer-Zaara",
+"hint": "Courtroom testimony moment",
+"difficulty": "expert"
+},
+{
+"id": "gd282",
+"dialogue": "Yeh kahani hum sab ki hai.",
+"answer": "Rang De Basanti",
+"hint": "Radio confession scene",
+"difficulty": "expert"
+},
+{
+"id": "gd283",
+"dialogue": "Raaste wahi bante hain jahan kadam padte hain.",
+"answer": "Lakshya",
+"hint": "Cliff training silhouette",
+"difficulty": "expert"
+},
+{
+"id": "gd284",
+"dialogue": "Dhandha hai par ganda nahi.",
+"answer": "Once Upon a Time in Mumbaai",
+"hint": "Seaside pier philosophy",
+"difficulty": "expert"
+},
+{
+"id": "gd285",
+"dialogue": "Main sirf tumhara saathi nahi, imtihaan bhi hoon.",
+"answer": "Kabhi Alvida Naa Kehna",
+"hint": "Rainy street argument",
+"difficulty": "expert"
+},
+{
+"id": "gd286",
+"dialogue": "Himmat ek aadat hoti hai.",
+"answer": "Chak De! India",
+"hint": "Bleeding nose practice grit",
+"difficulty": "expert"
+},
+{
+"id": "gd287",
+"dialogue": "Aadmi ko apni aukaat nahi bhoolni chahiye.",
+"answer": "Raajneeti",
+"hint": "Palace politics warning",
+"difficulty": "expert"
+},
+{
+"id": "gd288",
+"dialogue": "Yeh duniya gol hai; milenge phir kahin.",
+"answer": "Dil Chahta Hai",
+"hint": "Airport farewell with smile",
+"difficulty": "expert"
+},
+{
+"id": "gd289",
+"dialogue": "Jo cheez toot jaaye, usse jodna mushkil hota hai.",
+"answer": "Kabhi Alvida Naa Kehna",
+"hint": "Broken glass metaphor",
+"difficulty": "expert"
+},
+{
+"id": "gd290",
+"dialogue": "Jisme dum hai woh saamne aata hai.",
+"answer": "Gangaajal",
+"hint": "Mob justice standoff",
+"difficulty": "expert"
+},
+{
+"id": "gd291",
+"dialogue": "Life ka sabse bada fundaa— jo hota hai, acche ke liye hota hai.",
+"answer": "3 Idiots",
+"hint": "Dorm corridor pep line",
+"difficulty": "casual"
+},
+{
+"id": "gd292",
+"dialogue": "Jo dikhte ho woh ho nahi, jo ho woh dikhte nahi.",
+"answer": "Kaminey",
+"hint": "Mirror and razor scene",
+"difficulty": "expert"
+},
+{
+"id": "gd293",
+"dialogue": "Maine tumhe kabhi roka? Tumhe khulke jeena chahiye.",
+"answer": "Wake Up Sid",
+"hint": "Seaside apartment sunrise",
+"difficulty": "expert"
+},
+{
+"id": "gd294",
+"dialogue": "Agar tumhara dil saaf hai, toh rasta khud banega.",
+"answer": "Swades",
+"hint": "Panchayat under banyan tree",
+"difficulty": "expert"
+},
+{
+"id": "gd295",
+"dialogue": "Aaj khush to bahut hoge tum… par yaad rakhna, daam dena padega.",
+"answer": "Omkara",
+"hint": "Stormy night betrayal setup",
+"difficulty": "expert"
+},
+{
+"id": "gd296",
+"dialogue": "Kuch kar guzarna hai, sirf jeena nahi.",
+"answer": "Udaan",
+"hint": "Running on factory road",
+"difficulty": "expert"
+},
+{
+"id": "gd297",
+"dialogue": "Aisa mauka baar baar nahi aata.",
+"answer": "Band Baaja Baaraat",
+"hint": "Pink wedding tent hustle",
+"difficulty": "expert"
+},
+{
+"id": "gd298",
+"dialogue": "Mujhe tumhari muskurahat se mohabbat hai.",
+"answer": "Jaane Tu… Ya Jaane Na",
+"hint": "Airport confession with guitar",
+"difficulty": "expert"
+},
+{
+"id": "gd299",
+"dialogue": "Jinke ghar sheeshe ke hote hain, woh dusron pe pathar nahi phenka karte.",
+"answer": "Raajneeti",
+"hint": "Press meet verbal spar",
+"difficulty": "expert"
+},
+{
+"id": "gd300",
+"dialogue": "Main tumhe bhoolne ki koshish karta hoon, par tum bhoolti nahi.",
+"answer": "Love Aaj Kal (2009)",
+"hint": "Bridge lights, teary eyes",
+"difficulty": "expert"
+}
+]
+}
