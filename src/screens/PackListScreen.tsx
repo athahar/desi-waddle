@@ -154,7 +154,8 @@ function PackListScreen({ navigation }: Props) {
 
   const handleSectionLayout = useCallback((sectionId: string, event: any) => {
     const { y } = event.nativeEvent.layout;
-    sectionRefs.current[sectionId] = y - 100; // Offset for header and spacing
+    // Subtract a small offset to hide previous section margins
+    sectionRefs.current[sectionId] = Math.max(0, y - 20);
   }, []);
 
   const circleCategories = categories.filter(cat => cat.type === 'circle');
