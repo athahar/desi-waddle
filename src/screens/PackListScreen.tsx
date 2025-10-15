@@ -314,16 +314,16 @@ const styles = StyleSheet.create({
   cardGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    gap: 16,
   },
   cardCategory: {
-    width: 165,
+    width: 198,
     marginBottom: 16,
     alignItems: 'center',
   },
   cardImage: {
-    width: 165,
-    height: 175,
+    width: 198,
+    height: 210,
     borderRadius: 12,
   },
   cardCategoryName: {
