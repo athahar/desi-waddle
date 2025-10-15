@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2EDD3',
   },
   content: {
-    padding: 16,
+    paddingHorizontal: 16,
     paddingTop: 28,
     paddingBottom: 400,
   },
@@ -314,16 +314,16 @@ const styles = StyleSheet.create({
   cardGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 16,
+    justifyContent: 'space-between',
   },
   cardCategory: {
-    width: 163,
+    width: '48%',
     marginBottom: 16,
     alignItems: 'center',
   },
   cardImage: {
-    width: 163,
-    height: 173,
+    width: '100%',
+    aspectRatio: 163 / 173,
     borderRadius: 12,
   },
   cardCategoryName: {
