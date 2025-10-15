@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
   circleRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingVertical: 8,
+    paddingVertical: 4,
     paddingHorizontal: 8,
     backgroundColor: '#F8F1E9',
     borderBottomWidth: 1,
