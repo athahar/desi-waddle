@@ -175,6 +175,19 @@
 
 **Rule**: When creating new documentation, always place in appropriate `/docs` subfolder, never at root.
 
+### Scripts & Utilities
+**All build/utility scripts live in `/scripts` folder:**
+- `/scripts/` - Build scripts, generators, utilities
+  - `create-splash.js` - Generates splash screen image from assets
+
+**Root-level JS files (config only):**
+- `app.config.js` - Expo configuration
+- `babel.config.js` - Babel configuration
+- `jest.config.js` - Jest test configuration
+- `jest.setup.js` - Jest setup and mocks
+
+**Rule**: When creating utility scripts, test runners, or build tools, always place in `/scripts` folder, never at root.
+
 ---
 
 ## 🚨 Critical Safety Rules
