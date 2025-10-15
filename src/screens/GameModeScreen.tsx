@@ -5,40 +5,34 @@ import {
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
+  Image,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { NavigationProps } from '../types/game';
 import colors from '../styles/colors';
 import { fonts } from '../styles/fonts';
-import Icon from '../components/Icon';
 
 interface Props extends NavigationProps {}
 
 interface GameMode {
   id: 'charades' | 'guess-movie';
   title: string;
-  description: string;
-  icon: 'theater' | 'characters';
+  image: any;
   route: string;
-  color: string;
 }
 
 const gameModes: GameMode[] = [
   {
     id: 'charades',
-    title: 'Charades',
-    description: 'Act it out! Choose from themed packs like Bollywood, Cricket, and Street Food.',
-    icon: 'theater',
+    title: 'Desi Charades',
+    image: require('../../assets/DesiGames/main-Desi-Charades.png'),
     route: 'PackList',
-    color: colors.pastel.lightPurple,
   },
   {
     id: 'guess-movie',
     title: 'Guess the Movie',
-    description: 'Can you identify Bollywood movies from famous dialogues? 30-second rounds!',
-    icon: 'characters',
+    image: require('../../assets/DesiGames/main-Guess the Movie.png'),
     route: 'GuessMovieInstructions',
-    color: colors.pastel.lightBlue,
   },
 ];
 
@@ -70,15 +64,13 @@ function GameModeScreen({ navigation }: Props) {
         key={mode.id}
         style={styles.modeCard}
         onPress={() => handleModePress(mode)}
-        activeOpacity={0.7}
+        activeOpacity={0.85}
       >
-        <View style={styles.modeIconContainer}>
-          <Icon name={mode.icon} size={80} />
-        </View>
-        <View style={styles.modeContent}>
-          <Text style={styles.modeTitle}>{mode.title}</Text>
-          <Text style={styles.modeDescription}>{mode.description}</Text>
-        </View>
+        <Image
+          source={mode.image}
+          style={styles.modeImage}
+          resizeMode="contain"
+        />
       </TouchableOpacity>
     );
   }, [handleModePress]);
@@ -87,8 +79,7 @@ function GameModeScreen({ navigation }: Props) {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.title}>Choose a Game</Text>
-          <Text style={styles.subtitle}>Pick your party game mode</Text>
+          <Text style={styles.title}>Desi Party Games</Text>
         </View>
 
         <View style={styles.modesContainer}>
@@ -108,56 +99,38 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 16,
+    paddingHorizontal: 20,
+    paddingTop: 40,
+    justifyContent: 'flex-start',
   },
   header: {
     alignItems: 'center',
-    marginVertical: 32,
+    marginBottom: 40,
   },
   title: {
-    fontSize: 32,
+    fontSize: 24,
     fontFamily: fonts.sansation.bold,
     color: colors.text.primary,
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 18,
-    fontFamily: fonts.inter.regular,
-    color: colors.text.secondary,
   },
   modesContainer: {
-    flex: 1,
-    gap: 24,
+    gap: 32,
   },
   modeCard: {
-    backgroundColor: 'transparent',
-    borderRadius: 16,
-    padding: 24,
-    borderWidth: 2,
-    borderColor: colors.border.card,
-    borderLeftWidth: 6,
-    borderLeftColor: colors.border.black,
-    borderBottomWidth: 6,
-    borderBottomColor: colors.border.black,
-    alignItems: 'center',
+    width: '100%',
+    aspectRatio: 2.2,
+    borderRadius: 20,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 5,
   },
-  modeIconContainer: {
-    marginBottom: 16,
-  },
-  modeContent: {
-    alignItems: 'center',
-  },
-  modeTitle: {
-    fontSize: 28,
-    fontFamily: fonts.sansation.bold,
-    color: colors.text.primary,
-    marginBottom: 12,
-  },
-  modeDescription: {
-    fontSize: 16,
-    fontFamily: fonts.inter.regular,
-    color: colors.text.secondary,
-    textAlign: 'center',
-    lineHeight: 24,
+  modeImage: {
+    width: '100%',
+    height: '100%',
   },
 });
