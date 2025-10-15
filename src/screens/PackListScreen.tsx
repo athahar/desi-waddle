@@ -315,17 +315,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    gap: 16,
+    gap: 8,
   },
   cardCategory: {
-    width: 163,
+    width: 167,
     marginBottom: 16,
     alignItems: 'center',
     overflow: 'hidden',
   },
   cardImage: {
-    width: 163,
-    height: 173,
+    width: 167,
+    height: 178,
     borderRadius: 12,
   },
   cardCategoryName: {
