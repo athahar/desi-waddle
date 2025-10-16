@@ -1,17 +1,15 @@
 // Charades game data and utilities
 import { IconName } from '../components/Icon';
-import animalsItems from './charades/animalsItems';
-import foodsItems from './charades/foodsItems';
-import placesItems from './charades/placesItems';
-import charactersItems from './charades/charactersItems';
-import emotionsItems from './charades/emotionsItems';
-import sportsItems from './charades/sportsItems';
-import professionsItems from './charades/professionsItems';
-import actionsItems from './charades/actionsItems';
-import vehiclesItems from './charades/vehiclesItems';
-import instrumentsItems from './charades/instrumentsItems';
-import natureItems from './charades/natureItems';
-import householdItems from './charades/householdItems';
+import bollywoodStarsItems from './charades/bollywoodStarsItems';
+import iconicCharactersItems from './charades/iconicCharactersItems';
+import bollywoodMoviesItems from './charades/bollywoodMoviesItems';
+import comediansVillainsItems from './charades/comediansVillainsItems';
+import cricketPlayersItems from './charades/cricketPlayersItems';
+import famousMatchesItems from './charades/famousMatchesItems';
+import adsMomentsItems from './charades/adsMomentsItems';
+import desiStreetFoodItems from './charades/desiStreetFoodItems';
+import indianLandmarksItems from './charades/indianLandmarksItems';
+import indianBrandsItems from './charades/indianBrandsItems';
 
 export interface CharadesItem {
   id: string;
@@ -26,18 +24,16 @@ export interface CharadesItem {
 }
 
 export type CharadesCategoryId =
-  | 'animals'
-  | 'foods'
-  | 'places'
-  | 'characters'
-  | 'emotions'
-  | 'sports'
-  | 'professions'
-  | 'actions'
-  | 'vehicles'
-  | 'instruments'
-  | 'nature'
-  | 'household';
+  | 'bollywood-stars'
+  | 'iconic-characters'
+  | 'song-dance'
+  | 'comedians-villains'
+  | 'cricket-players'
+  | 'cricket-mania'
+  | 'ads-moments'
+  | 'desi-street-food'
+  | 'indian-landmarks'
+  | 'indian-brands';
 
 export interface CharadesCategory {
   id: CharadesCategoryId;
@@ -51,100 +47,84 @@ export interface CharadesCategory {
 // Category metadata
 export const charadesCategories: CharadesCategory[] = [
   {
-    id: 'actions',
-    name: 'Actions',
-    icon: 'actions' as const,
-    description: 'Act out different activities',
-    color: 'transparent',
-    items: actionsItems,
-  },
-  {
-    id: 'animals',
-    name: 'Animals',
-    icon: 'animals' as const,
-    description: 'Act out different animals',
-    color: 'transparent',
-    items: animalsItems,
-  },
-  {
-    id: 'characters',
-    name: 'Characters',
+    id: 'bollywood-stars',
+    name: 'Bollywood Stars',
     icon: 'characters' as const,
-    description: 'Pretend to be movie characters',
+    description: 'Act out famous Bollywood actors',
     color: 'transparent',
-    items: charactersItems,
+    items: bollywoodStarsItems,
   },
   {
-    id: 'emotions',
-    name: 'Emotions',
-    icon: 'emotions' as const,
-    description: 'Show different feelings',
+    id: 'iconic-characters',
+    name: 'Iconic Characters',
+    icon: 'characters' as const,
+    description: 'Act out memorable movie characters',
     color: 'transparent',
-    items: emotionsItems,
+    items: iconicCharactersItems,
   },
   {
-    id: 'foods',
-    name: 'Food',
-    icon: 'food' as const,
-    description: 'Pretend to eat or cook foods',
+    id: 'song-dance',
+    name: 'Movies & Masala',
+    icon: 'actions' as const,
+    description: 'Act out famous Bollywood movies',
     color: 'transparent',
-    items: foodsItems,
+    items: bollywoodMoviesItems,
   },
   {
-    id: 'instruments',
-    name: 'Instruments',
-    icon: 'instruments' as const,
-    description: 'Play imaginary instruments',
+    id: 'comedians-villains',
+    name: 'Comedians & Villains',
+    icon: 'characters' as const,
+    description: 'Act out famous comedians and villains',
     color: 'transparent',
-    items: instrumentsItems,
+    items: comediansVillainsItems,
   },
   {
-    id: 'nature',
-    name: 'Nature',
-    icon: 'nature-icon' as const,
-    description: 'Act out weather and nature',
-    color: 'transparent',
-    items: natureItems,
-  },
-  {
-    id: 'household',
-    name: 'Objects',
-    icon: 'objects' as const,
-    description: 'Pretend to use household items',
-    color: 'transparent',
-    items: householdItems,
-  },
-  {
-    id: 'places',
-    name: 'Places',
-    icon: 'places' as const,
-    description: 'Act out famous landmarks',
-    color: 'transparent',
-    items: placesItems,
-  },
-  {
-    id: 'professions',
-    name: 'Professions',
-    icon: 'professions' as const,
-    description: 'Pretend to work different jobs',
-    color: 'transparent',
-    items: professionsItems,
-  },
-  {
-    id: 'sports',
-    name: 'Sports',
+    id: 'cricket-players',
+    name: 'Cricket Players',
     icon: 'sports' as const,
-    description: 'Act out sports and activities',
+    description: 'Act out famous cricket players',
     color: 'transparent',
-    items: sportsItems,
+    items: cricketPlayersItems,
   },
   {
-    id: 'vehicles',
-    name: 'Vehicles',
-    icon: 'vehicles' as const,
-    description: 'Pretend to drive or ride vehicles',
+    id: 'cricket-mania',
+    name: 'Cricket Mania',
+    icon: 'sports' as const,
+    description: 'Act out cricket shots, bowling styles, and fielding actions',
     color: 'transparent',
-    items: vehiclesItems,
+    items: famousMatchesItems,
+  },
+  {
+    id: 'ads-moments',
+    name: 'Ads & Moments',
+    icon: 'actions' as const,
+    description: 'Act out iconic TV ads and moments',
+    color: 'transparent',
+    items: adsMomentsItems,
+  },
+  {
+    id: 'desi-street-food',
+    name: 'Desi Street Food',
+    icon: 'food' as const,
+    description: 'Act out popular Indian street foods',
+    color: 'transparent',
+    items: desiStreetFoodItems,
+  },
+  {
+    id: 'indian-landmarks',
+    name: 'Indian Landmarks',
+    icon: 'places' as const,
+    description: 'Act out famous Indian landmarks',
+    color: 'transparent',
+    items: indianLandmarksItems,
+  },
+  {
+    id: 'indian-brands',
+    name: 'Indian Brands',
+    icon: 'actions' as const,
+    description: 'Act out famous Indian brands',
+    color: 'transparent',
+    items: indianBrandsItems,
   },
 ];
 

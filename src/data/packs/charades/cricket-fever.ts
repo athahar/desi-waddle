@@ -3,7 +3,7 @@ import { CharadesPack } from '../../../types/content';
 /**
  * Cricket Fever - The ultimate cricket charades pack
  *
- * 3 categories covering Indian cricket legends, famous matches, and IPL
+ * 3 categories covering Indian cricket legends, Cricket Mania, and IPL
  * Total: 150 cards
  */
 export const cricketFeverPack: CharadesPack = {
@@ -72,7 +72,7 @@ export const cricketFeverPack: CharadesPack = {
     },
     {
       id: 'cricket-matches',
-      name: 'Famous Matches & Moments',
+      name: 'Cricket Mania',
       cards: [
         { id: 'cricket-match-001', text: '1983 World Cup Win' },
         { id: 'cricket-match-002', text: '2007 T20 World Cup Win' },

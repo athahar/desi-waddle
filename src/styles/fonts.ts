@@ -11,6 +11,11 @@ export const fonts = {
     semiBold: 'Inter_600SemiBold',
     bold: 'Inter_700Bold',
   },
+  // Lato - for dialogue text in Guess the Movie
+  lato: {
+    regular: 'Lato_400Regular',
+    bold: 'Lato_700Bold',
+  },
 };
 
 // Helper functions for consistent font usage

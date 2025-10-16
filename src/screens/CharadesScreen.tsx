@@ -1,6 +1,6 @@
 // screens/CharadesScreen.tsx
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 import * as ScreenOrientation from 'expo-screen-orientation';
@@ -8,17 +8,14 @@ import { useKeepAwake } from 'expo-keep-awake';
 import colors from '../styles/colors';
 import { fonts } from '../styles/fonts';
 import { NavigationProps } from '../types/game';
-import { getPackById } from '../data';
-import { isCharadesPack, CharadeCard } from '../types/content';
+import { getCharadesItemsByCategory, CharadesCategoryId } from '../data/charadesData';
 import { useAccelerometer } from '../hooks/useAccelerometer';
-import { getNextCards, getSessionId, DeckItem } from '../core/deckManager';
 import Icon from '../components/Icon';
 import { logEvent } from '../devlog/logger';
 
 interface Route {
   params: {
-    packId?: string;
-    categoryId?: string;
+    category?: string;
   };
 }
 
@@ -34,8 +31,7 @@ interface Attempt {
 const ROUND_SECONDS = 60;
 
 export default function CharadesScreen({ route, navigation }: Props) {
-  const packId = route.params?.packId;
-  const categoryId = route.params?.categoryId;
+  const categoryId = route.params?.category;
   useKeepAwake(); // Keep screen awake during gameplay
 
   // Lock orientation to landscape
@@ -79,94 +75,62 @@ export default function CharadesScreen({ route, navigation }: Props) {
 
   useEffect(() => {
     const loadWords = async () => {
-      // Get pack data
-      if (!packId) {
+      // Get category data
+      if (!categoryId) {
         if (__DEV__) {
-          console.error('CharadesScreen: packId is required');
+          console.error('CharadesScreen: category is required');
         }
         setWords([]);
         setIsLoading(false);
         return;
       }
 
-      const pack = getPackById(packId);
-      if (!pack || !isCharadesPack(pack)) {
+      const items = getCharadesItemsByCategory(categoryId as CharadesCategoryId);
+
+      if (items.length === 0) {
         if (__DEV__) {
-          console.error(`CharadesScreen: Pack not found or not a charades pack: ${packId}`);
+          console.error(`CharadesScreen: No items found for category: ${categoryId}`);
         }
         setWords([]);
         setIsLoading(false);
         return;
       }
 
-      // Get cards from category or all categories
-      let cards: CharadeCard[] = [];
-      if (categoryId) {
-        const category = pack.categories.find(cat => cat.id === categoryId);
-        if (category) {
-          cards = category.cards;
-        }
-      } else {
-        // Get all cards from all categories
-        cards = pack.categories.flatMap(cat => cat.cards);
-      }
+      // Shuffle items using Fisher-Yates algorithm
+      const shuffled = [...items].sort(() => Math.random() - 0.5);
 
-      if (cards.length === 0) {
-        setWords([]);
-        setIsLoading(false);
-        return;
-      }
-
-      const gameId = `charades_${packId}_${categoryId || 'all'}`;
-
-      // Convert CharadeCard[] to DeckItem format for enhanced deck manager
-      const deckItems: DeckItem[] = cards.map(card => ({
-        id: card.id,
-        term: card.text,
-        category: categoryId || 'all',
-        difficulty: 1,
-        ageBands: ['all'],
-      }));
-
-      // Get or create session ID
-      const currentSessionId = await getSessionId(gameId, packId, categoryId, deckItems.length);
+      // Generate session ID
+      const currentSessionId = `charades_${categoryId}_${Date.now()}`;
       setSessionId(currentSessionId);
 
-      // Get next cards using enhanced deck manager (50% refresh rule, seeded shuffle)
-      const nextCards = await getNextCards(
-        gameId,
-        packId,
-        categoryId,
-        deckItems,
-        deckItems.length // Get all available cards for this session
-      );
-
-      setWords(nextCards.map((item) => item.term));
+      setWords(shuffled.map(item => item.term));
       setIsLoading(false);
       setShowInstructions(true); // Show instructions after loading
 
       if (__DEV__) {
-        console.log(`Session ${currentSessionId}: Loaded ${nextCards.length} charades words for ${packId}/${categoryId || 'all'}`);
+        console.log(`Session ${currentSessionId}: Loaded ${shuffled.length} charades words for ${categoryId}`);
       }
 
       // Log session start
       await logEvent({
+        ts: Date.now(),
         type: 'SESSION_START',
         game: 'charades',
-        pack: packId,
-        category: categoryId,
         sessionId: currentSessionId,
+        metadata: {
+          category: categoryId,
+        },
       });
     };
 
     loadWords();
-  }, [packId, categoryId]);
+  }, [categoryId]);
 
   const [idx, setIdx] = useState(0);
   const [attempts, setAttempts] = useState<Attempt[]>([]);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(ROUND_SECONDS);
-  const [bg, setBg] = useState('#FFF9E6'); // cream
+  const [bg, setBg] = useState('#1761FF'); // blue
   const [sensorsEnabled, setSensorsEnabled] = useState(false); // Disabled until countdown ends
   const [hapticsEnabled, setHapticsEnabled] = useState(true);
   const [countdown, setCountdown] = useState(3); // 3-second countdown
@@ -234,23 +198,13 @@ export default function CharadesScreen({ route, navigation }: Props) {
       // Mark game as ended to prevent re-renders
       setGameEnded(true);
 
-      // Reset stack to: GameMode → PackList → PackDetail → CharadesResults (removes Charades screen)
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 3,
-          routes: [
-            { name: 'GameMode' },
-            { name: 'PackList', params: { gameMode: 'charades' } },
-            { name: 'PackDetail', params: route.params },
-            { name: 'CharadesResults', params: { score, attempts } },
-          ],
-        })
-      );
+      // Navigate to results screen
+      navigation.navigate('CharadesResults', { score, attempts });
       return;
     }
     const t = setTimeout(() => setTimeLeft((tl) => tl - 1), 1000);
     return () => clearTimeout(t);
-  }, [timeLeft, gameStarted, gameEnded, navigation, score, attempts, route.params]);
+  }, [timeLeft, gameStarted, gameEnded, navigation, score, attempts]);
 
   const nextWord = useCallback(() => {
     const nextIndex = (idx + 1) % words.length;
@@ -259,15 +213,17 @@ export default function CharadesScreen({ route, navigation }: Props) {
     // Log card shown
     if (words[nextIndex]) {
       logEvent({
+        ts: Date.now(),
         type: 'CARD_SHOWN',
         game: 'charades',
-        pack: packId,
-        category: categoryId,
         sessionId,
         cardTerm: words[nextIndex],
+        metadata: {
+          category: categoryId,
+        },
       });
     }
-  }, [idx, words, packId, categoryId, sessionId]);
+  }, [idx, words, categoryId, sessionId]);
 
   const markCorrect = useCallback(async () => {
     if (!hapticsEnabled) return;
@@ -282,12 +238,14 @@ export default function CharadesScreen({ route, navigation }: Props) {
 
     // Log correct answer
     await logEvent({
+      ts: Date.now(),
       type: 'CARD_CORRECT',
       game: 'charades',
-      pack: packId,
-      category: categoryId,
       sessionId,
       cardTerm: word,
+      metadata: {
+        category: categoryId,
+      },
     });
 
     setBg('#2ECC40'); // green
@@ -295,10 +253,10 @@ export default function CharadesScreen({ route, navigation }: Props) {
     setAttempts((a) => [...a, { word, correct: true }]);
 
     setTimeout(() => {
-      setBg('#FFF9E6'); // cream
+      setBg('#1761FF'); // blue
       nextWord();
     }, 260);
-  }, [word, nextWord, hapticsEnabled, packId, categoryId, sessionId]);
+  }, [word, nextWord, hapticsEnabled, categoryId, sessionId]);
 
   const markPass = useCallback(async () => {
     if (!hapticsEnabled) return;
@@ -313,22 +271,24 @@ export default function CharadesScreen({ route, navigation }: Props) {
 
     // Log passed card
     await logEvent({
+      ts: Date.now(),
       type: 'CARD_PASSED',
       game: 'charades',
-      pack: packId,
-      category: categoryId,
       sessionId,
       cardTerm: word,
+      metadata: {
+        category: categoryId,
+      },
     });
 
     setBg('#E6656A'); // red
     setAttempts((a) => [...a, { word, correct: false }]);
 
     setTimeout(() => {
-      setBg('#FFF9E6'); // cream
+      setBg('#1761FF'); // blue
       nextWord();
     }, 260);
-  }, [word, nextWord, hapticsEnabled, packId, categoryId, sessionId]);
+  }, [word, nextWord, hapticsEnabled, categoryId, sessionId]);
 
   // Accelerometer: down = correct, up = pass
   // No neutral position required - start immediately
@@ -347,19 +307,9 @@ export default function CharadesScreen({ route, navigation }: Props) {
     setHapticsEnabled(false);
     setGameEnded(true);
 
-    // Reset stack to: GameMode → PackList → PackDetail → CharadesResults (removes Charades screen)
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 3,
-        routes: [
-          { name: 'GameMode' },
-          { name: 'PackList', params: { gameMode: 'charades' } },
-          { name: 'PackDetail', params: route.params },
-          { name: 'CharadesResults', params: { score, attempts } },
-        ],
-      })
-    );
-  }, [navigation, score, attempts, route.params]);
+    // Navigate to results screen
+    navigation.navigate('CharadesResults', { score, attempts });
+  }, [navigation, score, attempts]);
 
   if (isLoading) {
     return (
@@ -387,13 +337,17 @@ export default function CharadesScreen({ route, navigation }: Props) {
   // Instructions screen
   if (showInstructions) {
     return (
-      <SafeAreaView style={[styles.container, { backgroundColor: '#FFF9E6' }]}>
+      <SafeAreaView style={[styles.container, { backgroundColor: '#F2EDD3' }]}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.backButton}
           activeOpacity={0.7}
         >
-          <Icon name="back-button" size={40} />
+          <Image
+            source={require('../../assets/DesiGames/icon-Back.png')}
+            style={styles.backIcon}
+            resizeMode="contain"
+          />
         </TouchableOpacity>
 
         <View style={styles.instructionsHeader}>
@@ -403,18 +357,30 @@ export default function CharadesScreen({ route, navigation }: Props) {
 
         <View style={styles.instructionsRow}>
           <View style={styles.instructionsItem}>
-            <Icon name="charades-hold" size={96} />
+            <Image
+              source={require('../../assets/DesiGames/charades-hold-up.png')}
+              style={styles.instructionIcon}
+              resizeMode="contain"
+            />
             <Text style={styles.instructionLabel}>Hold at forehead</Text>
           </View>
 
           <View style={styles.instructionsItem}>
-            <Icon name="charades-tilt-up" size={96} />
-            <Text style={styles.instructionLabel}>Tilt up for correct</Text>
+            <Image
+              source={require('../../assets/DesiGames/charades-correct.png')}
+              style={styles.instructionIcon}
+              resizeMode="contain"
+            />
+            <Text style={styles.instructionLabel}>Tilt down for correct</Text>
           </View>
 
           <View style={styles.instructionsItem}>
-            <Icon name="charades-tilt-down" size={96} />
-            <Text style={styles.instructionLabel}>Tilt down to pass</Text>
+            <Image
+              source={require('../../assets/DesiGames/charades-wrong.png')}
+              style={styles.instructionIcon}
+              resizeMode="contain"
+            />
+            <Text style={styles.instructionLabel}>Tilt up to pass</Text>
           </View>
         </View>
 
@@ -427,13 +393,11 @@ export default function CharadesScreen({ route, navigation }: Props) {
 
   // Countdown screen
   if (isCountingDown && !gameStarted) {
-    const countdownTextColor = bg === '#FFF9E6' ? colors.text.primary : colors.primary.white;
-
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: bg }]}>
         <View style={styles.center}>
-          <Text style={[styles.readyTitle, { color: countdownTextColor }]}>Get Ready</Text>
-          <Text style={[styles.countdownText, { color: countdownTextColor }]} accessibilityLiveRegion="polite">
+          <Text style={[styles.readyTitle, { color: '#ffffff' }]}>Get Ready</Text>
+          <Text style={[styles.countdownText, { color: '#ffffff' }]} accessibilityLiveRegion="polite">
             {countdown}
           </Text>
         </View>
@@ -442,21 +406,17 @@ export default function CharadesScreen({ route, navigation }: Props) {
   }
 
   // Normal gameplay with word and timer
-  // Determine text color based on background
-  const textColor = bg === '#FFF9E6' ? colors.text.primary : colors.primary.white;
-  const timerColor = bg === '#FFF9E6' ? colors.text.secondary : 'rgba(255,255,255,0.9)';
-
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: bg }]}>
       <TouchableOpacity onPress={finish} style={styles.finishBtn} activeOpacity={0.7}>
-        <Text style={[styles.finishTxt, { color: textColor }]}>FINISH</Text>
+        <Text style={[styles.finishTxt, { color: '#ffffff' }]}>FINISH</Text>
       </TouchableOpacity>
 
       <View style={styles.center}>
-        <Text style={[styles.word, { color: textColor }]} numberOfLines={1} adjustsFontSizeToFit>
+        <Text style={[styles.word, { color: '#ffffff' }]} numberOfLines={1} adjustsFontSizeToFit>
           {word}
         </Text>
-        <Text style={[styles.timer, { color: timerColor }]}>{formatTime(timeLeft)}</Text>
+        <Text style={[styles.timer, { color: '#ffffff' }]}>{formatTime(timeLeft)}</Text>
       </View>
     </SafeAreaView>
   );
@@ -528,6 +488,10 @@ const styles = StyleSheet.create({
     zIndex: 10,
     padding: 12,
   },
+  backIcon: {
+    width: 40,
+    height: 40,
+  },
   instructionsHeader: {
     alignItems: 'center',
     marginTop: 8,
@@ -536,13 +500,13 @@ const styles = StyleSheet.create({
   instructionsTitle: {
     fontSize: 28,
     fontFamily: fonts.inter.bold,
-    color: colors.text?.primary ?? '#0F172A',
+    color: '#000',
     marginBottom: 4,
   },
   instructionsSubtitle: {
     fontSize: 16,
     fontFamily: fonts.inter.semiBold,
-    color: 'rgba(0,0,0,0.6)',
+    color: '#000',
   },
   instructionsRow: {
     flexDirection: 'row',
@@ -558,12 +522,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+  instructionIcon: {
+    width: 96,
+    height: 96,
+  },
   instructionLabel: {
     marginTop: 8,
     textAlign: 'center',
     fontSize: 16,
     fontFamily: fonts.inter.bold,
-    color: colors.text?.primary ?? '#0F172A',
+    color: '#000',
   },
   startBtn: {
     marginTop: 8,

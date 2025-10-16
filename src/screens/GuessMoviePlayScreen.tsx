@@ -5,7 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
-  Alert,
+  Image,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { useKeepAwake } from 'expo-keep-awake';
@@ -14,7 +14,6 @@ import { DialogueCard } from '../types/content';
 import { getGuessMoviePacks } from '../data';
 import colors from '../styles/colors';
 import { fonts } from '../styles/fonts';
-import ProgressBar from '../components/ProgressBar';
 import { getNextCards, getSessionId, DeckItem } from '../core/deckManager';
 import { logEvent } from '../devlog/logger';
 
@@ -24,19 +23,20 @@ interface CardResult {
   dialogue: string;
   answer: string;
   correct: boolean;
-  timeToReveal: number; // seconds until reveal button pressed
 }
 
-const ROUND_SECONDS = 30;
-const QUICK_BONUS_THRESHOLD = 3; // Bonus if revealed in <3 seconds
-
 function GuessMoviePlayScreen({ navigation }: Props) {
-  useKeepAwake(); // Keep screen awake during gameplay
+  useKeepAwake();
 
-  // Load dialogue cards using deck manager
   const [cards, setCards] = useState<DialogueCard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [sessionId, setSessionId] = useState<string>('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [revealed, setRevealed] = useState(false);
+  const [results, setResults] = useState<CardResult[]>([]);
+
+  const currentCard = cards[currentIndex];
+  const isLastCard = currentIndex >= cards.length - 1;
 
   useEffect(() => {
     const loadCards = async () => {
@@ -47,11 +47,9 @@ function GuessMoviePlayScreen({ navigation }: Props) {
         return;
       }
 
-      // For now, use the first pack (Bollywood Dialogues)
       const pack = packs[0];
       const gameId = `guess-movie_${pack.id}`;
 
-      // Convert DialogueCard[] to DeckItem format
       const deckItems: DeckItem[] = pack.cards.map(card => ({
         id: card.id,
         term: card.dialogue,
@@ -60,20 +58,17 @@ function GuessMoviePlayScreen({ navigation }: Props) {
         ageBands: ['all'],
       }));
 
-      // Get or create session ID
       const currentSessionId = await getSessionId(gameId, pack.id, undefined, deckItems.length);
       setSessionId(currentSessionId);
 
-      // Get next cards using enhanced deck manager (50% refresh rule, seeded shuffle)
       const nextCards = await getNextCards(
         gameId,
         pack.id,
         undefined,
         deckItems,
-        deckItems.length // Get all available cards for this session
+        deckItems.length
       );
 
-      // Map back to DialogueCard format
       const loadedCards = nextCards.map(item => {
         const originalCard = pack.cards.find(c => c.id === item.id);
         return originalCard!;
@@ -83,97 +78,60 @@ function GuessMoviePlayScreen({ navigation }: Props) {
       setIsLoading(false);
 
       if (__DEV__) {
-        console.log(`Session ${currentSessionId}: Loaded ${loadedCards.length} dialogue cards for ${pack.id}`);
+        console.log(`Session ${currentSessionId}: Loaded ${loadedCards.length} dialogue cards`);
       }
 
-      // Log session start
       await logEvent({
+        ts: Date.now(),
         type: 'SESSION_START',
         game: 'guess-movie',
-        pack: pack.id,
         sessionId: currentSessionId,
+        metadata: {
+          packId: pack.id,
+        },
       });
     };
 
     loadCards();
   }, []);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(ROUND_SECONDS);
-  const [revealed, setRevealed] = useState(false);
-  const [results, setResults] = useState<CardResult[]>([]);
-  const [revealTime, setRevealTime] = useState<number | null>(null);
+  const navigateToResults = useCallback((finalResults: CardResult[]) => {
+    const score = finalResults.filter(r => r.correct).length;
 
-  const currentCard = cards[currentIndex];
-  const isLastCard = currentIndex >= cards.length - 1;
+    navigation.navigate('GuessMovieResults', {
+      results: finalResults,
+      score,
+      totalCards: cards.length,
+    });
+  }, [cards.length, navigation]);
 
-  // Countdown timer
-  useEffect(() => {
-    if (!currentCard || isLoading) return;
-
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          // Auto-reveal when time runs out
-          if (!revealed) {
-            setRevealed(true);
-            setRevealTime(ROUND_SECONDS);
-          }
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [currentCard, isLoading, revealed]); // Timer continues even when revealed
-
-  // Auto-navigate to results when timer hits 0
-  useEffect(() => {
-    if (timeLeft === 0 && revealed && !isLoading) {
-      // Create a result for the current card (treated as skipped)
-      const result: CardResult = {
-        dialogue: currentCard.dialogue,
-        answer: currentCard.answer,
-        correct: false, // Treat timeout as skip
-        timeToReveal: ROUND_SECONDS,
-      };
-
-      const updatedResults = [...results, result];
-
-      // Wait 2 seconds before navigating (give user time to see the answer)
-      const timeout = setTimeout(() => {
-        navigateToResults(updatedResults);
-      }, 2000);
-
-      return () => clearTimeout(timeout);
-    }
-  }, [timeLeft, revealed, isLoading, currentCard, results, navigateToResults]);
+  const nextCard = useCallback(() => {
+    setCurrentIndex(currentIndex + 1);
+    setRevealed(false);
+  }, [currentIndex]);
 
   const handleReveal = useCallback(async () => {
     if (revealed) return;
 
     try {
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     } catch (error) {
       if (__DEV__) {
         console.log('Haptics error (non-critical):', error);
       }
     }
 
-    const elapsed = ROUND_SECONDS - timeLeft;
-    setRevealTime(elapsed);
     setRevealed(true);
 
-    // Log card shown (when revealed)
     await logEvent({
+      ts: Date.now(),
       type: 'CARD_SHOWN',
       game: 'guess-movie',
-      pack: cards[currentIndex]?.id || 'unknown',
       sessionId,
       cardTerm: currentCard.dialogue,
+      cardId: currentCard.id,
     });
-  }, [revealed, timeLeft, currentCard, currentIndex, cards, sessionId]);
+  }, [revealed, currentCard, currentIndex, cards, sessionId]);
 
   const handleCorrect = useCallback(async () => {
     try {
@@ -184,31 +142,30 @@ function GuessMoviePlayScreen({ navigation }: Props) {
       }
     }
 
-    // Log correct answer
     await logEvent({
+      ts: Date.now(),
       type: 'CARD_CORRECT',
       game: 'guess-movie',
-      pack: cards[currentIndex]?.id || 'unknown',
       sessionId,
       cardTerm: currentCard.dialogue,
+      cardId: currentCard.id,
     });
 
     const result: CardResult = {
       dialogue: currentCard.dialogue,
       answer: currentCard.answer,
       correct: true,
-      timeToReveal: revealTime || ROUND_SECONDS,
     };
 
-    setResults([...results, result]);
+    const updatedResults = [...results, result];
+    setResults(updatedResults);
 
-    // Move to next card or finish
     if (isLastCard) {
-      navigateToResults([...results, result]);
+      navigateToResults(updatedResults);
     } else {
       nextCard();
     }
-  }, [currentCard, revealTime, results, isLastCard, currentIndex, cards, sessionId]);
+  }, [currentCard, results, isLastCard, currentIndex, cards, sessionId]);
 
   const handleSkip = useCallback(async () => {
     try {
@@ -219,78 +176,57 @@ function GuessMoviePlayScreen({ navigation }: Props) {
       }
     }
 
-    // Log skipped card
     await logEvent({
+      ts: Date.now(),
       type: 'CARD_PASSED',
       game: 'guess-movie',
-      pack: cards[currentIndex]?.id || 'unknown',
       sessionId,
       cardTerm: currentCard.dialogue,
+      cardId: currentCard.id,
     });
 
     const result: CardResult = {
       dialogue: currentCard.dialogue,
       answer: currentCard.answer,
       correct: false,
-      timeToReveal: revealTime || ROUND_SECONDS,
     };
 
-    setResults([...results, result]);
+    const updatedResults = [...results, result];
+    setResults(updatedResults);
 
-    // Move to next card or finish
     if (isLastCard) {
-      navigateToResults([...results, result]);
+      navigateToResults(updatedResults);
     } else {
       nextCard();
     }
-  }, [currentCard, revealTime, results, isLastCard, currentIndex, cards, sessionId]);
+  }, [currentCard, results, isLastCard, currentIndex, cards, sessionId]);
 
-  const nextCard = useCallback(() => {
-    setCurrentIndex(currentIndex + 1);
-    // Don't reset timer - let it continue from current time
-    setRevealed(false);
-    setRevealTime(null);
-  }, [currentIndex]);
-
-  const navigateToResults = useCallback((finalResults: CardResult[]) => {
-    // Calculate score
-    let score = 0;
-    finalResults.forEach(result => {
-      if (result.correct) {
-        score += 1;
-        // Bonus point for quick reveal
-        if (result.timeToReveal < QUICK_BONUS_THRESHOLD) {
-          score += 1;
-        }
+  const handleNext = useCallback(async () => {
+    try {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Haptics error (non-critical):', error);
       }
-    });
+    }
 
-    navigation.navigate('GuessMovieResults', {
-      results: finalResults,
-      score,
-      totalCards: cards.length,
-    });
-  }, [cards.length, navigation]);
+    if (isLastCard) {
+      // Navigate to results when last card is reached
+      navigateToResults(results);
+    } else {
+      nextCard();
+    }
+  }, [isLastCard, results, navigateToResults, nextCard]);
 
-  const handleFinish = useCallback(() => {
-    Alert.alert(
-      'Finish Game?',
-      'Are you sure you want to end the game early?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Finish',
-          onPress: () => navigateToResults(results),
-        },
-      ]
-    );
-  }, [results, navigateToResults]);
+  const handleBack = useCallback(() => {
+    navigation.navigate('GameMode');
+  }, [navigation]);
 
   if (isLoading) {
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>Loading...</Text>
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Loading dialogues...</Text>
         </View>
       </SafeAreaView>
     );
@@ -299,13 +235,13 @@ function GuessMoviePlayScreen({ navigation }: Props) {
   if (!currentCard) {
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>No dialogues available</Text>
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>No dialogues available</Text>
           <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
+            style={styles.backToMenuButton}
+            onPress={() => navigation.navigate('GameMode')}
           >
-            <Text style={styles.backButtonText}>Go Back</Text>
+            <Text style={styles.backToMenuButtonText}>Back to Menu</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -314,76 +250,65 @@ function GuessMoviePlayScreen({ navigation }: Props) {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+          <Image
+            source={require('../../assets/DesiGames/icon-Back.png')}
+            style={styles.backButtonImage}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Guess the Movie</Text>
+      </View>
+
+      {/* Main Content */}
       <View style={styles.content}>
-        {/* Header with timer and progress */}
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.finishButton}
-            onPress={handleFinish}
-          >
-            <Text style={styles.finishButtonText}>Finish</Text>
-          </TouchableOpacity>
-
-          <View style={styles.timerContainer}>
-            <Text style={styles.timerText}>{timeLeft}s</Text>
-            <ProgressBar
-              progress={(ROUND_SECONDS - timeLeft) / ROUND_SECONDS}
-            />
-          </View>
-
-          <Text style={styles.counterText}>
-            {currentIndex + 1}/{cards.length}
-          </Text>
-        </View>
-
-        {/* Dialogue display */}
-        <View style={styles.dialogueContainer}>
-          <Text style={styles.dialogueLabel}>Dialogue:</Text>
-          <Text style={styles.dialogueText}>"{currentCard.dialogue}"</Text>
-        </View>
-
-        {/* Reveal section */}
         {!revealed ? (
-          <TouchableOpacity
-            style={styles.revealButton}
-            onPress={handleReveal}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.revealButtonText}>Reveal Answer</Text>
-          </TouchableOpacity>
+          <>
+            {/* Clue Screen */}
+            <View style={styles.clueContainer}>
+              <Image
+                source={require('../../assets/DesiGames/icon-quotes.png')}
+                style={styles.quoteIcon}
+                resizeMode="contain"
+              />
+              <Text style={styles.quoteText}>"{currentCard.dialogue}"</Text>
+            </View>
+
+            <TouchableOpacity
+              style={styles.revealButton}
+              onPress={handleReveal}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.revealButtonText}>Reveal Answer</Text>
+            </TouchableOpacity>
+          </>
         ) : (
-          <View style={styles.answerContainer}>
-            <View style={styles.answerBox}>
-              <Text style={styles.answerLabel}>Movie:</Text>
-              <Text style={styles.answerText}>{currentCard.answer}</Text>
-            </View>
+          <>
+            {/* Answer Screen */}
+            <View style={styles.answerContainer}>
+              <Image
+                source={require('../../assets/DesiGames/icon-quotes.png')}
+                style={styles.quoteIcon}
+                resizeMode="contain"
+              />
+              <Text style={styles.quoteText}>"{currentCard.dialogue}"</Text>
 
-            {currentCard.hint && (
-              <View style={styles.hintBox}>
-                <Text style={styles.hintLabel}>Hint:</Text>
-                <Text style={styles.hintText}>{currentCard.hint}</Text>
+              <View style={styles.answerBox}>
+                <Text style={styles.answerLabel}>Movie</Text>
+                <Text style={styles.answerText}>{currentCard.answer}</Text>
               </View>
-            )}
-
-            {/* Action buttons */}
-            <View style={styles.actionButtons}>
-              <TouchableOpacity
-                style={[styles.actionButton, styles.skipButton]}
-                onPress={handleSkip}
-                activeOpacity={0.8}
-              >
-                <Text style={styles.skipButtonText}>Skip</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[styles.actionButton, styles.correctButton]}
-                onPress={handleCorrect}
-                activeOpacity={0.8}
-              >
-                <Text style={styles.correctButtonText}>Correct ✓</Text>
-              </TouchableOpacity>
             </View>
-          </View>
+
+            <TouchableOpacity
+              style={styles.nextButton}
+              onPress={handleNext}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.nextButtonText}>Next Clue</Text>
+            </TouchableOpacity>
+          </>
         )}
       </View>
     </SafeAreaView>
@@ -395,171 +320,155 @@ export default React.memo(GuessMoviePlayScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F1E9',
-  },
-  content: {
-    flex: 1,
-    padding: 20,
+    backgroundColor: '#F2EDD3',
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 32,
-  },
-  finishButton: {
+    justifyContent: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 8,
-    backgroundColor: colors.border.black,
+    paddingVertical: 12,
+    position: 'relative',
   },
-  finishButtonText: {
-    fontSize: 16,
-    fontFamily: fonts.sansation.bold,
-    color: colors.primary.white,
+  backButton: {
+    position: 'absolute',
+    left: 16,
+    width: 48,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  timerContainer: {
-    flex: 1,
-    marginHorizontal: 20,
+  backButtonImage: {
+    width: 40,
+    height: 40,
   },
-  timerText: {
-    fontSize: 24,
+  headerTitle: {
+    fontSize: 20,
     fontFamily: fonts.sansation.bold,
     color: colors.text.primary,
-    textAlign: 'center',
-    marginBottom: 8,
   },
-  counterText: {
-    fontSize: 16,
-    fontFamily: fonts.inter.regular,
-    color: colors.text.secondary,
+  content: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 40,
+    paddingBottom: 32,
+    justifyContent: 'space-between',
   },
-  dialogueContainer: {
+  loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    padding: 32,
   },
-  dialogueLabel: {
-    fontSize: 18,
-    fontFamily: fonts.inter.regular,
-    color: colors.text.secondary,
-    marginBottom: 16,
-  },
-  dialogueText: {
-    fontSize: 28,
+  loadingText: {
+    fontSize: 20,
     fontFamily: fonts.sansation.bold,
+    color: colors.text.secondary,
+    textAlign: 'center',
+    marginBottom: 24,
+  },
+  backToMenuButton: {
+    backgroundColor: colors.border.black,
+    borderRadius: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 32,
+  },
+  backToMenuButtonText: {
+    fontSize: 18,
+    fontFamily: fonts.sansation.bold,
+    color: colors.primary.white,
+  },
+  // Clue Screen Styles
+  clueContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+  },
+  quoteIcon: {
+    width: 60,
+    height: 48,
+    marginBottom: 32,
+  },
+  quoteText: {
+    fontSize: 44,
+    fontFamily: fonts.lato.bold,
     color: colors.text.primary,
     textAlign: 'center',
-    lineHeight: 40,
+    lineHeight: 60,
   },
   revealButton: {
     backgroundColor: colors.border.black,
-    borderRadius: 10,
+    borderRadius: 12,
     paddingVertical: 18,
-    paddingHorizontal: 40,
+    paddingHorizontal: 48,
     alignItems: 'center',
-    width: '100%',
-    marginTop: 32,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 8,
   },
   revealButtonText: {
     fontSize: 20,
     fontFamily: fonts.sansation.bold,
     color: colors.primary.white,
   },
+  // Answer Screen Styles
   answerContainer: {
-    marginTop: 32,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 24,
   },
   answerBox: {
-    backgroundColor: colors.pastel.lightGreen,
-    borderRadius: 10,
-    padding: 20,
-    marginBottom: 16,
-    borderWidth: 2,
-    borderColor: colors.border.card,
-    borderLeftWidth: 6,
-    borderLeftColor: colors.border.black,
-    borderBottomWidth: 6,
-    borderBottomColor: colors.border.black,
+    backgroundColor: '#FFC107',
+    borderRadius: 16,
+    padding: 32,
+    marginTop: 48,
+    width: '100%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 6,
   },
   answerLabel: {
     fontSize: 16,
     fontFamily: fonts.inter.regular,
     color: colors.text.primary,
+    textAlign: 'center',
     marginBottom: 8,
   },
   answerText: {
-    fontSize: 24,
+    fontSize: 36,
     fontFamily: fonts.sansation.bold,
     color: colors.text.primary,
-  },
-  hintBox: {
-    backgroundColor: colors.pastel.lightBlue,
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 24,
-  },
-  hintLabel: {
-    fontSize: 14,
-    fontFamily: fonts.inter.regular,
-    color: colors.text.secondary,
-    marginBottom: 4,
-  },
-  hintText: {
-    fontSize: 16,
-    fontFamily: fonts.inter.regular,
-    color: colors.text.primary,
-    lineHeight: 22,
-  },
-  actionButtons: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  actionButton: {
-    flex: 1,
-    borderRadius: 10,
-    paddingVertical: 14,
-    alignItems: 'center',
-  },
-  skipButton: {
-    backgroundColor: 'transparent',
-    borderWidth: 2,
-    borderColor: colors.border.card,
-  },
-  skipButtonText: {
-    fontSize: 18,
-    fontFamily: fonts.sansation.bold,
-    color: colors.text.primary,
-  },
-  correctButton: {
-    backgroundColor: colors.border.black,
-  },
-  correctButtonText: {
-    fontSize: 18,
-    fontFamily: fonts.sansation.bold,
-    color: colors.primary.white,
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 32,
-  },
-  emptyText: {
-    fontSize: 20,
-    fontFamily: fonts.sansation.bold,
-    color: colors.text.secondary,
     textAlign: 'center',
-    marginBottom: 24,
   },
-  backButton: {
+  nextButton: {
     backgroundColor: colors.border.black,
-    borderRadius: 10,
-    paddingVertical: 14,
-    paddingHorizontal: 32,
+    borderRadius: 12,
+    paddingVertical: 18,
+    paddingHorizontal: 48,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 8,
   },
-  backButtonText: {
-    fontSize: 18,
+  nextButtonText: {
+    fontSize: 20,
     fontFamily: fonts.sansation.bold,
     color: colors.primary.white,
   },

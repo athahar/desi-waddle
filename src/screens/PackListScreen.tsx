@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   ScrollView,
   Image,
+  Linking,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { NavigationProps } from '../types/game';
@@ -60,7 +61,7 @@ const categories: CharadesCategory[] = [
   },
   {
     id: 'song-dance',
-    name: 'Song &\nDance',
+    name: 'Movies &\nMasala',
     image: require('../../assets/DesiGames/category-Song-Dance.png'),
     type: 'card',
     parentCategory: 'bollywood',
@@ -81,8 +82,8 @@ const categories: CharadesCategory[] = [
     parentCategory: 'cricket',
   },
   {
-    id: 'famous-matches',
-    name: 'Famous\nMatches',
+    id: 'cricket-mania',
+    name: 'Cricket\nMania',
     image: require('../../assets/DesiGames/category-Cricket-Matches.png'),
     type: 'card',
     parentCategory: 'cricket',
@@ -151,9 +152,8 @@ function PackListScreen({ navigation }: Props) {
       }, 500);
     } else {
       // If it's a card category, navigate to Charades game
-      navigation.navigate('CharadesCategory', {
-        categoryId: category.id,
-        categoryName: category.name.replace('\n', ' '),
+      navigation.navigate('Charades', {
+        category: category.id,
       });
     }
   }, [navigation]);
@@ -177,6 +177,29 @@ function PackListScreen({ navigation }: Props) {
       setSelectedCategory('cricket');
     } else if (scrollY >= sections['desi-life'] - 50) {
       setSelectedCategory('desi-life');
+    }
+  }, []);
+
+  const handleSuggestCategory = useCallback(async () => {
+    try {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Haptics error (non-critical):', error);
+      }
+    }
+
+    const email = 'kidsgameslearnandplay@gmail.com';
+    const subject = 'Desi Charades: Category Suggestion';
+    const body = "Hi! I've an idea for a new charades category:\n\n";
+    const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    try {
+      await Linking.openURL(mailtoUrl);
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Error opening email:', error);
+      }
     }
   }, []);
 
@@ -263,6 +286,11 @@ function PackListScreen({ navigation }: Props) {
 
         {/* Desi Life section */}
         {renderSection('desi-life', desiLifeCategories)}
+
+        {/* Suggest category link */}
+        <TouchableOpacity onPress={handleSuggestCategory} style={styles.suggestLink}>
+          <Text style={styles.suggestLinkText}>Suggest a category</Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
@@ -278,7 +306,7 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 0,
     paddingTop: 28,
-    paddingBottom: 400,
+    paddingBottom: 40,
   },
   circleRow: {
     flexDirection: 'row',
@@ -338,5 +366,16 @@ const styles = StyleSheet.create({
     paddingBottom: 6,
     paddingHorizontal: 8,
     lineHeight: 20,
+  },
+  suggestLink: {
+    alignItems: 'center',
+    paddingVertical: 20,
+    marginTop: 30,
+  },
+  suggestLinkText: {
+    fontSize: 14,
+    color: '#969696',
+    fontFamily: fonts.inter.regular,
+    textDecorationLine: 'underline',
   },
 });

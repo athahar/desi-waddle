@@ -46,8 +46,8 @@ function GuessMovieResultsScreen({ navigation, route }: Props) {
       }
     }
 
-    // Navigate back to GuessMovieInstructions
-    navigation.navigate('GuessMovieInstructions');
+    // Navigate back to GuessMoviePlay to start a new game
+    navigation.navigate('GuessMoviePlay');
   }, [navigation]);
 
   const handleBackPress = useCallback(async () => {

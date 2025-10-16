@@ -13,6 +13,10 @@ import {
   Inter_600SemiBold,
   Inter_700Bold,
 } from '@expo-google-fonts/inter';
+import {
+  Lato_400Regular,
+  Lato_700Bold,
+} from '@expo-google-fonts/lato';
 import { ErrorBoundary } from './src/components/ErrorBoundary';
 import { fonts } from './src/styles/fonts';
 import { DevPanel } from './src/devlog/DevPanel';
@@ -21,10 +25,8 @@ import GameModeScreen from './src/screens/GameModeScreen';
 import PackListScreen from './src/screens/PackListScreen';
 import PackDetailScreen from './src/screens/PackDetailScreen';
 import InfoScreen from './src/screens/InfoScreen';
-import CharadesCategoryScreen from './src/screens/CharadesCategoryScreen';
 import CharadesScreen from './src/screens/CharadesScreen';
 import CharadesResultsScreen from './src/screens/CharadesResultsScreen';
-import GuessMovieInstructionsScreen from './src/screens/GuessMovieInstructionsScreen';
 import GuessMoviePlayScreen from './src/screens/GuessMoviePlayScreen';
 import GuessMovieResultsScreen from './src/screens/GuessMovieResultsScreen';
 import Icon from './src/components/Icon';
@@ -39,6 +41,8 @@ export default function App() {
     Inter_400Regular,
     Inter_600SemiBold,
     Inter_700Bold,
+    Lato_400Regular,
+    Lato_700Bold,
   });
 
   if (__DEV__) {
@@ -65,7 +69,7 @@ export default function App() {
     <ErrorBoundary>
         <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="GameMode"
+          initialRouteName="PackList"
           screenOptions={({ navigation }) => ({
             headerStyle: {
               backgroundColor: '#F2EDD3',
@@ -128,13 +132,31 @@ export default function App() {
           <Stack.Screen
             name="PackList"
             component={PackListScreen}
-            options={{
+            options={({ navigation }) => ({
               title: 'Desi Charades',
               headerTitleStyle: {
                 fontFamily: fonts.sansation.bold,
                 fontSize: 20,
               },
-            }}
+              headerLeft: () => null,
+              headerBackVisible: false,
+              gestureEnabled: false,
+              headerRight: () => (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Info')}
+                  style={{
+                    width: 44,
+                    height: 44,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginRight: 8,
+                    marginTop: -5,
+                  }}
+                >
+                  <Icon name="info-icon" size={30} />
+                </TouchableOpacity>
+              ),
+            })}
           />
           <Stack.Screen
             name="PackDetail"
@@ -148,11 +170,6 @@ export default function App() {
             }}
           />
           <Stack.Screen
-            name="CharadesCategory"
-            component={CharadesCategoryScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
             name="Charades"
             component={CharadesScreen}
             options={{ headerShown: false }}
@@ -161,17 +178,6 @@ export default function App() {
             name="CharadesResults"
             component={CharadesResultsScreen}
             options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="GuessMovieInstructions"
-            component={GuessMovieInstructionsScreen}
-            options={{
-              title: 'Guess the Movie',
-              headerTitleStyle: {
-                fontFamily: fonts.sansation.bold,
-                fontSize: 20,
-              },
-            }}
           />
           <Stack.Screen
             name="GuessMoviePlay"

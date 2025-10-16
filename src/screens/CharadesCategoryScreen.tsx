@@ -1,24 +1,56 @@
-// screens/CharadesCategoryScreen.tsx
-import React, { useMemo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import React, { useCallback, useEffect } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+  Image,
+} from 'react-native';
 import * as Haptics from 'expo-haptics';
-import colors from '../styles/colors';
-import { fonts } from '../styles/fonts';
+import * as ScreenOrientation from 'expo-screen-orientation';
 import { NavigationProps } from '../types/game';
-import { charadesCategories, CharadesCategoryId } from '../data/charadesData';
-import Icon from '../components/Icon';
+import { fonts } from '../styles/fonts';
 
-interface Props extends NavigationProps {}
+interface Props extends NavigationProps {
+  route: {
+    params: {
+      categoryId: string;
+      categoryName: string;
+    };
+  };
+}
 
-export default function CharadesCategoryScreen({ navigation }: Props) {
-  const categoryStats = useMemo(() => {
-    return charadesCategories.map((cat) => ({
-      ...cat,
-      count: cat.items.length,
-    }));
+function CharadesCategoryScreen({ navigation, route }: Props) {
+  const { categoryId, categoryName } = route.params;
+
+  // Lock screen to landscape on mount
+  useEffect(() => {
+    const lockOrientation = async () => {
+      try {
+        await ScreenOrientation.lockAsync(
+          ScreenOrientation.OrientationLock.LANDSCAPE
+        );
+      } catch (error) {
+        if (__DEV__) {
+          console.log('Screen orientation lock error:', error);
+        }
+      }
+    };
+
+    lockOrientation();
+
+    // Unlock on unmount
+    return () => {
+      ScreenOrientation.unlockAsync().catch((error) => {
+        if (__DEV__) {
+          console.log('Screen orientation unlock error:', error);
+        }
+      });
+    };
   }, []);
 
-  const startGame = async (category: CharadesCategoryId) => {
+  const handleBack = useCallback(async () => {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     } catch (error) {
@@ -26,126 +58,156 @@ export default function CharadesCategoryScreen({ navigation }: Props) {
         console.log('Haptics error (non-critical):', error);
       }
     }
-
-    navigation.navigate('Charades', { category });
-  };
-
-  const handleBack = async () => {
-    try {
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    } catch (error) {
-      if (__DEV__) {
-        console.log('Haptics error (non-critical):', error);
-      }
-    }
-
-    // Simple goBack - pops to Home with correct animation
     navigation.goBack();
-  };
+  }, [navigation]);
+
+  const handleStartGame = useCallback(async () => {
+    try {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Haptics error (non-critical):', error);
+      }
+    }
+
+    navigation.navigate('Charades', { category: categoryId });
+  }, [navigation, categoryId]);
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Custom Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={handleBack}
-          style={styles.backButton}
-          activeOpacity={0.7}
-        >
-          <Icon name="back-button" size={48} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Charades</Text>
-      </View>
+      {/* Back Button */}
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={handleBack}
+        activeOpacity={0.7}
+      >
+        <Image
+          source={require('../../assets/DesiGames/icon-Back.png')}
+          style={styles.backIcon}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
 
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <Text style={styles.subtitle}>Pick a category to act!</Text>
+      {/* Header Title */}
+      <Text style={styles.headerTitle}>Desi Charades</Text>
 
-        <View style={styles.grid}>
-          {/* Individual Categories */}
-          {categoryStats.map((cat) => (
-            <TouchableOpacity
-              key={cat.id}
-              style={styles.card}
-              onPress={() => startGame(cat.id)}
-              activeOpacity={0.85}
-            >
-              <Icon name={cat.icon} size={64} style={styles.cardIcon} />
-              <Text style={styles.cardTitle}>{cat.name}</Text>
-            </TouchableOpacity>
-          ))}
+      <View style={styles.content}>
+        {/* Instructions */}
+        <View style={styles.instructionsContainer}>
+          <View style={styles.instructionItem}>
+            <Image
+              source={require('../../assets/DesiGames/charades-hold-up.png')}
+              style={styles.instructionImage}
+              resizeMode="contain"
+            />
+            <Text style={styles.instructionText}>Hold at forehead</Text>
+          </View>
+
+          <View style={styles.instructionItem}>
+            <Image
+              source={require('../../assets/DesiGames/charades-correct.png')}
+              style={styles.instructionImage}
+              resizeMode="contain"
+            />
+            <Text style={styles.instructionText}>Tilt down for correct</Text>
+          </View>
+
+          <View style={styles.instructionItem}>
+            <Image
+              source={require('../../assets/DesiGames/charades-wrong.png')}
+              style={styles.instructionImage}
+              resizeMode="contain"
+            />
+            <Text style={styles.instructionText}>Tilt up to pass</Text>
+          </View>
         </View>
-      </ScrollView>
+
+        {/* Start Button */}
+        <TouchableOpacity
+          style={styles.startButton}
+          onPress={handleStartGame}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.startButtonText}>Start</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
 
+export default React.memo(CharadesCategoryScreen);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#DAEDF8',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 16,
-    height: 70,
-    backgroundColor: '#DAEDF8',
-    position: 'relative',
+    backgroundColor: '#F2EDD3',
   },
   backButton: {
     position: 'absolute',
+    top: 16,
     left: 16,
-    width: 48,
-    height: 48,
+    width: 44,
+    height: 44,
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 10,
+  },
+  backIcon: {
+    width: 40,
+    height: 40,
   },
   headerTitle: {
+    position: 'absolute',
+    top: 20,
+    left: 0,
+    right: 0,
     fontSize: 20,
     fontFamily: fonts.sansation.bold,
-    color: colors.text.primary,
+    color: '#000000',
     textAlign: 'center',
+    zIndex: 5,
   },
   content: {
-    padding: 16,
-    paddingBottom: 32,
-  },
-  subtitle: {
-    fontSize: 18,
-    fontFamily: fonts.inter.regular,
-    color: colors.text.primary,
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 12,
-    marginBottom: 20,
-  },
-  card: {
-    width: '48%',
-    backgroundColor: 'transparent',
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: colors.border.card,
-    borderLeftWidth: 6,
-    borderLeftColor: colors.border.black,
-    borderBottomWidth: 6,
-    borderBottomColor: colors.border.black,
-    padding: 20,
-    alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
-    minHeight: 140,
+    alignItems: 'center',
+    paddingHorizontal: 40,
   },
-  cardIcon: {
+  instructionsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    maxWidth: 600,
+    marginBottom: 40,
+  },
+  instructionItem: {
+    alignItems: 'center',
+    flex: 1,
+    paddingHorizontal: 12,
+  },
+  instructionImage: {
+    width: 100,
+    height: 100,
     marginBottom: 12,
   },
-  cardTitle: {
-    fontSize: 18,
-    fontFamily: fonts.sansation.bold,
-    color: colors.text.primary,
+  instructionText: {
+    fontSize: 14,
+    fontFamily: fonts.inter.regular,
+    color: '#000000',
     textAlign: 'center',
+    lineHeight: 18,
+  },
+  startButton: {
+    backgroundColor: '#000000',
+    borderRadius: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 60,
+    minWidth: 300,
+    alignItems: 'center',
+  },
+  startButtonText: {
+    fontSize: 20,
+    fontFamily: fonts.sansation.bold,
+    color: '#FFFFFF',
   },
 });

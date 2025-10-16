@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
   Linking,
   Alert,
+  Image,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import * as StoreReview from 'expo-store-review';
 import { NavigationProps } from '../types/game';
 import { fonts } from '../styles/fonts';
 import colors from '../styles/colors';
-import Icon from '../components/Icon';
 import { useDevModeStore } from '../devlog/devMode';
 
 interface Props extends NavigationProps {}
@@ -78,7 +78,7 @@ export default function InfoScreen({ navigation }: Props) {
     }
 
     const email = 'kidsgameslearnandplay@gmail.com';
-    const subject = 'Waddle Play: Feedback';
+    const subject = 'Desi Charades: Feedback';
     const body = 'Hi! I wanted to share some feedback about the app:\n\n';
 
     const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -102,37 +102,67 @@ export default function InfoScreen({ navigation }: Props) {
     }
   };
 
+  const handleGetStickers = async () => {
+    try {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch (error) {
+      if (__DEV__) {
+        console.log('Haptics error (non-critical):', error);
+      }
+    }
+
+    // TODO: Add stickers link when available
+    Alert.alert(
+      'Coming Soon!',
+      'Stickers will be available soon. Stay tuned!',
+      [{ text: 'OK' }]
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        {/* Title */}
-        <Text style={styles.title}>About</Text>
+      {/* Custom Header */}
+      <View style={styles.header}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}
+          activeOpacity={0.7}
+        >
+          <Image
+            source={require('../../assets/DesiGames/icon-Back.png')}
+            style={styles.backButtonImage}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>About</Text>
+      </View>
 
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         {/* Description */}
         <Text style={styles.description}>
-          This app was designed for restaurant waits, car rides, family time, rainy days and learning together!  Suitable for ages 4-99!
+          This app was designed by <Text style={styles.italic}>desis</Text>, for{' '}
+          <Text style={styles.italic}>desis</Text>.
         </Text>
 
         {/* Rate This App Card */}
         <TouchableOpacity
-          style={styles.card}
+          style={[styles.card, styles.ratingCard]}
           onPress={handleRateApp}
           activeOpacity={0.8}
         >
-          <View style={styles.starsContainer}>
-            <Icon name="star" size={48} />
-            <Icon name="star" size={48} />
-            <Icon name="star" size={48} />
-            <Icon name="star" size={48} />
-            <Icon name="star" size={48} />
-          </View>
+          <Image
+            source={require('../../assets/DesiGames/icon-rating-stars.png')}
+            style={styles.starsImage}
+            resizeMode="contain"
+          />
           <Text style={styles.rateText}>Rate this app</Text>
         </TouchableOpacity>
 
         {/* Feedback Card */}
-        <View style={styles.card}>
+        <View style={[styles.card, styles.feedbackCard]}>
           <Text style={styles.feedbackMessage}>
-            Have an idea on improving this app? We read every message!
+            Got a <Text style={styles.italic}>dhinchaak</Text> idea to make this app better? We read
+            every message!
           </Text>
           <TouchableOpacity
             style={styles.sendButton}
@@ -141,12 +171,21 @@ export default function InfoScreen({ navigation }: Props) {
           >
             <Text style={styles.sendButtonText}>Send Feedback</Text>
           </TouchableOpacity>
-          <Text style={styles.emailText}>kidsgameslearnandplay@gmail.com</Text>
         </View>
+
+        {/* Stickers Card */}
+        <TouchableOpacity
+          style={[styles.card, styles.stickersCard]}
+          onPress={handleGetStickers}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.stickersTitle}>Love the designs?</Text>
+          <Text style={styles.stickersLink}>Get stickers</Text>
+        </TouchableOpacity>
 
         {/* Developer Section (only visible in __DEV__) */}
         {__DEV__ && (
-          <View style={styles.card}>
+          <View style={[styles.card, styles.devCard]}>
             <Text style={styles.devTitle}>Developer</Text>
             <Text style={styles.devDescription}>
               Access developer console to view deck manager sessions, event logs, and export history.
@@ -169,82 +208,125 @@ export default function InfoScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EDF2FF',
+    backgroundColor: '#F2EDD3',
   },
-  content: {
-    padding: 16,
-    paddingTop: 24,
-    paddingBottom: 32,
-  },
-  title: {
-    fontSize: 32,
-    fontFamily: fonts.sansation.bold,
-    color: colors.text.primary,
-    textAlign: 'center',
-    marginBottom: 24,
-  },
-  description: {
-    fontSize: 16,
-    fontFamily: fonts.inter.regular,
-    color: colors.text.primary,
-    textAlign: 'center',
-    lineHeight: 24,
-    marginBottom: 24,
-    paddingHorizontal: 4,
-  },
-  card: {
-    backgroundColor: 'transparent',
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: colors.border.card,
-    borderLeftWidth: 6,
-    borderLeftColor: colors.border.black,
-    borderBottomWidth: 6,
-    borderBottomColor: colors.border.black,
-    padding: 24,
-    marginBottom: 16,
-    alignItems: 'center',
-  },
-  starsContainer: {
+  header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: '#F2EDD3',
+    position: 'relative',
+  },
+  backButton: {
+    position: 'absolute',
+    left: 16,
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  backButtonImage: {
+    width: 40,
+    height: 40,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontFamily: fonts.sansation.bold,
+    color: colors.text.primary,
+  },
+  content: {
+    padding: 16,
+    paddingTop: 8,
+    paddingBottom: 32,
+  },
+  description: {
+    fontSize: 18,
+    fontFamily: fonts.lato.regular,
+    color: colors.text.primary,
+    textAlign: 'center',
+    lineHeight: 28,
+    marginBottom: 24,
+    paddingHorizontal: 8,
+  },
+  italic: {
+    fontStyle: 'italic',
+  },
+  card: {
+    borderRadius: 16,
+    padding: 24,
     marginBottom: 16,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 4,
+  },
+  ratingCard: {
+    backgroundColor: '#FFC107',
+  },
+  starsImage: {
+    width: 280,
+    height: 60,
+    marginBottom: 12,
   },
   rateText: {
     fontSize: 18,
-    fontFamily: fonts.inter.regular,
+    fontFamily: fonts.sansation.bold,
     color: colors.text.primary,
     textAlign: 'center',
+    textDecorationLine: 'underline',
+  },
+  feedbackCard: {
+    backgroundColor: '#66BB6A',
   },
   feedbackMessage: {
-    fontSize: 16,
-    fontFamily: fonts.inter.regular,
+    fontSize: 18,
+    fontFamily: fonts.lato.regular,
     color: colors.text.primary,
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: 26,
     marginBottom: 20,
   },
   sendButton: {
     backgroundColor: colors.border.black,
-    borderRadius: 10,
+    borderRadius: 12,
     paddingVertical: 16,
     paddingHorizontal: 32,
     alignItems: 'center',
     width: '100%',
-    marginBottom: 12,
   },
   sendButtonText: {
     fontSize: 18,
-    fontFamily: fonts.inter.bold,
+    fontFamily: fonts.sansation.bold,
     color: colors.primary.white,
   },
-  emailText: {
-    fontSize: 14,
-    fontFamily: fonts.inter.regular,
+  stickersCard: {
+    backgroundColor: '#CE93D8',
+  },
+  stickersTitle: {
+    fontSize: 20,
+    fontFamily: fonts.lato.regular,
     color: colors.text.primary,
     textAlign: 'center',
+    marginBottom: 8,
+  },
+  stickersLink: {
+    fontSize: 18,
+    fontFamily: fonts.sansation.bold,
+    color: colors.text.primary,
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+  },
+  devCard: {
+    backgroundColor: '#E3F2FD',
+    borderWidth: 2,
+    borderColor: colors.border.card,
   },
   devTitle: {
     fontSize: 20,

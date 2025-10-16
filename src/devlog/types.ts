@@ -7,6 +7,7 @@
 
 export type GameId =
   | "charades"
+  | "guess-movie"
   | "guessAnimal"
   | "guessCountry"
   | "guessCelebrity"

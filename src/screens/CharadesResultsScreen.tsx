@@ -1,12 +1,11 @@
 // screens/CharadesResultsScreen.tsx
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Image } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import * as Haptics from 'expo-haptics';
 import colors from '../styles/colors';
 import { fonts } from '../styles/fonts';
 import { NavigationProps } from '../types/game';
-import Icon from '../components/Icon';
 
 interface Attempt {
   word: string;
@@ -39,7 +38,7 @@ export default function CharadesResultsScreen({ route, navigation }: Props) {
     unlockOrientation();
   }, []);
 
-  const handleBack = async () => {
+  const handleClose = async () => {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     } catch (error) {
@@ -48,22 +47,26 @@ export default function CharadesResultsScreen({ route, navigation }: Props) {
       }
     }
 
-    // Simple goBack - works because stack is: Home → CharadesCategory → CharadesResults
-    navigation.goBack();
+    // Navigate back to category selection page
+    navigation.navigate('PackList');
   };
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Custom Header */}
       <View style={styles.header}>
+        <Text style={styles.headerTitle}>Results</Text>
         <TouchableOpacity
-          onPress={handleBack}
-          style={styles.backButton}
+          onPress={handleClose}
+          style={styles.closeButton}
           activeOpacity={0.7}
         >
-          <Icon name="back-button" size={48} />
+          <Image
+            source={require('../../assets/DesiGames/icon-close-white.png')}
+            style={styles.closeIcon}
+            resizeMode="contain"
+          />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Results</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
@@ -93,7 +96,7 @@ export default function CharadesResultsScreen({ route, navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2DA4EA', // blue
+    backgroundColor: '#1761FF', // blue
   },
   header: {
     flexDirection: 'row',
@@ -101,16 +104,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 16,
     height: 70,
-    backgroundColor: '#2DA4EA',
+    backgroundColor: '#1761FF',
     position: 'relative',
   },
-  backButton: {
+  closeButton: {
     position: 'absolute',
-    left: 16,
+    right: 16,
     width: 48,
     height: 48,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  closeIcon: {
+    width: 32,
+    height: 32,
   },
   headerTitle: {
     fontSize: 20,
