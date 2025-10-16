@@ -12,10 +12,16 @@ import { getCharadesItemsByCategory, CharadesCategoryId } from '../data/charades
 import { useAccelerometer } from '../hooks/useAccelerometer';
 import Icon from '../components/Icon';
 import { logEvent } from '../devlog/logger';
+import {
+  trackCharadesStarted,
+  trackCharadesCompleted,
+  trackCharadesAbandoned,
+} from '../services/analytics';
 
 interface Route {
   params: {
     category?: string;
+    pack?: string;
   };
 }
 
@@ -32,6 +38,7 @@ const ROUND_SECONDS = 60;
 
 export default function CharadesScreen({ route, navigation }: Props) {
   const categoryId = route.params?.category;
+  const packId = route.params?.pack || 'unknown';
   useKeepAwake(); // Keep screen awake during gameplay
 
   // Lock orientation to landscape
@@ -149,6 +156,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
   const [countdown, setCountdown] = useState(3); // 3-second countdown
   const [gameStarted, setGameStarted] = useState(false);
   const [gameEnded, setGameEnded] = useState(false); // Prevent re-renders after game ends
+  const [gameStartTime, setGameStartTime] = useState<number>(0); // Track start time for duration
   // Pre-game phases
   const [showInstructions, setShowInstructions] = useState(false); // Will be set to true after loading
   const [isCountingDown, setIsCountingDown] = useState(false);
@@ -194,6 +202,13 @@ export default function CharadesScreen({ route, navigation }: Props) {
           setGameStarted(true);
           setSensorsEnabled(true);
           setIsCountingDown(false);
+
+          // Track game started and record start time
+          const startTime = Date.now();
+          setGameStartTime(startTime);
+          if (categoryId) {
+            trackCharadesStarted(packId, categoryId);
+          }
         }
 
         return next;
@@ -201,7 +216,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
     }, 1000);
 
     return () => clearInterval(tick);
-  }, [isCountingDown, gameStarted, isLoading, words.length]);
+  }, [isCountingDown, gameStarted, isLoading, words.length, categoryId, packId]);
 
   // Game timer (runs after countdown finishes)
   useEffect(() => {
@@ -211,13 +226,19 @@ export default function CharadesScreen({ route, navigation }: Props) {
       // Mark game as ended to prevent re-renders
       setGameEnded(true);
 
+      // Track game completed (natural end)
+      const durationSeconds = Math.floor((Date.now() - gameStartTime) / 1000);
+      if (categoryId) {
+        trackCharadesCompleted(packId, categoryId, score, attempts.length, durationSeconds);
+      }
+
       // Navigate to results screen
       navigation.navigate('CharadesResults', { score, attempts });
       return;
     }
     const t = setTimeout(() => setTimeLeft((tl) => tl - 1), 1000);
     return () => clearTimeout(t);
-  }, [timeLeft, gameStarted, gameEnded, navigation, score, attempts]);
+  }, [timeLeft, gameStarted, gameEnded, navigation, score, attempts, categoryId, packId, gameStartTime]);
 
   const nextWord = useCallback(() => {
     const nextIndex = (idx + 1) % words.length;
@@ -320,9 +341,15 @@ export default function CharadesScreen({ route, navigation }: Props) {
     setHapticsEnabled(false);
     setGameEnded(true);
 
+    // Track game abandoned (user quit early)
+    const durationSeconds = Math.floor((Date.now() - gameStartTime) / 1000);
+    if (categoryId) {
+      trackCharadesAbandoned(packId, categoryId, score, attempts.length, durationSeconds);
+    }
+
     // Navigate to results screen
     navigation.navigate('CharadesResults', { score, attempts });
-  }, [navigation, score, attempts]);
+  }, [navigation, score, attempts, categoryId, packId, gameStartTime]);
 
   if (isLoading) {
     return (

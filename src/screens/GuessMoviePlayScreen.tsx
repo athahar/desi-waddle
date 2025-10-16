@@ -16,6 +16,11 @@ import colors from '../styles/colors';
 import { fonts } from '../styles/fonts';
 import { getNextCards, getSessionId, DeckItem } from '../core/deckManager';
 import { logEvent } from '../devlog/logger';
+import {
+  trackGuessMovieStarted,
+  trackGuessMovieCompleted,
+  trackGuessMovieAbandoned,
+} from '../services/analytics';
 
 interface Props extends NavigationProps {}
 
@@ -31,6 +36,8 @@ function GuessMoviePlayScreen({ navigation }: Props) {
   const [cards, setCards] = useState<DialogueCard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [sessionId, setSessionId] = useState<string>('');
+  const [packId, setPackId] = useState<string>('');
+  const [gameStartTime, setGameStartTime] = useState<number>(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [results, setResults] = useState<CardResult[]>([]);
@@ -75,7 +82,13 @@ function GuessMoviePlayScreen({ navigation }: Props) {
       }).filter(Boolean);
 
       setCards(loadedCards);
+      setPackId(pack.id);
       setIsLoading(false);
+
+      // Track game start time and analytics
+      const startTime = Date.now();
+      setGameStartTime(startTime);
+      await trackGuessMovieStarted(pack.id);
 
       if (__DEV__) {
         console.log(`Session ${currentSessionId}: Loaded ${loadedCards.length} dialogue cards`);
@@ -98,12 +111,16 @@ function GuessMoviePlayScreen({ navigation }: Props) {
   const navigateToResults = useCallback((finalResults: CardResult[]) => {
     const score = finalResults.filter(r => r.correct).length;
 
+    // Track game completed
+    const durationSeconds = Math.floor((Date.now() - gameStartTime) / 1000);
+    trackGuessMovieCompleted(packId, score, cards.length, durationSeconds);
+
     navigation.navigate('GuessMovieResults', {
       results: finalResults,
       score,
       totalCards: cards.length,
     });
-  }, [cards.length, navigation]);
+  }, [cards.length, navigation, packId, gameStartTime]);
 
   const nextCard = useCallback(() => {
     setCurrentIndex(currentIndex + 1);
@@ -219,8 +236,13 @@ function GuessMoviePlayScreen({ navigation }: Props) {
   }, [isLastCard, results, navigateToResults, nextCard]);
 
   const handleBack = useCallback(() => {
+    // Track game abandoned (user quit early)
+    const durationSeconds = Math.floor((Date.now() - gameStartTime) / 1000);
+    const score = results.filter(r => r.correct).length;
+    trackGuessMovieAbandoned(packId, score, results.length, durationSeconds);
+
     navigation.navigate('GameMode');
-  }, [navigation]);
+  }, [navigation, gameStartTime, packId, results]);
 
   if (isLoading) {
     return (

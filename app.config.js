@@ -44,6 +44,12 @@ module.exports = {
       eas: {
         projectId: '850609f7-3aa4-443c-99f0-0561fd1858cc',
       },
+      // PostHog Analytics Configuration
+      posthog: {
+        apiKey: process.env.EXPO_PUBLIC_POSTHOG_API_KEY || 'phc_ykO5YVqj9fkao7VoVWlbJgyCi48xhD1y4WDNE6SfXdP',
+        host: process.env.EXPO_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
+        enabled: process.env.EXPO_PUBLIC_ENABLE_ANALYTICS !== 'false', // Enabled by default
+      },
     },
     owner: 'athahar',
   },

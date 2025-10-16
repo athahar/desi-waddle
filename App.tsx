@@ -17,10 +17,12 @@ import {
   Lato_400Regular,
   Lato_700Bold,
 } from '@expo-google-fonts/lato';
+import { PostHogProvider, usePostHog } from 'posthog-react-native';
 import { ErrorBoundary } from './src/components/ErrorBoundary';
 import { fonts } from './src/styles/fonts';
 import { DevPanel } from './src/devlog/DevPanel';
 import { useDevModeStore } from './src/devlog/devMode';
+import { setPostHogInstance, trackAppOpened } from './src/services/analytics';
 import GameModeScreen from './src/screens/GameModeScreen';
 import PackListScreen from './src/screens/PackListScreen';
 import PackDetailScreen from './src/screens/PackDetailScreen';
@@ -33,6 +35,64 @@ import Icon from './src/components/Icon';
 
 const Stack = createNativeStackNavigator();
 
+// PostHog Initializer Component
+// Connects usePostHog hook to analytics service
+const PostHogInitializer: React.FC = () => {
+  const posthog = usePostHog();
+
+  React.useEffect(() => {
+    const setup = async () => {
+      if (posthog) {
+        await setPostHogInstance(posthog);
+        await trackAppOpened();
+
+        if (__DEV__) {
+          console.log('[Analytics] PostHog initialized from hook');
+        }
+      }
+    };
+    setup();
+  }, [posthog]);
+
+  return null;
+};
+
+// Conditional PostHog Provider Wrapper
+// Only enables analytics if environment variables are configured
+const PostHogProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // Get credentials - fallback to hardcoded values for development
+  const apiKey = process.env.EXPO_PUBLIC_POSTHOG_API_KEY || 'phc_ykO5YVqj9fkao7VoVWlbJgyCi48xhD1y4WDNE6SfXdP';
+  const host = process.env.EXPO_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com';
+  const analyticsEnabled = process.env.EXPO_PUBLIC_ENABLE_ANALYTICS !== 'false'; // Enabled by default
+
+  // Disable analytics if explicitly disabled or invalid key
+  if (!analyticsEnabled || !apiKey || apiKey === 'phc_disabled' || apiKey === 'phc_your_key_here') {
+    if (__DEV__) {
+      console.log('[Analytics] Disabled - PostHog will not track events');
+    }
+    return <>{children}</>;
+  }
+
+  if (__DEV__) {
+    console.log('[Analytics] Enabled - PostHog will track events');
+    console.log('[Analytics] API Key:', apiKey.substring(0, 10) + '...');
+    console.log('[Analytics] Host:', host);
+  }
+
+  return (
+    <PostHogProvider
+      apiKey={apiKey}
+      options={{
+        host,
+        captureAppLifecycleEvents: false,
+      }}
+      autocapture={false}
+    >
+      <PostHogInitializer />
+      {children}
+    </PostHogProvider>
+  );
+};
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -206,5 +266,9 @@ export default function App() {
     );
   };
 
-  return <AppContent />;
+  return (
+    <PostHogProviderWrapper>
+      <AppContent />
+    </PostHogProviderWrapper>
+  );
 }

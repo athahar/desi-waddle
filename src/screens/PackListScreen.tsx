@@ -154,6 +154,7 @@ function PackListScreen({ navigation }: Props) {
       // If it's a card category, navigate to Charades game
       navigation.navigate('Charades', {
         category: category.id,
+        pack: category.parentCategory || 'unknown',
       });
     }
   }, [navigation]);

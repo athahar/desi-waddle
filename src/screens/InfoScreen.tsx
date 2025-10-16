@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -16,13 +16,26 @@ import { NavigationProps } from '../types/game';
 import { fonts } from '../styles/fonts';
 import colors from '../styles/colors';
 import { useDevModeStore } from '../devlog/devMode';
+import {
+  trackAboutPageViewed,
+  trackRateAppTapped,
+  trackFeedbackTapped,
+  trackStickersTapped,
+} from '../services/analytics';
 
 interface Props extends NavigationProps {}
 
 export default function InfoScreen({ navigation }: Props) {
   const { togglePanel } = useDevModeStore();
 
+  // Track screen view on mount
+  useEffect(() => {
+    trackAboutPageViewed();
+  }, []);
+
   const handleRateApp = async () => {
+    // Track analytics event
+    await trackRateAppTapped();
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     } catch (error) {
@@ -69,6 +82,9 @@ export default function InfoScreen({ navigation }: Props) {
   };
 
   const handleSendFeedback = async () => {
+    // Track analytics event
+    await trackFeedbackTapped();
+
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     } catch (error) {
@@ -103,6 +119,9 @@ export default function InfoScreen({ navigation }: Props) {
   };
 
   const handleGetStickers = async () => {
+    // Track analytics event
+    await trackStickersTapped();
+
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     } catch (error) {
