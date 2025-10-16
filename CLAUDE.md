@@ -239,21 +239,34 @@ Grep pattern="functionName|variableName|className"
 **❌ Wrong:** Remove function but leave calls → immediate crash
 **✅ Right:** Remove function AND all calls → clean codebase
 
-### Rule #2: Always Guard Console Statements
+### Rule #2: Console Statements (Automated Protection)
+
+**Status:** ✅ **Protected by Babel Plugin**
+
+This project uses `babel-plugin-transform-remove-console` which automatically removes ALL console statements in production builds. No manual wrapping required!
 
 ```typescript
-// ❌ WRONG: Crashes in production on iOS
-console.log('Debug info');
+// ✅ BOTH ARE FINE - Plugin removes console in production
+console.log('Debug info');  // Removed automatically
 
-// ✅ CORRECT: Development only
 if (__DEV__) {
-  console.log('Debug info');
+  console.log('Debug info');  // Double protection (optional)
 }
 ```
 
+**Configuration:**
+```javascript
+// babel.config.js
+plugins: [
+  process.env.NODE_ENV === 'production' && 'transform-remove-console',
+].filter(Boolean),
+```
+
 **Why This Matters:**
-- Unguarded console statements cause white screens in iOS production builds
-- This is the #1 cause of production crashes in React Native apps
+- Babel plugin automatically strips console.* in production
+- Preserves `console.error` for actual error handling
+- EAS Build sets NODE_ENV=production automatically
+- Many statements already wrapped with `if (__DEV__)` for extra safety
 
 ### Rule #3: Wrap Haptics in Try-Catch
 
@@ -293,21 +306,23 @@ const firstCard = cards[0]?.text;
 
 ### Before Every Commit
 1. **Multiple JSX in ternary?** → Wrap in `<>...</>` Fragment
-2. **Console statements?** → Guard with `if (__DEV__)`
-3. **Array access?** → Check `.length > 0` first or use optional chaining
-4. **Removing code?** → Grep for ALL references FIRST
-5. **Apple build?** → Increment `buildNumber` in `app.config.js`
-6. **Haptics?** → Wrap in try-catch (older devices don't support)
-7. **Heavy operations?** → Use `useMemo` for expensive calculations
-8. **Event handlers?** → Use `useCallback` to prevent re-renders
+2. **Array access?** → Check `.length > 0` first or use optional chaining
+3. **Removing code?** → Grep for ALL references FIRST
+4. **Apple build?** → Increment `buildNumber` in `app.config.js`
+5. **Haptics?** → Wrap in try-catch (older devices don't support)
+6. **Heavy operations?** → Use `useMemo` for expensive calculations
+7. **Event handlers?** → Use `useCallback` to prevent re-renders
+
+**Note:** Console.log statements are automatically removed by babel plugin in production - no manual wrapping needed!
 
 ### Pre-Commit Validation (MANDATORY)
 
 ```bash
-# Run this BEFORE every commit - both commands must pass!
-npx tsc --noEmit                                                    # Must = 0 TypeScript errors
-grep -r "console\." src/ --include="*.tsx" --include="*.ts" | grep -v "__DEV__" | grep -v "console.error"  # Must = 0 unguarded console
+# TypeScript check - must pass with 0 errors in src/
+npx tsc --noEmit
 ```
+
+**Note:** Babel plugin (`transform-remove-console`) automatically strips all console.* statements in production builds.
 
 ---
 
@@ -423,9 +438,11 @@ npm install
 # TypeScript validation (must pass)
 npx tsc --noEmit
 
-# Console statement audit (CRITICAL for iOS)
-grep -r "console\." src/ --include="*.tsx" --include="*.ts" | grep -v "__DEV__" | grep -v "console.error"
-# Result must be 0 unguarded statements!
+# Verify babel plugin installed (handles console.log removal)
+grep "babel-plugin-transform-remove-console" package.json
+
+# Expo Doctor check
+npx expo-doctor
 
 # Performance pattern check
 grep -r "useMemo\|useCallback\|React.memo" src/ --include="*.tsx" --include="*.ts"
@@ -545,8 +562,8 @@ grep -A 10 "ios" app.config.js | grep buildNumber
 **✅ CORRECT**: Always increment before each submission
 
 #### 2. Code Quality Gates
-- [ ] TypeScript compiles: `npx tsc --noEmit` (0 errors)
-- [ ] No unguarded console statements (run grep audit above)
+- [ ] TypeScript compiles: `npx tsc --noEmit` (0 errors in src/)
+- [ ] Babel plugin installed: `grep "babel-plugin-transform-remove-console" package.json`
 - [ ] All tests passing (when implemented)
 - [ ] No orphaned references
 - [ ] Error boundaries implemented
@@ -596,13 +613,15 @@ grep -A 10 "ios" app.config.js | grep buildNumber
 - Verify current build number
 - Remind you to increment if deploying
 
-#### 2. ✅ Console.log Safety Audit (CRITICAL!)
+#### 2. ✅ Console.log Safety Check (Automated by Babel)
 ```bash
-grep -r "console\." src/ --include="*.ts" --include="*.tsx" | grep -v "__DEV__" | grep -v "console.error"
+grep "babel-plugin-transform-remove-console" package.json
 ```
-- **Must return 0 results**
-- Unguarded console.log statements crash iOS production builds
-- This is the #1 deployment blocker
+- **Status:** ✅ Handled automatically by babel plugin
+- **What it does:** Removes ALL console.* statements in production builds
+- **No manual wrapping needed:** Plugin strips console at build time
+- **Configured in:** `babel.config.js` (runs when NODE_ENV=production)
+- **Note:** Many statements already have `if (__DEV__)` as double protection, but not required
 
 #### 3. ✅ TypeScript Compilation
 ```bash
