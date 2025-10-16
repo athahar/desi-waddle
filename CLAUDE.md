@@ -573,6 +573,91 @@ grep -A 10 "ios" app.config.js | grep buildNumber
 
 ---
 
+## 🚀 iOS Deployment & Pre-Flight Checks
+
+### Trigger Keywords
+
+When you say **any of these phrases**, I will automatically run the complete pre-flight check:
+- "testflight ready"
+- "pre-flight check"
+- "deploy for ios"
+- "ready for ios"
+- "ios deploy"
+- "build for testflight"
+
+### Automated Pre-Flight Checklist
+
+I will run these checks in order and report results:
+
+#### 1. ✅ Build Number Check
+```bash
+grep -A 10 "ios" app.config.js | grep buildNumber
+```
+- Verify current build number
+- Remind you to increment if deploying
+
+#### 2. ✅ Console.log Safety Audit (CRITICAL!)
+```bash
+grep -r "console\." src/ --include="*.ts" --include="*.tsx" | grep -v "__DEV__" | grep -v "console.error"
+```
+- **Must return 0 results**
+- Unguarded console.log statements crash iOS production builds
+- This is the #1 deployment blocker
+
+#### 3. ✅ TypeScript Compilation
+```bash
+npx tsc --noEmit
+```
+- Must pass with 0 errors
+- Catches type safety issues before build
+
+#### 4. ✅ Expo Doctor
+```bash
+npx expo-doctor
+```
+- Must pass with 0 critical issues
+- Checks dependencies, config, and compatibility
+
+#### 5. ✅ Bundle ID & Version Verification
+```bash
+grep -A 10 "ios" app.config.js
+```
+- Verify bundleIdentifier: `com.desiwaddle.charades`
+- Verify version follows semantic versioning
+- Check EAS project ID: `850609f7-3aa4-443c-99f0-0561fd1858cc`
+
+### Build Number Tracking
+
+**Current Build:** 1 (not yet deployed)
+
+**Build History:**
+| Build # | Version | Date | Status | Deployment | Notes |
+|---------|---------|------|--------|------------|-------|
+| 1 | 0.1.0 | 2025-10-16 | Ready | - | Initial setup, not deployed |
+
+**Next Build Number:** 2
+
+> **Reference:** See [docs/deploy/apple-deployment-guide.md](./docs/deploy/apple-deployment-guide.md) for detailed deployment instructions and build number history.
+
+### Deployment Commands (After Pre-Flight Check Passes)
+
+```bash
+# 1. Increment build number in app.config.js
+# 2. Update build history tables (CLAUDE.md + deployment guide)
+# 3. Commit changes
+git add app.config.js docs/deploy/apple-deployment-guide.md CLAUDE.md
+git commit -m "chore: increment build number to X for iOS deployment"
+git push origin main
+
+# 4. Build for TestFlight (preview profile)
+npx eas build --platform ios --profile preview
+
+# 5. Submit to App Store Connect
+npx eas submit --platform ios --latest
+```
+
+---
+
 ## 📊 Architecture Summary
 
 ```typescript
@@ -621,4 +706,4 @@ desi-charades/
 
 *This document serves as the project-specific reference for development practices, safety rules, and crash prevention. Update after every significant change.*
 
-**Last Updated**: 2025-10-15 | **Next Review**: Before Phase 8 (Data Import)
+**Last Updated**: 2025-10-16 | **Next Review**: Before first TestFlight deployment
