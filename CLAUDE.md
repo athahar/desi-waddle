@@ -55,6 +55,18 @@
 
 > **IMPORTANT**: Update this section AFTER EVERY COMMIT with a brief summary of changes.
 
+### 2025-10-16 - 🎉 FIRST TESTFLIGHT BUILD SUCCESS!
+- **Commit**: `5f3921e` - "fix: change slug to match EAS project configuration"
+- **Major Milestone**: Build 1 deployed to TestFlight and tested successfully!
+- **Changes**:
+  - 🚀 Fixed slug mismatch (desi-waddle-charades → desi-waddle)
+  - ✅ Built production iOS app with EAS
+  - ✅ Submitted to TestFlight
+  - ✅ Tested on device - all features working!
+  - 📋 Updated deployment documentation with babel plugin clarifications
+  - 📊 Established build tracking system in CLAUDE.md and deployment guide
+- **Achievement**: App is production-ready and deployable!
+
 ### 2025-10-15 - UI/UX Improvements (WIP)
 - **Commit**: `0d943f3` - "WIP: Charades and Guess the Movie UI/UX improvements"
 - **Changes**:
@@ -480,13 +492,14 @@ npx eas build --platform ios --profile production
 ## 🎯 Project Status
 
 ### Current Implementation: Desi Waddle
-- **Status**: 🚧 75% Complete (Functional MVP, needs content + polish)
-- **Last Updated**: 2025-10-15
+- **Status**: 🚀 **LIVE ON TESTFLIGHT** - Build 1 deployed and tested successfully!
+- **Last Updated**: 2025-10-16
 - **Games**: 2 complete (Charades + Guess the Movie)
-- **Content**: 3/11 charades packs (560+ cards), sample dialogue pack
+- **Content**: 10 charades categories (1000+ clues), sample dialogue pack
 - **Platform**: iOS (Expo React Native + TypeScript)
 - **Repository**: `github.com/athahar/desi-waddle`
 - **EAS Project**: `850609f7-3aa4-443c-99f0-0561fd1858cc`
+- **TestFlight**: Build 1 (v0.1.0) - ✅ Working!
 
 ### Phases Complete ✅
 - ✅ **Phase 1-2**: Repository setup, stripped to charades-only (17,179 lines deleted)
@@ -647,12 +660,12 @@ grep -A 10 "ios" app.config.js
 
 ### Build Number Tracking
 
-**Current Build:** 1 (not yet deployed)
+**Current Build:** 1 (deployed to TestFlight)
 
 **Build History:**
 | Build # | Version | Date | Status | Deployment | Notes |
 |---------|---------|------|--------|------------|-------|
-| 1 | 0.1.0 | 2025-10-16 | Ready | - | Initial setup, not deployed |
+| 1 | 0.1.0 | 2025-10-16 | ✅ Deployed | TestFlight | First successful build - tested and working! |
 
 **Next Build Number:** 2
 

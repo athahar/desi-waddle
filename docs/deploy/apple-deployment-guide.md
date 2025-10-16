@@ -34,7 +34,7 @@ Track all builds here to make incrementing easy:
 
 | Build # | Version | Date | Status | Notes |
 |---------|---------|------|--------|-------|
-| 1 | 0.1.0 | 2025-10-16 | Ready | Initial setup - not yet deployed |
+| 1 | 0.1.0 | 2025-10-16 | ✅ TestFlight | First successful build - tested and working! |
 
 **Next Build Number:** 2
 
