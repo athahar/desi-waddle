@@ -103,6 +103,19 @@ export default function CharadesScreen({ route, navigation }: Props) {
       const currentSessionId = `charades_${categoryId}_${Date.now()}`;
       setSessionId(currentSessionId);
 
+      // Reset ALL game state when loading new category
+      setIdx(0);
+      setAttempts([]);
+      setScore(0);
+      setTimeLeft(ROUND_SECONDS);
+      setGameStarted(false);
+      setGameEnded(false);
+      setCountdown(3);
+      setIsCountingDown(false);
+      setSensorsEnabled(false);
+      setHapticsEnabled(true);
+      setBg('#1761FF');
+
       setWords(shuffled.map(item => item.term));
       setIsLoading(false);
       setShowInstructions(true); // Show instructions after loading
