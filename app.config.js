@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   expo: {
     name: 'Desi Waddle',
-    slug: 'desi-waddle-charades',
+    slug: 'desi-waddle',
     version: '0.1.0',
     orientation: 'portrait',
     icon: path.resolve(__dirname, './assets/icon.png'),
