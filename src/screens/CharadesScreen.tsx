@@ -230,6 +230,13 @@ export default function CharadesScreen({ route, navigation }: Props) {
       // Mark game as ended to prevent re-renders
       setGameEnded(true);
 
+      // Unlock orientation before navigating away
+      ScreenOrientation.unlockAsync().catch((error) => {
+        if (__DEV__) {
+          console.log('Screen orientation unlock error:', error);
+        }
+      });
+
       // Track game completed (natural end)
       const durationSeconds = Math.floor((Date.now() - gameStartTime) / 1000);
       if (categoryId) {
@@ -344,6 +351,13 @@ export default function CharadesScreen({ route, navigation }: Props) {
     setSensorsEnabled(false);
     setHapticsEnabled(false);
     setGameEnded(true);
+
+    // Unlock orientation before navigating away
+    ScreenOrientation.unlockAsync().catch((error) => {
+      if (__DEV__) {
+        console.log('Screen orientation unlock error:', error);
+      }
+    });
 
     // Track game abandoned (user quit early)
     const durationSeconds = Math.floor((Date.now() - gameStartTime) / 1000);
