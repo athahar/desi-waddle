@@ -223,6 +223,10 @@ export default function CharadesScreen({ route, navigation }: Props) {
     if (!gameStarted || gameEnded) return;
 
     if (timeLeft <= 0) {
+      // Stop sensors and haptics IMMEDIATELY to prevent post-game inputs
+      setSensorsEnabled(false);
+      setHapticsEnabled(false);
+
       // Mark game as ended to prevent re-renders
       setGameEnded(true);
 
@@ -260,7 +264,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
   }, [idx, words, categoryId, sessionId]);
 
   const markCorrect = useCallback(async () => {
-    if (!hapticsEnabled) return;
+    if (!hapticsEnabled || gameEnded) return;
 
     try {
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -290,10 +294,10 @@ export default function CharadesScreen({ route, navigation }: Props) {
       setBg('#1761FF'); // blue
       nextWord();
     }, 260);
-  }, [word, nextWord, hapticsEnabled, categoryId, sessionId]);
+  }, [word, nextWord, hapticsEnabled, gameEnded, categoryId, sessionId]);
 
   const markPass = useCallback(async () => {
-    if (!hapticsEnabled) return;
+    if (!hapticsEnabled || gameEnded) return;
 
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -322,7 +326,7 @@ export default function CharadesScreen({ route, navigation }: Props) {
       setBg('#1761FF'); // blue
       nextWord();
     }, 260);
-  }, [word, nextWord, hapticsEnabled, categoryId, sessionId]);
+  }, [word, nextWord, hapticsEnabled, gameEnded, categoryId, sessionId]);
 
   // Accelerometer: down = correct, up = pass
   // No neutral position required - start immediately
