@@ -1,4 +1,4 @@
-# Desi Waddle - Project Plan & Roadmap
+# Charadesi - Project Plan & Roadmap
 
 **Version**: 0.1.0
 **Status**: 🚧 Phase 2 Complete - Charades-Only Foundation
@@ -36,7 +36,7 @@
 - ✅ Copied WaddlePlay structure (excluded git history, node_modules)
 - ✅ Initialized git repo with proper .gitignore
 - ✅ Updated app.config.js:
-  - App name: "Desi Waddle"
+  - App name: "Charadesi"
   - Bundle ID: `com.desiwaddle.charades`
   - Version: 0.1.0 (initial development)
   - Build number: 1
@@ -46,8 +46,8 @@
   - Verified all required dependencies (uuid, expo-sharing, expo-file-system, etc.)
   - Added typecheck script
 - ✅ Created README.md with project overview
-- ✅ Created DESI-WADDLE-PROJECT-PLAN.md (this file)
-- ✅ Initial commit: "chore: initialize Desi Waddle app"
+- ✅ Created project plan (this file)
+- ✅ Initial commit: "chore: initialize app"
 
 **Deliverables**:
 - Clean standalone repo ready for development

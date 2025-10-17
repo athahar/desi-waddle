@@ -193,7 +193,7 @@ export default function App() {
             name="PackList"
             component={PackListScreen}
             options={({ navigation }) => ({
-              title: 'Desi Charades',
+              title: 'Charadesi',
               headerTitleStyle: {
                 fontFamily: fonts.sansation.bold,
                 fontSize: 20,

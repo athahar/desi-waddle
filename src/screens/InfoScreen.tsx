@@ -44,7 +44,7 @@ export default function InfoScreen({ navigation }: Props) {
       }
     }
 
-    const appStoreUrl = 'https://apps.apple.com/app/id6753095421';
+    const appStoreUrl = 'https://apps.apple.com/app/id6754100318';
 
     try {
       // Try native in-app review first (best UX)
@@ -94,7 +94,7 @@ export default function InfoScreen({ navigation }: Props) {
     }
 
     const email = 'kidsgameslearnandplay@gmail.com';
-    const subject = 'Desi Charades: Feedback';
+    const subject = 'Charadesi: Feedback';
     const body = 'Hi! I wanted to share some feedback about the app:\n\n';
 
     const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;

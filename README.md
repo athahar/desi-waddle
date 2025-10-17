@@ -1,4 +1,4 @@
-# Desi Waddle - Desi Charades App
+# Charadesi
 
 **Status**: 🚧 In Development (v0.1.0)
 
@@ -6,7 +6,7 @@ A standalone grown-up charades app for Indian audiences, featuring Bollywood, Cr
 
 ## Overview
 
-Desi Waddle is a charades app built specifically for Indian families and grown-ups. Unlike traditional charades games, this app features culturally relevant content packs including:
+Charadesi is a charades app built specifically for Indian families and grown-ups. Unlike traditional charades games, this app features culturally relevant content packs including:
 
 - 🎬 Bollywood Universe (movies, stars, dialogues, songs)
 - 🏏 Cricket Fever (legends, IPL, commentary)

@@ -24,7 +24,7 @@ export const setPostHogInstance = async (instance: PostHog): Promise<void> => {
 
   // Identify user with device properties (no personal data)
   await instance.identify(userId, {
-    app_name: 'desi-charades',
+    app_name: 'charadesi',
     app_bundle_id: 'com.desiwaddle.charades',
     app_version: Application.nativeApplicationVersion,
     app_build: Application.nativeBuildVersion,
@@ -36,7 +36,7 @@ export const setPostHogInstance = async (instance: PostHog): Promise<void> => {
 
   if (__DEV__) {
     console.log('[Analytics] PostHog initialized with user:', userId);
-    console.log('[Analytics] App: desi-charades (com.desiwaddle.charades)');
+    console.log('[Analytics] App: charadesi (com.desiwaddle.charades)');
   }
 };
 
@@ -57,7 +57,7 @@ export const trackEvent = async (
 
   // Add app context to all events
   const eventProperties = {
-    app_name: 'desi-charades',
+    app_name: 'charadesi',
     app_bundle_id: 'com.desiwaddle.charades',
     platform: 'ios',
     ...properties,
@@ -241,6 +241,16 @@ export const trackFeedbackTapped = async (): Promise<void> => {
 export const trackStickersTapped = async (): Promise<void> => {
   await trackEvent('stickers_tapped', {
     source: 'about_page',
+    timestamp: new Date().toISOString(),
+  });
+};
+
+/**
+ * Track when user taps "Suggest a category"
+ */
+export const trackCategorySuggestionTapped = async (): Promise<void> => {
+  await trackEvent('category_suggestion_tapped', {
+    source: 'pack_list_page',
     timestamp: new Date().toISOString(),
   });
 };

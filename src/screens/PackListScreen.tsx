@@ -13,6 +13,7 @@ import * as Haptics from 'expo-haptics';
 import { NavigationProps } from '../types/game';
 import colors from '../styles/colors';
 import { fonts } from '../styles/fonts';
+import { trackCategorySuggestionTapped } from '../services/analytics';
 
 interface Props extends NavigationProps {}
 
@@ -190,8 +191,11 @@ function PackListScreen({ navigation }: Props) {
       }
     }
 
+    // Track category suggestion tap
+    await trackCategorySuggestionTapped();
+
     const email = 'kidsgameslearnandplay@gmail.com';
-    const subject = 'Desi Charades: Category Suggestion';
+    const subject = 'Charadesi: Category Suggestion';
     const body = "Hi! I've an idea for a new charades category:\n\n";
     const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
