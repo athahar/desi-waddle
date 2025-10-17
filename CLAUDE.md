@@ -660,15 +660,16 @@ grep -A 10 "ios" app.config.js
 
 ### Build Number Tracking
 
-**Current Build:** 2 (ready to build)
+**Current Build:** 3 (ready to build)
 
 **Build History:**
 | Build # | Version | Date | Status | Deployment | Notes |
 |---------|---------|------|--------|------------|-------|
 | 1 | 0.1.0 | 2025-10-16 | ✅ Deployed | TestFlight | First successful build - tested and working! |
-| 2 | 0.1.0 | 2025-10-16 | 🚧 Building | TestFlight | App rename to "Charadesi" + PostHog analytics + category suggestion tracking |
+| 2 | 0.1.0 | 2025-10-16 | ⏭️ Skipped | - | Build number incremented but not deployed |
+| 3 | 0.1.0 | 2025-10-16 | 🚧 Building | TestFlight | App rename to "Charadesi" + PostHog analytics + Khelo icon/splash |
 
-**Next Build Number:** 3
+**Next Build Number:** 4
 
 > **Reference:** See [docs/deploy/apple-deployment-guide.md](./docs/deploy/apple-deployment-guide.md) for detailed deployment instructions and build number history.
 

@@ -35,9 +35,10 @@ Track all builds here to make incrementing easy:
 | Build # | Version | Date | Status | Notes |
 |---------|---------|------|--------|-------|
 | 1 | 0.1.0 | 2025-10-16 | ✅ TestFlight | First successful build - tested and working! |
-| 2 | 0.1.0 | 2025-10-16 | 🚧 Building | App rename to "Charadesi" + PostHog analytics + category suggestion tracking |
+| 2 | 0.1.0 | 2025-10-16 | ⏭️ Skipped | Build number incremented but not deployed |
+| 3 | 0.1.0 | 2025-10-16 | 🚧 Building | App rename to "Charadesi" + PostHog analytics + Khelo icon/splash |
 
-**Next Build Number:** 3
+**Next Build Number:** 4
 
 ---
 

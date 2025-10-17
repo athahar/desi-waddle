@@ -17,7 +17,7 @@ module.exports = {
     ios: {
       supportsTablet: false,
       bundleIdentifier: 'com.desiwaddle.charades',
-      buildNumber: '2',
+      buildNumber: '3',
       icon: path.resolve(__dirname, './assets/icon.png'),
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
