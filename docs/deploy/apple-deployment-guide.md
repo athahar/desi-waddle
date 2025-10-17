@@ -1,8 +1,8 @@
-# Apple App Store Deployment Guidelines - Desi Charades
+# Apple App Store Deployment Guidelines - Charadesi
 
 ## 📱 App Information
 
-- **App Name:** Desi Waddle (working title) / Desi Charades
+- **App Name:** Charadesi
 - **Bundle ID:** `com.desiwaddle.charades`
 - **Slug:** `desi-waddle-charades`
 - **EAS Project ID:** `850609f7-3aa4-443c-99f0-0561fd1858cc`
@@ -35,8 +35,9 @@ Track all builds here to make incrementing easy:
 | Build # | Version | Date | Status | Notes |
 |---------|---------|------|--------|-------|
 | 1 | 0.1.0 | 2025-10-16 | ✅ TestFlight | First successful build - tested and working! |
+| 2 | 0.1.0 | 2025-10-16 | 🚧 Building | App rename to "Charadesi" + PostHog analytics + category suggestion tracking |
 
-**Next Build Number:** 2
+**Next Build Number:** 3
 
 ---
 
@@ -166,7 +167,7 @@ npx eas submit --platform ios --latest
 
 ```bash
 #!/bin/bash
-echo "🚀 Desi Charades - iOS Pre-Flight Check"
+echo "🚀 Charadesi - iOS Pre-Flight Check"
 echo "========================================"
 echo ""
 

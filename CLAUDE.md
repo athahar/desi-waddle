@@ -1,4 +1,4 @@
-# Claude Code Development Guidelines - Desi Waddle
+# Claude Code Development Guidelines - Charadesi
 
 > **Quick Context**: Dual-game Bollywood party app (Charades + Movie Dialogues). Phase 6-7: 75% done, needs 8 more packs + final polish.
 
@@ -491,7 +491,7 @@ npx eas build --platform ios --profile production
 
 ## 🎯 Project Status
 
-### Current Implementation: Desi Waddle
+### Current Implementation: Charadesi
 - **Status**: 🚀 **LIVE ON TESTFLIGHT** - Build 1 deployed and tested successfully!
 - **Last Updated**: 2025-10-16
 - **Games**: 2 complete (Charades + Guess the Movie)
@@ -660,14 +660,15 @@ grep -A 10 "ios" app.config.js
 
 ### Build Number Tracking
 
-**Current Build:** 1 (deployed to TestFlight)
+**Current Build:** 2 (ready to build)
 
 **Build History:**
 | Build # | Version | Date | Status | Deployment | Notes |
 |---------|---------|------|--------|------------|-------|
 | 1 | 0.1.0 | 2025-10-16 | ✅ Deployed | TestFlight | First successful build - tested and working! |
+| 2 | 0.1.0 | 2025-10-16 | 🚧 Building | TestFlight | App rename to "Charadesi" + PostHog analytics + category suggestion tracking |
 
-**Next Build Number:** 2
+**Next Build Number:** 3
 
 > **Reference:** See [docs/deploy/apple-deployment-guide.md](./docs/deploy/apple-deployment-guide.md) for detailed deployment instructions and build number history.
 

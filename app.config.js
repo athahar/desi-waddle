@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   expo: {
-    name: 'Desi Waddle',
+    name: 'Charadesi',
     slug: 'desi-waddle',
     version: '0.1.0',
     orientation: 'portrait',
@@ -17,7 +17,7 @@ module.exports = {
     ios: {
       supportsTablet: false,
       bundleIdentifier: 'com.desiwaddle.charades',
-      buildNumber: '1',
+      buildNumber: '2',
       icon: path.resolve(__dirname, './assets/icon.png'),
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
